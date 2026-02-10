@@ -58,6 +58,13 @@
             "accessories": "Accessories",
             "viewDetails": "View Details",
             "material": "Material"
+        },
+        "ProductDetail": {
+            "Products": "Products",
+            "Description": "Description",
+            "Order": "Order via WhatsApp",
+            "BackToProducts": "Back to Products",
+            "YouMayAlsoLike": "You May Also Like"
         }
     }
 }

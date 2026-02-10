@@ -58,6 +58,13 @@
             "accessories": "Aksesoris",
             "viewDetails": "Lihat Detail",
             "material": "Material"
+        },
+        "ProductDetail": {
+            "Products": "Produk",
+            "Description": "Deskripsi",
+            "Order": "Pesan via WhatsApp",
+            "BackToProducts": "Kembali ke Produk",
+            "YouMayAlsoLike": "Mungkin Anda Suka"
         }
     }
 }

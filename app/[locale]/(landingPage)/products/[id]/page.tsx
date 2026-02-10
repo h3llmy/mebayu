@@ -1,5 +1,6 @@
 import { ProductGallery } from "@/components/card";
 import { Link } from "@/i18n/routing";
+import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
@@ -10,7 +11,8 @@ interface Props {
 }
 
 export default async function ProductPage({ params }: Props) {
-  const { id } = await params;
+    const { id } = await params;
+    const t = await getTranslations("Pages.ProductDetail");
 
   // 🔥 Mock product (replace with DB later)
   const product = {
@@ -33,7 +35,7 @@ export default async function ProductPage({ params }: Props) {
         {/* Breadcrumb */}
         <div className="mb-10 text-sm text-gray-500">
           <Link href="/products" className="hover:text-[#507c59]">
-            Products
+            {t("Products")}
           </Link>
           <span className="mx-2">/</span>
           <span className="text-[#2D2D2A]">{product.name}</span>
@@ -69,7 +71,7 @@ export default async function ProductPage({ params }: Props) {
             {/* Description */}
             <div className="mt-10">
               <h2 className="text-sm uppercase tracking-widest text-gray-500 mb-4">
-                Description
+                {t("Description")}
               </h2>
               <p className="text-gray-600 leading-relaxed">
                 {product.description}
@@ -84,14 +86,14 @@ export default async function ProductPage({ params }: Props) {
                 target="_blank"
                 className="px-8 py-3 bg-[#507c59] text-white text-sm tracking-widest uppercase text-center hover:bg-[#466e4e] transition"
               >
-                Order via WhatsApp
+                {t("Order")}
               </a>
 
               <Link
                 href="/products"
                 className="px-8 py-3 border border-[#507c59] text-[#507c59] text-sm tracking-widest uppercase text-center hover:bg-[#507c59] hover:text-white transition"
               >
-                Back to Products
+                {t("BackToProducts")}
               </Link>
 
             </div>
@@ -102,7 +104,7 @@ export default async function ProductPage({ params }: Props) {
         {/* Extra Section */}
         <div className="mt-24 border-t border-gray-200 pt-16 text-center">
           <h3 className="text-2xl font-light text-[#2D2D2A] mb-6">
-            You May Also Like
+            {t("YouMayAlsoLike")}
           </h3>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
