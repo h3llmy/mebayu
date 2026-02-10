@@ -78,7 +78,7 @@ export const metadata: Metadata = {
   category: "fashion",
 };
 
-export default async function RootLayout({
+export default async function LandingPageLayout({
   children,
   params
 }: {

@@ -3,6 +3,9 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/routing";
+
+import { FadeIn } from "@/components/ui/fade-in";
 
 const images = ["/hero-2.png", "/hero-1.png"];
 
@@ -43,20 +46,26 @@ export const HeroSection = () => {
 
             {/* Content */}
             <div className="relative z-30 min-h-[70vh] md:min-h-screen flex flex-col justify-center items-center text-center text-white px-6">
-                <h1 className="text-3xl sm:text-4xl md:text-6xl font-light tracking-wide mb-6">
-                    {t("title")}
-                </h1>
-                <p className="text-base sm:text-lg md:text-xl max-w-xl mb-8">
-                    {t("description")}
-                </p>
-                <a
-                    href="#products"
-                    className="px-6 sm:px-8 py-3 bg-white text-black rounded-sm
-                     hover:bg-[#6F8F6B] hover:text-white
-                     transition duration-300"
-                >
-                    {t("cta")}
-                </a>
+                <FadeIn direction="up" delay={0.2} duration={1}>
+                    <h1 className="text-3xl sm:text-4xl md:text-6xl font-light tracking-wide mb-6">
+                        {t("title")}
+                    </h1>
+                </FadeIn>
+                <FadeIn direction="up" delay={0.4} duration={1}>
+                    <p className="text-base sm:text-lg md:text-xl max-w-xl mb-8">
+                        {t("description")}
+                    </p>
+                </FadeIn>
+                <FadeIn direction="up" delay={0.6} duration={1}>
+                    <Link
+                        href="/products"
+                        className="inline-block px-6 sm:px-8 py-3 bg-white text-black rounded-sm
+                        hover:bg-[#6F8F6B] hover:text-white
+                        transition duration-300"
+                    >
+                        {t("cta")}
+                    </Link>
+                </FadeIn>
             </div>
         </section>
     );

@@ -36,14 +36,14 @@ export const Navbar = () => {
                 {/* Desktop Nav */}
                 <nav className="hidden md:flex items-center gap-12 text-sm tracking-[0.15em] uppercase">
                     <Link
-                        href="#about"
+                        href="/#about"
                         className="relative text-white/90 hover:text-white transition duration-300 group"
                     >
                         {t("about")}
                         <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full" />
                     </Link>
                     <Link
-                        href="#products"
+                        href="/#products"
                         className="relative text-white/90 hover:text-white transition duration-300 group"
                     >
                         {t("products")}
@@ -94,10 +94,10 @@ export const Navbar = () => {
                     } overflow-hidden bg-[#507c59]/95 backdrop-blur-md`}
             >
                 <div className="flex flex-col items-center gap-6 py-6 text-white uppercase tracking-widest text-sm">
-                    <Link href="#about" onClick={() => setOpen(false)}>
+                    <Link href="/#about" onClick={() => setOpen(false)}>
                         {t("about")}
                     </Link>
-                    <Link href="#products" onClick={() => setOpen(false)}>
+                    <Link href="/#products" onClick={() => setOpen(false)}>
                         {t("products")}
                     </Link>
                     <a
