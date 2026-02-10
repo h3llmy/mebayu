@@ -1,40 +1,40 @@
 {
     "Components": {
         "Navbar": {
-            "about": "About",
-            "products": "Products",
-            "instagram": "Instagram"
+            "about": "Our Story",
+            "products": "Collection",
+            "instagram": "Journal"
         },
         "Footer": {
-            "description": "Handcrafted leather goods from Bali. Designed with purpose, shaped with intention.",
+            "description": "Handcrafted leather goods from Bali. Rooted in tradition, refined for modern living.",
             "explore": "Explore",
-            "about": "About",
-            "products": "Products",
-            "connect": "Connect"
+            "about": "Our Story",
+            "products": "Collection",
+            "connect": "Stay Connected"
         }
     },
     "Pages": {
         "Home": {
             "Hero": {
-                "title": "Crafted in Bali",
-                "description": "Timeless leather pieces shaped with purpose and precision.",
-                "cta": "Explore Collection"
+                "title": "Crafted by Hand. Made to Last.",
+                "description": "Premium leather goods handcrafted in Bali — timeless pieces designed to grow with you.",
+                "cta": "Discover the Collection"
             },
             "About": {
-                "title": "Timeless Elegance",
-                "p1": "Founded in the heart of Bali, Mebayu brings together traditional craftsmanship and contemporary design. Every piece is handmade by local artisans using the finest genuine leather.",
-                "p2": "We believe in creating products that tell a story—pieces that age beautifully and become a part of your daily journey."
+                "title": "Where Craft Meets Character",
+                "p1": "Born in the heart of Bali, Mebayu blends traditional craftsmanship with contemporary design. Each piece is carefully shaped by skilled local artisans using full-grain genuine leather.",
+                "p2": "We create more than accessories — we craft companions. Pieces that soften, age beautifully, and carry the marks of your journey."
             },
             "Products": {
-                "title": "Our Collection",
-                "description": "Timeless silhouettes crafted from premium leather, designed to age beautifully with you.",
-                "viewDetails": "View Details",
-                "showMore": "Show More"
+                "title": "The Collection",
+                "description": "Clean silhouettes. Honest materials. Designed with intention and built to endure.",
+                "viewDetails": "Discover More",
+                "showMore": "View Full Collection"
             },
             "Cta": {
-                "title": "Shape Your Style",
-                "description": "Discover handcrafted leather goods that blend simplicity, functionality, and timeless elegance.",
-                "cta": "Visit Instagram"
+                "title": "Carry Something Meaningful",
+                "description": "Explore handcrafted leather essentials that balance simplicity, function, and quiet elegance.",
+                "cta": "Follow Our Journey"
             }
         }
     }

@@ -1,40 +1,40 @@
 {
     "Components": {
         "Navbar": {
-            "about": "Tentang",
-            "products": "Produk",
+            "about": "Cerita Kami",
+            "products": "Koleksi",
             "instagram": "Instagram"
         },
         "Footer": {
-            "description": "Produk kulit buatan tangan dari Bali. Didesain dengan tujuan, dibentuk dengan kesadaran.",
+            "description": "Produk kulit buatan tangan dari Bali. Berakar pada tradisi, dirancang untuk kehidupan modern.",
             "explore": "Jelajahi",
-            "about": "Tentang",
-            "products": "Produk",
-            "connect": "Terhubung"
+            "about": "Cerita Kami",
+            "products": "Koleksi",
+            "connect": "Tetap Terhubung"
         }
     },
     "Pages": {
         "Home": {
             "Hero": {
-                "title": "Dibuat di Bali",
-                "description": "Produk kulit abadi yang dibentuk dengan tujuan dan presisi.",
-                "cta": "Koleksi Produk"
+                "title": "Dibuat dengan Tangan. Dirancang untuk Bertahan.",
+                "description": "Produk kulit premium buatan pengrajin Bali — dirancang untuk menemani perjalanan Anda dalam jangka panjang.",
+                "cta": "Lihat Koleksi"
             },
             "About": {
-                "title": "Tentang Mebayu",
-                "p1": "Didirikan di jantung Bali, Mebayu menyatukan keahlian tradisional dan desain kontemporer. Setiap bagian dibuat dengan tangan oleh pengrajin lokal menggunakan kulit asli terbaik.",
-                "p2": "Kami percaya pada pembuatan produk yang menceritakan sebuah kisah—produk yang menua dengan indah dan menjadi bagian dari perjalanan harian Anda."
+                "title": "Ketika Keahlian Bertemu Karakter",
+                "p1": "Lahir di jantung Bali, Mebayu memadukan keahlian tradisional dengan desain modern yang bersih dan fungsional. Setiap produk dibuat secara handmade oleh pengrajin lokal menggunakan kulit asli pilihan.",
+                "p2": "Kami tidak sekadar membuat aksesori — kami menciptakan karya yang akan menua dengan indah, membentuk karakter, dan menjadi bagian dari kisah Anda sehari-hari."
             },
             "Products": {
-                "title": "Koleksi Kami",
-                "description": "Siluet abadi yang dibuat dari kulit premium, dirancang untuk menua dengan indah bersama Anda.",
-                "viewDetails": "Lihat Detail",
-                "showMore": "Tampilkan Lebih Banyak"
+                "title": "Koleksi Pilihan",
+                "description": "Desain yang jujur. Material berkualitas. Dirancang dengan ketelitian untuk digunakan dalam waktu yang lama.",
+                "viewDetails": "Selengkapnya",
+                "showMore": "Lihat Semua Koleksi"
             },
             "Cta": {
-                "title": "Bentuk Gaya Anda",
-                "description": "Temukan produk kulit buatan tangan yang memadukan kesederhanaan, fungsionalitas, dan keanggunan abadi.",
-                "cta": "Kunjungi Instagram"
+                "title": "Bawa Sesuatu yang Bermakna",
+                "description": "Temukan produk kulit handmade yang memadukan kesederhanaan, fungsi, dan karakter yang tak lekang waktu.",
+                "cta": "Ikuti Perjalanan Kami"
             }
         }
     }
