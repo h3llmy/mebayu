@@ -2,8 +2,7 @@
     "Components": {
         "Navbar": {
             "about": "Our Story",
-            "products": "Collection",
-            "instagram": "Instagram"
+            "products": "Collection"
         },
         "Footer": {
             "description": "Handcrafted leather goods from Bali. Rooted in tradition, refined for modern living.",
@@ -35,7 +34,30 @@
                 "title": "Carry Something Meaningful",
                 "description": "Explore handcrafted leather essentials that balance simplicity, function, and quiet elegance.",
                 "cta": "Follow Our Journey"
+            },
+            "Craftsmanship": {
+                "title": "Crafted by Hand",
+                "description": "Every piece begins with carefully selected leather and is shaped through time, patience, and skilled hands.",
+                "storyTitle": "Honest Materials",
+                "story": "We source premium genuine leather from trusted local suppliers and use traditional vegetable tanning methods that allow the material to age beautifully. Each stitch is done by hand, ensuring strength, character, and a finish that carries the mark of the artisan behind it."
             }
+        },
+        "Products": {
+            "title": "Our Products",
+            "description": "Discover handcrafted leather pieces made with timeless craftsmanship.",
+            "showing": "Showing",
+            "items": "products",
+            "sort": "Sort",
+            "newest": "Newest",
+            "lowToHigh": "Price: Low to High",
+            "highToLow": "Price: High to Low",
+            "category": "Category",
+            "all": "All",
+            "bags": "Bags",
+            "wallets": "Wallets",
+            "accessories": "Accessories",
+            "viewDetails": "View Details",
+            "material": "Material"
         }
     }
 }

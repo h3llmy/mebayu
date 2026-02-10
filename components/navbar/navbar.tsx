@@ -50,15 +50,6 @@ export const Navbar = () => {
                         <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full" />
                     </Link>
 
-                    <a
-                        href="https://www.instagram.com/mebayu.idn/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-4 py-2 border border-white/40 text-white text-xs tracking-[0.2em] uppercase hover:bg-white hover:text-[#507c59] transition duration-300"
-                    >
-                        {t("instagram")}
-                    </a>
-
                     {/* Locale Switcher */}
                     <button
                         onClick={toggleLocale}
@@ -100,15 +91,6 @@ export const Navbar = () => {
                     <Link href="/#products" onClick={() => setOpen(false)}>
                         {t("products")}
                     </Link>
-                    <a
-                        href="https://www.instagram.com/mebayu.idn/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={() => setOpen(false)}
-                        className="border border-white/40 px-6 py-2"
-                    >
-                        {t("instagram")}
-                    </a>
                     <button
                         onClick={() => {
                             toggleLocale();

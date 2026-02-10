@@ -2,8 +2,7 @@
     "Components": {
         "Navbar": {
             "about": "Cerita Kami",
-            "products": "Koleksi",
-            "instagram": "Instagram"
+            "products": "Koleksi"
         },
         "Footer": {
             "description": "Produk kulit buatan tangan dari Bali. Berakar pada tradisi, dirancang untuk kehidupan modern.",
@@ -35,7 +34,30 @@
                 "title": "Bawa Sesuatu yang Bermakna",
                 "description": "Temukan produk kulit handmade yang memadukan kesederhanaan, fungsi, dan karakter yang tak lekang waktu.",
                 "cta": "Ikuti Perjalanan Kami"
+            },
+            "Craftsmanship": {
+                "title": "Dibuat dengan Tangan",
+                "description": "Setiap produk dimulai dari kulit pilihan dan dibentuk melalui waktu, kesabaran, dan keahlian tangan pengrajin.",
+                "storyTitle": "Material yang Jujur",
+                "story": "Kami menggunakan kulit asli premium dari pemasok lokal terpercaya dengan proses penyamakan nabati tradisional agar kulit dapat menua dengan indah. Setiap jahitan dilakukan secara manual untuk memastikan kekuatan, karakter, dan sentuhan personal dari pengrajin di baliknya."
             }
+        },
+        "Products": {
+            "title": "Produk Kami",
+            "description": "Temukan produk kulit handmade dengan kualitas terbaik.",
+            "showing": "Menampilkan",
+            "items": "produk",
+            "sort": "Urutkan",
+            "newest": "Terbaru",
+            "lowToHigh": "Harga: Rendah ke Tinggi",
+            "highToLow": "Harga: Tinggi ke Rendah",
+            "category": "Kategori",
+            "all": "Semua",
+            "bags": "Tas",
+            "wallets": "Dompet",
+            "accessories": "Aksesoris",
+            "viewDetails": "Lihat Detail",
+            "material": "Material"
         }
     }
 }
