@@ -5,9 +5,6 @@ import { routing } from '@/i18n/routing';
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./../../globals.css";
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
-import { WhatsAppButton } from "@/components/floatingButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -102,10 +99,7 @@ export default async function LandingPageLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <NextIntlClientProvider messages={messages}>
-          <Navbar />
           {children}
-          <WhatsAppButton phoneNumber="0817085750446" />
-          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>
