@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 
 const images = ["/hero-2.png", "/hero-1.png"];
 
-export const Hero = () => {
+export const HeroSection = () => {
     const t = useTranslations("Pages.Home.Hero");
     const [current, setCurrent] = useState(0);
 

@@ -62,7 +62,7 @@ export const Navbar = () => {
                     {/* Locale Switcher */}
                     <button
                         onClick={toggleLocale}
-                        className="text-white/80 hover:text-white text-xs font-medium border border-white/20 px-2 py-1 rounded"
+                        className="text-white/80 hover:text-white text-xs font-medium border border-white/20 px-2 py-1 rounded hover:cursor-pointer"
                     >
                         {locale.toUpperCase()}
                     </button>
@@ -114,7 +114,7 @@ export const Navbar = () => {
                             toggleLocale();
                             setOpen(false);
                         }}
-                        className="text-white/80"
+                        className="text-white/80 hover:cursor-pointer"
                     >
                         Language: {locale.toUpperCase()}
                     </button>

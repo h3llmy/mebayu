@@ -1,10 +1,9 @@
-import { Hero } from "@/components/hero";
-import { AboutSection, CtaSection, ProductSection } from "@/components/section";
+import { AboutSection, CtaSection, HeroSection, ProductSection } from "@/components/section/home";
 
 const Home = () => {
   return (
     <>
-      <Hero />
+      <HeroSection />
       <AboutSection />
       <ProductSection />
       <CtaSection />

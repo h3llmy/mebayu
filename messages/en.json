@@ -28,7 +28,8 @@
             "Products": {
                 "title": "Our Collection",
                 "description": "Timeless silhouettes crafted from premium leather, designed to age beautifully with you.",
-                "viewDetails": "View Details"
+                "viewDetails": "View Details",
+                "showMore": "Show More"
             },
             "Cta": {
                 "title": "Shape Your Style",

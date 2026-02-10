@@ -1,4 +1,4 @@
-export default function ProductsPage() {
+export default function Page() {
     return (
         <div>
             <h1>Products</h1>
