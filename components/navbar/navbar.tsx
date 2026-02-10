@@ -2,10 +2,20 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { Link, usePathname, useRouter } from "@/i18n/routing";
+import { useTranslations, useLocale } from "next-intl";
 
 export const Navbar = () => {
+    const t = useTranslations("Components.Navbar");
+    const locale = useLocale();
+    const router = useRouter();
+    const pathname = usePathname();
     const [open, setOpen] = useState(false);
+
+    const toggleLocale = () => {
+        const nextLocale = locale === "en" ? "id" : "en";
+        router.replace(pathname, { locale: nextLocale });
+    };
 
     return (
         <header className="w-full bg-[#507c59]/95 backdrop-blur-md border-b border-white/10 sticky top-0 z-50">
@@ -25,16 +35,20 @@ export const Navbar = () => {
 
                 {/* Desktop Nav */}
                 <nav className="hidden md:flex items-center gap-12 text-sm tracking-[0.15em] uppercase">
-                    {["About", "Products"].map((item) => (
-                        <Link
-                            key={item}
-                            href={`#${item.toLowerCase()}`}
-                            className="relative text-white/90 hover:text-white transition duration-300 group"
-                        >
-                            {item}
-                            <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full" />
-                        </Link>
-                    ))}
+                    <Link
+                        href="#about"
+                        className="relative text-white/90 hover:text-white transition duration-300 group"
+                    >
+                        {t("about")}
+                        <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full" />
+                    </Link>
+                    <Link
+                        href="#products"
+                        className="relative text-white/90 hover:text-white transition duration-300 group"
+                    >
+                        {t("products")}
+                        <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full" />
+                    </Link>
 
                     <a
                         href="https://www.instagram.com/mebayu.idn/"
@@ -42,8 +56,16 @@ export const Navbar = () => {
                         rel="noopener noreferrer"
                         className="px-4 py-2 border border-white/40 text-white text-xs tracking-[0.2em] uppercase hover:bg-white hover:text-[#507c59] transition duration-300"
                     >
-                        Instagram
+                        {t("instagram")}
                     </a>
+
+                    {/* Locale Switcher */}
+                    <button
+                        onClick={toggleLocale}
+                        className="text-white/80 hover:text-white text-xs font-medium border border-white/20 px-2 py-1 rounded"
+                    >
+                        {locale.toUpperCase()}
+                    </button>
                 </nav>
 
                 {/* Hamburger */}
@@ -68,15 +90,15 @@ export const Navbar = () => {
 
             {/* Mobile Menu */}
             <div
-                className={`md:hidden transition-all duration-500 ease-in-out ${open ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
+                className={`md:hidden transition-all duration-500 ease-in-out ${open ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
                     } overflow-hidden bg-[#507c59]/95 backdrop-blur-md`}
             >
                 <div className="flex flex-col items-center gap-6 py-6 text-white uppercase tracking-widest text-sm">
                     <Link href="#about" onClick={() => setOpen(false)}>
-                        About
+                        {t("about")}
                     </Link>
                     <Link href="#products" onClick={() => setOpen(false)}>
-                        Products
+                        {t("products")}
                     </Link>
                     <a
                         href="https://www.instagram.com/mebayu.idn/"
@@ -85,8 +107,17 @@ export const Navbar = () => {
                         onClick={() => setOpen(false)}
                         className="border border-white/40 px-6 py-2"
                     >
-                        Instagram
+                        {t("instagram")}
                     </a>
+                    <button
+                        onClick={() => {
+                            toggleLocale();
+                            setOpen(false);
+                        }}
+                        className="text-white/80"
+                    >
+                        Language: {locale.toUpperCase()}
+                    </button>
                 </div>
             </div>
         </header>

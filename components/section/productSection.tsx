@@ -1,6 +1,8 @@
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export const ProductSection = () => {
+    const t = useTranslations("Pages.Home.Products");
     const products = Array.from({ length: 8 });
 
     return (
@@ -13,12 +15,11 @@ export const ProductSection = () => {
                 {/* Section Header */}
                 <div className="text-center mb-20">
                     <h2 className="text-4xl md:text-5xl font-light tracking-wide text-[#2D2D2A]">
-                        Our Collection
+                        {t("title")}
                     </h2>
                     <div className="w-16 h-[1px] bg-[#507c59] mx-auto mt-6" />
                     <p className="mt-6 text-gray-500 max-w-xl mx-auto">
-                        Timeless silhouettes crafted from premium leather, designed to
-                        age beautifully with you.
+                        {t("description")}
                     </p>
                 </div>
 
@@ -59,7 +60,7 @@ export const ProductSection = () => {
                                 {/* Subtle underline hover */}
                                 <div className="relative w-fit">
                                     <span className="text-xs uppercase tracking-widest text-gray-600">
-                                        View Details
+                                        {t("viewDetails")}
                                     </span>
                                     <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-[#507c59] transition-all duration-300 group-hover:w-full" />
                                 </div>

@@ -1,4 +1,7 @@
+import { useTranslations } from "next-intl";
+
 export const AboutSection = () => {
+    const t = useTranslations("Pages.Home.About");
     return (
         <section
             id="about"
@@ -6,13 +9,12 @@ export const AboutSection = () => {
         >
             <div className="max-w-5xl mx-auto text-center">
                 <h2 className="text-3xl md:text-4xl font-light tracking-wide mb-6 text-[#2D2D2A]">
-                    About Mebayu
+                    {t("title")}
                 </h2>
-                <p className="text-gray-600 leading-relaxed max-w-2xl mx-auto">
-                    Mebayu is a Bali-based leather brand dedicated to timeless
-                    silhouettes and handcrafted precision. Every piece is shaped with
-                    intention, using natural materials that age beautifully over time.
-                </p>
+                <div className="text-gray-600 leading-relaxed max-w-2xl mx-auto space-y-4">
+                    <p>{t("p1")}</p>
+                    <p>{t("p2")}</p>
+                </div>
             </div>
         </section>
     );

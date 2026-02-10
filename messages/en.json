@@ -1,0 +1,40 @@
+{
+    "Components": {
+        "Navbar": {
+            "about": "About",
+            "products": "Products",
+            "instagram": "Instagram"
+        },
+        "Footer": {
+            "description": "Handcrafted leather goods from Bali. Designed with purpose, shaped with intention.",
+            "explore": "Explore",
+            "about": "About",
+            "products": "Products",
+            "connect": "Connect"
+        }
+    },
+    "Pages": {
+        "Home": {
+            "Hero": {
+                "title": "Crafted in Bali",
+                "description": "Timeless leather pieces shaped with purpose and precision.",
+                "cta": "Explore Collection"
+            },
+            "About": {
+                "title": "Timeless Elegance",
+                "p1": "Founded in the heart of Bali, Mebayu brings together traditional craftsmanship and contemporary design. Every piece is handmade by local artisans using the finest genuine leather.",
+                "p2": "We believe in creating products that tell a story—pieces that age beautifully and become a part of your daily journey."
+            },
+            "Products": {
+                "title": "Our Collection",
+                "description": "Timeless silhouettes crafted from premium leather, designed to age beautifully with you.",
+                "viewDetails": "View Details"
+            },
+            "Cta": {
+                "title": "Shape Your Style",
+                "description": "Discover handcrafted leather goods that blend simplicity, functionality, and timeless elegance.",
+                "cta": "Visit Instagram"
+            }
+        }
+    }
+}

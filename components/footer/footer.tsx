@@ -1,6 +1,8 @@
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 export const Footer = () => {
+    const t = useTranslations("Components.Footer");
     return (
         <footer className="bg-[#507c59] text-white">
             <div className="max-w-6xl mx-auto px-6 md:px-8 py-14">
@@ -14,22 +16,21 @@ export const Footer = () => {
                             Mebayu
                         </h2>
                         <p className="text-white/70 text-sm leading-relaxed max-w-sm">
-                            Handcrafted leather goods from Bali. Designed with purpose,
-                            shaped with intention.
+                            {t("description")}
                         </p>
                     </div>
 
                     {/* Navigation */}
                     <div>
                         <h3 className="text-sm tracking-[0.25em] uppercase mb-4">
-                            Explore
+                            {t("explore")}
                         </h3>
                         <div className="flex flex-col gap-3 text-sm text-white/70">
                             <Link href="#about" className="hover:text-white transition">
-                                About
+                                {t("about")}
                             </Link>
                             <Link href="#products" className="hover:text-white transition">
-                                Products
+                                {t("products")}
                             </Link>
                             <a
                                 href="https://www.instagram.com/mebayu.idn/"
@@ -45,7 +46,7 @@ export const Footer = () => {
                     {/* Contact / Social */}
                     <div>
                         <h3 className="text-sm tracking-[0.25em] uppercase mb-4">
-                            Connect
+                            {t("connect")}
                         </h3>
                         <p className="text-white/70 text-sm mb-3">
                             Bali, Indonesia

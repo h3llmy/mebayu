@@ -1,6 +1,10 @@
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
+import { notFound } from 'next/navigation';
+import { routing } from '@/i18n/routing';
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./../globals.css";
+import "./../../globals.css";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { WhatsAppButton } from "@/components/floatingButton";
@@ -74,23 +78,35 @@ export const metadata: Metadata = {
   category: "fashion",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-}: Readonly<{
+  params
+}: {
   children: React.ReactNode;
-}>) {
+  params: Promise<{locale: string}>;
+}) {
+  const { locale } = await params;
+
+  // Ensure that the incoming `locale` is valid
+  if (!routing.locales.includes(locale as any)) {
+    notFound();
+  }
+
+  // Providing all messages to the client
+  // side is the easiest way to get started
+  const messages = await getMessages();
+
   return (
-    <html lang="en">
-      {/* <head>
-        <link rel="icon" type="image/png" href="/favicon.ico" />
-      </head> */}
+    <html lang={locale}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar />
-        {children}
-        <WhatsAppButton phoneNumber="0817085750446" />
-        <Footer />
+        <NextIntlClientProvider messages={messages}>
+          <Navbar />
+          {children}
+          <WhatsAppButton phoneNumber="0817085750446" />
+          <Footer />
+        </NextIntlClientProvider>
       </body>
     </html>
   );

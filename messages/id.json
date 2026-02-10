@@ -1,0 +1,40 @@
+{
+    "Components": {
+        "Navbar": {
+            "about": "Tentang",
+            "products": "Produk",
+            "instagram": "Instagram"
+        },
+        "Footer": {
+            "description": "Produk kulit buatan tangan dari Bali. Didesain dengan tujuan, dibentuk dengan kesadaran.",
+            "explore": "Jelajahi",
+            "about": "Tentang",
+            "products": "Produk",
+            "connect": "Terhubung"
+        }
+    },
+    "Pages": {
+        "Home": {
+            "Hero": {
+                "title": "Dibuat di Bali",
+                "description": "Produk kulit abadi yang dibentuk dengan tujuan dan presisi.",
+                "cta": "Koleksi Produk"
+            },
+            "About": {
+                "title": "Tentang Mebayu",
+                "p1": "Didirikan di jantung Bali, Mebayu menyatukan keahlian tradisional dan desain kontemporer. Setiap bagian dibuat dengan tangan oleh pengrajin lokal menggunakan kulit asli terbaik.",
+                "p2": "Kami percaya pada pembuatan produk yang menceritakan sebuah kisah—produk yang menua dengan indah dan menjadi bagian dari perjalanan harian Anda."
+            },
+            "Products": {
+                "title": "Koleksi Kami",
+                "description": "Siluet abadi yang dibuat dari kulit premium, dirancang untuk menua dengan indah bersama Anda.",
+                "viewDetails": "Lihat Detail"
+            },
+            "Cta": {
+                "title": "Bentuk Gaya Anda",
+                "description": "Temukan produk kulit buatan tangan yang memadukan kesederhanaan, fungsionalitas, dan keanggunan abadi.",
+                "cta": "Kunjungi Instagram"
+            }
+        }
+    }
+}

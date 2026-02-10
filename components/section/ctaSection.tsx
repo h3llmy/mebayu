@@ -1,12 +1,14 @@
+import { useTranslations } from "next-intl";
+
 export const CtaSection = () => {
+    const t = useTranslations("Pages.Home.Cta");
     return (
         <section className="bg-[#507c59] text-white py-20 px-6 text-center">
             <h2 className="text-3xl md:text-4xl font-light tracking-wide mb-6">
-                Shape Your Style
+                {t("title")}
             </h2>
             <p className="max-w-xl mx-auto text-white/80 mb-8">
-                Discover handcrafted leather goods that blend simplicity,
-                functionality, and timeless elegance.
+                {t("description")}
             </p>
             <a
                 href="https://www.instagram.com/mebayu.idn/"
@@ -14,7 +16,7 @@ export const CtaSection = () => {
                 rel="noopener noreferrer"
                 className="inline-block px-8 py-3 border border-white hover:bg-white hover:text-[#507c59] transition duration-300 uppercase tracking-widest text-sm"
             >
-                Visit Instagram
+                {t("cta")}
             </a>
         </section>
     )

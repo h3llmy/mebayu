@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 const images = ["/hero-2.png", "/hero-1.png"];
 
 export const Hero = () => {
+    const t = useTranslations("Pages.Home.Hero");
     const [current, setCurrent] = useState(0);
 
     useEffect(() => {
@@ -42,10 +44,10 @@ export const Hero = () => {
             {/* Content */}
             <div className="relative z-30 min-h-[70vh] md:min-h-screen flex flex-col justify-center items-center text-center text-white px-6">
                 <h1 className="text-3xl sm:text-4xl md:text-6xl font-light tracking-wide mb-6">
-                    Crafted in Bali
+                    {t("title")}
                 </h1>
                 <p className="text-base sm:text-lg md:text-xl max-w-xl mb-8">
-                    Timeless leather pieces shaped with purpose and precision.
+                    {t("description")}
                 </p>
                 <a
                     href="#products"
@@ -53,7 +55,7 @@ export const Hero = () => {
                      hover:bg-[#6F8F6B] hover:text-white
                      transition duration-300"
                 >
-                    Explore Collection
+                    {t("cta")}
                 </a>
             </div>
         </section>
