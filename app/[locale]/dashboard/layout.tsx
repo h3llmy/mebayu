@@ -5,6 +5,8 @@ import { routing } from '@/i18n/routing';
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./../../globals.css";
+import { DashboardSidebar } from '@/components/sidebar';
+import { DashboardNavbar } from '@/components/navbar';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,65 +19,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://mebayu.dwikihome.my.id"), // change to your real domain
-
-  title: {
-    default: "Mebayu | Handmade Leather Bags from Bali",
-    template: "%s | Mebayu Leather Bali",
-  },
-
-  description:
-    "Mebayu is a Bali-based handmade leather brand crafting timeless bags and accessories. Premium genuine leather, minimalist silhouettes, and artisan craftsmanship.",
-
-  keywords: [
-    "Mebayu",
-    "Mebayu Bali",
-    "Handmade leather bag Bali",
-    "Tas kulit Bali",
-    "Genuine leather Indonesia",
-    "Local leather brand Indonesia",
-    "Handcrafted leather bags",
-    "Minimalist leather bag",
-  ],
-
-  authors: [{ name: "Mebayu" }],
-  creator: "Mebayu",
-  publisher: "Mebayu",
-
-  openGraph: {
-    title: "Mebayu | Handmade Leather Bags from Bali",
-    description:
-      "Discover handcrafted leather bags made in Bali. Timeless silhouettes, premium materials, and artisan craftsmanship.",
-    url: "https://mebayu.dwikihome.my.id", // change to your real domain
-    siteName: "Mebayu",
-    images: [
-      {
-        url: "/hero-2.png", // add this in public folder
-        width: 1200,
-        height: 630,
-        alt: "Mebayu Handmade Leather Bags",
-      },
-    ],
-    locale: "en_US",
-    type: "website",
-  },
-
-  twitter: {
-    card: "summary_large_image",
-    title: "Mebayu | Handmade Leather Bags from Bali",
-    description:
-      "Premium handcrafted leather bags made in Bali.",
-    images: ["/hero-2.png"],
-  },
-
-  icons: {
-    icon: "/favicon.ico",
-  },
-
-  category: "fashion",
+  title: "Mebayu Dashboard",
+  description: "Manage your Mebayu store.",
 };
 
-export default async function LandingPageLayout({
+export default async function DashboardLayout({
   children,
   params
 }: {
@@ -96,10 +44,24 @@ export default async function LandingPageLayout({
   return (
     <html lang={locale}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50`}
       >
         <NextIntlClientProvider messages={messages}>
-          {children}
+          
+          <div className="flex min-h-screen">
+            {/* Sidebar */}
+            <DashboardSidebar />
+
+            {/* Main Content Area */}
+            <div className="flex-1 flex flex-col ml-64 transition-all duration-300 ease-in-out">
+              <DashboardNavbar />
+
+              <main className="flex-1 p-6 md:p-8 mt-16 overflow-y-auto">
+                {children}
+              </main>
+            </div>
+          </div>
+
         </NextIntlClientProvider>
       </body>
     </html>
