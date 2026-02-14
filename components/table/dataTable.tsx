@@ -218,8 +218,8 @@ export function DataTable<T extends Record<string, any>>({
       {isLoading && (
         <div className="absolute inset-0 bg-white/60 backdrop-blur-[1px] z-30 flex items-center justify-center transition-all">
           <div className="flex flex-col items-center gap-2">
-            <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-            <span className="text-sm font-medium text-blue-600">Loading data...</span>
+            <div className="w-8 h-8 border-4 border-[var(--primary)] border-t-transparent rounded-full animate-spin"></div>
+            <span className="text-sm font-medium text-[var(--primary)]">Loading data...</span>
           </div>
         </div>
       )}
@@ -231,7 +231,7 @@ export function DataTable<T extends Record<string, any>>({
             <div className="relative" ref={bulkRef}>
               <button
                 onClick={() => setShowBulkDropdown(!showBulkDropdown)}
-                className="h-9 px-4 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 whitespace-nowrap flex items-center gap-2"
+                className="h-9 px-4 text-sm bg-[var(--primary)] text-white rounded-md hover:bg-[var(--primary-hover)] whitespace-nowrap flex items-center gap-2"
               >
                 <span>Bulk Actions ({selectedRows.size})</span>
                 <svg className={`w-4 h-4 transition-transform ${showBulkDropdown ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -264,7 +264,7 @@ export function DataTable<T extends Record<string, any>>({
             <input
               type="text"
               placeholder="Search..."
-              className="h-9 pl-9 pr-3 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none w-full transition-all"
+              className="h-9 pl-9 pr-3 text-sm border border-[var(--gray-300)] rounded-md focus:ring-2 focus:ring-[var(--primary)] focus:border-[var(--primary)] outline-none w-full transition-all"
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
             />
@@ -290,7 +290,7 @@ export function DataTable<T extends Record<string, any>>({
                   <label key={col.accessor} className="flex items-center gap-2 text-sm py-1.5 px-2 hover:bg-gray-50 cursor-pointer rounded transition-colors text-gray-700">
                     <input
                       type="checkbox"
-                      className="rounded text-blue-600 focus:ring-blue-500"
+                      className="rounded text-[var(--primary)] focus:ring-[var(--primary)]"
                       checked={visibleColumns.has(col.accessor)}
                       onChange={() => {
                         const newSet = new Set(visibleColumns);
@@ -315,7 +315,7 @@ export function DataTable<T extends Record<string, any>>({
               <th className="px-4 py-3 w-10 text-center">
                 <input
                   type="checkbox"
-                  className="rounded text-blue-600 focus:ring-blue-500"
+                  className="rounded text-[var(--primary)] focus:ring-[var(--primary)]"
                   onChange={() => setSelectedRows(selectedRows.size === paginatedData.length ? new Set() : new Set(paginatedData.map((_, i) => i)))}
                   checked={selectedRows.size === paginatedData.length && paginatedData.length > 0}
                 />
@@ -329,7 +329,7 @@ export function DataTable<T extends Record<string, any>>({
                   <div className="flex items-center gap-1">
                     {col.header}
                     {col.sortable && (
-                      <span className={`inline-flex transition-opacity ${querySort === col.accessor ? "opacity-100 text-blue-600" : "opacity-0 group-hover:opacity-50"}`}>
+                      <span className={`inline-flex transition-opacity ${querySort === col.accessor ? "opacity-100 text-[var(--primary)]" : "opacity-0 group-hover:opacity-50"}`}>
                         {querySort === col.accessor ? (
                           queryDir === "desc" ? (
                             <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 112 0v7.586l2.293-2.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
@@ -356,7 +356,7 @@ export function DataTable<T extends Record<string, any>>({
                   <td className="px-4 py-3 text-center">
                     <input
                       type="checkbox"
-                      className="rounded text-blue-600 focus:ring-blue-500"
+                      className="rounded text-[var(--primary)] focus:ring-[var(--primary)]"
                       checked={selectedRows.has(rowIndex)}
                       onChange={() => {
                         const newSet = new Set(selectedRows);
@@ -431,8 +431,8 @@ export function DataTable<T extends Record<string, any>>({
                   onClick={() => updateUrl({ page: page as number })}
                   className={`w-9 h-9 flex items-center justify-center text-sm font-medium rounded-md transition-all shadow-sm ${
                     queryPage === page 
-                      ? "bg-blue-600 text-white border border-blue-600" 
-                      : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+                      ? "bg-[var(--primary)] text-white border border-[var(--primary)]" 
+                      : "bg-white text-[var(--gray-700)] border border-[var(--gray-300)] hover:bg-[var(--gray-50)]"
                   }`}
                 >
                   {page}

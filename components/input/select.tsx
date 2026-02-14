@@ -48,7 +48,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
               ${
                 error
                   ? "border-red-500 focus:ring-4 focus:ring-red-500/10"
-                  : "border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                  : "border-[var(--gray-200)] focus:border-[var(--primary)] focus:ring-4 focus:ring-[var(--primary)]/10"
               }
               ${className}
             `}
@@ -66,7 +66,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             ))}
           </select>
 
-          <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 group-focus-within:text-blue-500 transition-colors">
+          <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--gray-400)] group-focus-within:text-[var(--primary)] transition-colors">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"

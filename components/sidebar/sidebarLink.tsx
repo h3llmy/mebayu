@@ -21,22 +21,22 @@ export const SidebarLink = ({
             className={`
                 flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 group
                 ${isActive 
-                    ? "bg-[#507c59]/10 text-[#507c59]" 
-                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                    ? "bg-[var(--primary-light)] text-[var(--primary)]" 
+                    : "text-[var(--gray-600)] hover:bg-[var(--gray-50)] hover:text-[var(--gray-900)]"
                 }
             `}
         >
             {icon && (
                 <div className={`
                     transition-colors duration-200
-                    ${isActive ? "text-[#507c59]" : "text-gray-400 group-hover:text-gray-600"}
+                    ${isActive ? "text-[var(--primary)]" : "text-[var(--gray-400)] group-hover:text-[var(--gray-600)]"}
                 `}>
                     {icon}
                 </div>
             )}
             {label}
             {isActive && (
-                <div className="ml-auto w-1.5 h-1.5 rounded-full bg-[#507c59]" />
+                <div className="ml-auto w-1.5 h-1.5 rounded-full bg-[var(--primary)]" />
             )}
         </Link>
     );

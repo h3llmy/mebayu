@@ -19,11 +19,11 @@ export const Button = ({
   const baseStyles = "inline-flex items-center justify-center font-medium transition-all duration-200 rounded-lg focus:outline-none focus:ring-4 disabled:opacity-50 disabled:cursor-not-allowed";
   
   const variants = {
-    primary: "bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-600/20 shadow-sm",
-    secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-100/20",
-    outline: "bg-transparent border border-gray-200 text-gray-700 hover:bg-gray-50 focus:ring-gray-200/20",
-    danger: "bg-red-600 text-white hover:bg-red-700 focus:ring-red-600/20 shadow-sm",
-    ghost: "bg-transparent text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:ring-gray-100/20",
+    primary: "bg-[var(--primary)] text-white hover:bg-[var(--primary-hover)] focus:ring-[var(--primary)]/20 shadow-sm",
+    secondary: "bg-[var(--gray-100)] text-[var(--gray-900)] hover:bg-[var(--gray-200)] focus:ring-[var(--gray-100)]/20",
+    outline: "bg-transparent border border-[var(--gray-200)] text-[var(--gray-700)] hover:bg-[var(--gray-50)] focus:ring-[var(--gray-200)]/20",
+    danger: "bg-[var(--danger)] text-white hover:bg-red-700 focus:ring-red-600/20 shadow-sm",
+    ghost: "bg-transparent text-[var(--gray-600)] hover:bg-[var(--gray-100)] hover:text-[var(--gray-900)] focus:ring-[var(--gray-100)]/20",
   };
 
   const sizes = {

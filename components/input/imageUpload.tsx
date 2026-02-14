@@ -87,7 +87,7 @@ export const ImageUpload = ({
         className={`
           relative border-2 border-dashed rounded-xl p-4
           transition-all duration-200 cursor-pointer
-          ${error ? "border-red-300 bg-red-50" : "border-gray-200 bg-white hover:border-blue-400 hover:bg-blue-50/30"}
+          ${error ? "border-red-300 bg-red-50" : "border-gray-200 bg-white hover:border-[var(--primary)] hover:bg-[var(--primary-light)]"}
         `}
         onDragOver={onDragOver}
         onDrop={onDrop}

@@ -20,7 +20,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
         <div className="relative group">
           {icon && (
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-500 transition-colors">
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--gray-400)] group-focus-within:text-[var(--primary)] transition-colors">
               {icon}
             </div>
           )}
@@ -34,7 +34,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               ${
                 error
                   ? "border-red-500 focus:ring-4 focus:ring-red-500/10"
-                  : "border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                  : "border-[var(--gray-200)] focus:border-[var(--primary)] focus:ring-4 focus:ring-[var(--primary)]/10"
               }
               ${className}
             `}

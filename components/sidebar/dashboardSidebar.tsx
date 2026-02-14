@@ -7,13 +7,13 @@ export const DashboardSidebar = () => {
             {/* Logo */}
             <div className="h-16 flex items-center px-6 border-b border-gray-100 mb-2">
                 <Link href="/" className="flex items-center gap-2 group">
-                    <div className="bg-[#507c59] p-1.5 rounded-lg group-hover:scale-110 transition-transform duration-200">
+                    <div className="bg-[var(--primary)] p-1.5 rounded-lg group-hover:scale-110 transition-transform duration-200">
                         <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                         </svg>
                     </div>
                     <span className="text-xl font-bold tracking-tight text-gray-900">
-                        Mebayu<span className="text-[#507c59]">.</span>
+                        Mebayu<span className="text-[var(--primary)]">.</span>
                     </span>
                 </Link>
             </div>
@@ -34,6 +34,11 @@ export const DashboardSidebar = () => {
                             href="/dashboard/products" 
                             label="Products" 
                             icon={<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>}
+                        />
+                        <SidebarLink 
+                            href="/dashboard/categories" 
+                            label="Categories" 
+                            icon={<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>}
                         />
                         <SidebarLink 
                             href="/dashboard/orders" 
@@ -60,7 +65,7 @@ export const DashboardSidebar = () => {
             {/* User Profile */}
             <div className="p-4 border-t border-gray-100">
                 <button className="flex items-center gap-3 w-full px-2 py-2.5 rounded-xl hover:bg-gray-50 transition-colors duration-200">
-                    <div className="w-9 h-9 rounded-full bg-[#507c59]/10 flex items-center justify-center text-[#507c59] font-bold text-xs ring-2 ring-white shadow-sm">
+                    <div className="w-9 h-9 rounded-full bg-[var(--primary-light)] flex items-center justify-center text-[var(--primary)] font-bold text-xs ring-2 ring-white shadow-sm">
                         AD
                     </div>
                     <div className="flex-1 text-left min-w-0">
