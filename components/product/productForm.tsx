@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Input, Select, ImageUpload } from "@/components/input";
 import { Button } from "@/components/button";
-import { type Product } from "@/lib/mockApi";
+import { type Product, mockCategories } from "@/lib/mockApi";
 
 interface ProductFormProps {
   initialData?: Product;
@@ -23,27 +23,55 @@ export function ProductForm({
   description,
 }: ProductFormProps) {
   const router = useRouter();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<Product>({
+    id: 0,
     name: "",
-    category: "",
+    category: {
+      description: "",
+      name: "",
+      id: 0,
+      isActive: true,
+      productCount: 0,
+    },
     material: "",
-    price: "",
+    price: 0,
   });
   const [images, setImages] = useState<File[]>([]);
 
   useEffect(() => {
     if (initialData) {
       setFormData({
+        id: initialData.id,
         name: initialData.name,
-        category: initialData.category,
+        category: {
+          description: initialData.category.description,
+          id: initialData.category.id,
+          name: initialData.category.name,
+          isActive: initialData.category.isActive,
+          productCount: initialData.category.productCount,
+        },
         material: initialData.material,
-        price: initialData.price.toString(),
+        price: initialData.price,
       });
     }
   }, [initialData]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
+
+    if (name === "category") {
+      const selectedCategory = mockCategories.find((c) => c.name === value);
+      if (selectedCategory) {
+        setFormData((prev) => ({ ...prev, category: selectedCategory }));
+      }
+      return;
+    }
+
+    if (name === "price") {
+      setFormData((prev) => ({ ...prev, price: Number(value) }));
+      return;
+    }
+
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -109,7 +137,7 @@ export function ProductForm({
               label="Category"
               name="category"
               placeholder="Select Category"
-              value={formData.category}
+              value={formData.category.name}
               onChange={handleChange}
               options={[
                 { label: "Bags", value: "Bags" },
