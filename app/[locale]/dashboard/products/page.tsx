@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { DataTable } from "@/components/table";
-import { fetchProducts, type Product } from "@/lib/mockApi";
+import { type Product } from "@/lib/mockApi";
 import { useSearchParams } from "next/navigation";
 import { RedirectButton } from "@/components/button";
 import { Link } from "@/i18n/routing";
+import { ProductService } from "@/lib/service/productService";
 
 export default function ProductPage() {
     const searchParams = useSearchParams();
@@ -17,7 +18,7 @@ export default function ProductPage() {
     // for simplicity unless server-side is specifically required.
     // However, the user said "pretend like fetch an api", so I should probably fetch 
     // when params change if I want to "pretend" better.
-    
+
     const [total, setTotal] = useState(0);
 
     useEffect(() => {
@@ -30,15 +31,15 @@ export default function ProductPage() {
                 const sort = searchParams.get("sort") || undefined;
                 const dir = (searchParams.get("dir") as "asc" | "desc") || "asc";
 
-                const result = await fetchProducts({
+                const result = await ProductService.getAllPagination({
                     page,
                     limit,
                     search,
                     sort,
                     dir,
                 });
-                setData(result.items);
-                setTotal(result.total);
+                setData(result.data);
+                setTotal(result.total_data);
             } catch (error) {
                 console.error("Failed to fetch products:", error);
             } finally {
@@ -66,18 +67,19 @@ export default function ProductPage() {
                 totalItems={total}
                 columns={[
                     { header: "Name", accessor: "name", sortable: true },
-                    { header: "Category", accessor: "category.name", sortable: true },
-                    { header: "Material", accessor: "material", sortable: true },
-                    { 
-                        header: "Price", 
-                        accessor: "price", 
-                        sortable: true,
-                        render: (value) => new Intl.NumberFormat("id-ID", {
-                            style: "currency",
-                            currency: "IDR",
-                            minimumFractionDigits: 0,
-                        }).format(value)
-                    },
+                    { header: "Price", accessor: "price", sortable: true },
+                    { header: "Categories", accessor: "categories", sortable: true, render: (value) => value?.map((item: any) => item.name).join(", ") },
+                    { header: "Materials", accessor: "product_materials", sortable: true, render: (value) => value?.map((item: any) => item.name).join(", ") },
+                    // {
+                    //     header: "Price",
+                    //     accessor: "price",
+                    //     sortable: true,
+                    //     render: (value) => new Intl.NumberFormat("id-ID", {
+                    //         style: "currency",
+                    //         currency: "IDR",
+                    //         minimumFractionDigits: 0,
+                    //     }).format(value)
+                    // },
                     {
                         header: "Actions",
                         accessor: "id",
