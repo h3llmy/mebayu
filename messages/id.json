@@ -2,7 +2,8 @@
     "Components": {
         "Navbar": {
             "about": "Cerita Kami",
-            "products": "Koleksi"
+            "products": "Koleksi",
+            "login": "Masuk"
         },
         "Footer": {
             "description": "Produk kulit buatan tangan dari Bali. Berakar pada tradisi, dirancang untuk kehidupan modern.",
@@ -65,6 +66,18 @@
             "Order": "Pesan via WhatsApp",
             "BackToProducts": "Kembali ke Produk",
             "YouMayAlsoLike": "Mungkin Anda Suka"
+        },
+        "Login": {
+            "title": "Selamat Datang Kembali",
+            "description": "Masuk untuk mengelola koleksi dan dasbor Anda.",
+            "brandTitle": "Produk kulit buatan tangan dari Bali.",
+            "brandDescription": "Berakar pada tradisi, dirancang untuk kehidupan modern. Kelola koleksi dan dasbor Anda dengan mudah.",
+            "username": "Username",
+            "password": "Kata Sandi",
+            "login": "Masuk",
+            "forgotPassword": "Lupa Kata Sandi?",
+            "noAccount": "Belum punya akun? Hubungi administrator.",
+            "error": "Email atau kata sandi salah. Silakan coba lagi."
         }
     }
 }

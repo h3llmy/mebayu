@@ -49,6 +49,13 @@ export const Navbar = () => {
                         {t("products")}
                         <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full" />
                     </Link>
+                    <Link
+                        href="/login"
+                        className="relative text-white/90 hover:text-white transition duration-300 group"
+                    >
+                        {t("login")}
+                        <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full" />
+                    </Link>
 
                     {/* Locale Switcher */}
                     <button
@@ -90,6 +97,9 @@ export const Navbar = () => {
                     </Link>
                     <Link href="/#products" onClick={() => setOpen(false)}>
                         {t("products")}
+                    </Link>
+                    <Link href="/login" onClick={() => setOpen(false)}>
+                        {t("login")}
                     </Link>
                     <button
                         onClick={() => {

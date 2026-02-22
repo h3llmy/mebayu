@@ -2,7 +2,8 @@
     "Components": {
         "Navbar": {
             "about": "Our Story",
-            "products": "Collection"
+            "products": "Collection",
+            "login": "Login"
         },
         "Footer": {
             "description": "Handcrafted leather goods from Bali. Rooted in tradition, refined for modern living.",
@@ -65,6 +66,18 @@
             "Order": "Order via WhatsApp",
             "BackToProducts": "Back to Products",
             "YouMayAlsoLike": "You May Also Like"
+        },
+        "Login": {
+            "title": "Welcome Back",
+            "description": "Log in to manage your collection and dashboard.",
+            "brandTitle": "Handcrafted leather goods from Bali.",
+            "brandDescription": "Rooted in tradition, refined for modern living. Manage your collection and dashboard with ease.",
+            "username": "Username",
+            "password": "Password",
+            "login": "Sign In",
+            "forgotPassword": "Forgot Password?",
+            "noAccount": "Don't have an account? Contact the administrator.",
+            "error": "Invalid email or password. Please try again."
         }
     }
 }
