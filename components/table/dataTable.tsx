@@ -341,25 +341,27 @@ export function DataTable<T extends Record<string, any>>({
         <table className="w-full text-sm text-left border-collapse">
           <thead className="bg-gray-50 border-b border-gray-200 text-xs uppercase text-gray-500 font-bold">
             <tr>
-              <th className="px-4 py-3 w-10 text-center">
-                <input
-                  type="checkbox"
-                  onChange={() =>
-                    setSelectedRows(
-                      selectedRows.size === paginatedData.length
-                        ? new Set()
-                        : new Set(
-                          paginatedData.map((_, i) => i)
-                        )
-                    )
-                  }
-                  checked={
-                    selectedRows.size ===
-                    paginatedData.length &&
-                    paginatedData.length > 0
-                  }
-                />
-              </th>
+              {bulkActions.length > 0 && (
+                <th className="px-4 py-3 w-10 text-center">
+                  <input
+                    type="checkbox"
+                    onChange={() =>
+                      setSelectedRows(
+                        selectedRows.size === paginatedData.length
+                          ? new Set()
+                          : new Set(
+                            paginatedData.map((_, i) => i)
+                          )
+                      )
+                    }
+                    checked={
+                      selectedRows.size ===
+                      paginatedData.length &&
+                      paginatedData.length > 0
+                    }
+                  />
+                </th>
+              )}
 
               {columns.map(
                 (col) =>
@@ -383,21 +385,23 @@ export function DataTable<T extends Record<string, any>>({
             {paginatedData.length > 0 ? (
               paginatedData.map((row, rowIndex) => (
                 <tr key={rowIndex}>
-                  <td className="px-4 py-3 text-center">
-                    <input
-                      type="checkbox"
-                      checked={selectedRows.has(rowIndex)}
-                      onChange={() => {
-                        const newSet = new Set(
-                          selectedRows
-                        );
-                        newSet.has(rowIndex)
-                          ? newSet.delete(rowIndex)
-                          : newSet.add(rowIndex);
-                        setSelectedRows(newSet);
-                      }}
-                    />
-                  </td>
+                  {bulkActions.length > 0 && (
+                    <td className="px-4 py-3 text-center">
+                      <input
+                        type="checkbox"
+                        checked={selectedRows.has(rowIndex)}
+                        onChange={() => {
+                          const newSet = new Set(
+                            selectedRows
+                          );
+                          newSet.has(rowIndex)
+                            ? newSet.delete(rowIndex)
+                            : newSet.add(rowIndex);
+                          setSelectedRows(newSet);
+                        }}
+                      />
+                    </td>
+                  )}
 
                   {columns.map(
                     (col) =>
@@ -483,8 +487,8 @@ export function DataTable<T extends Record<string, any>>({
                   key={page}
                   onClick={() => updateUrl({ page: page as number })}
                   className={`w-9 h-9 flex items-center justify-center text-sm font-medium rounded-md transition-all shadow-sm ${queryPage === page
-                      ? "bg-[var(--primary)] text-white border border-[var(--primary)]"
-                      : "bg-white text-[var(--gray-700)] border border-[var(--gray-300)] hover:bg-[var(--gray-50)]"
+                    ? "bg-[var(--primary)] text-white border border-[var(--primary)]"
+                    : "bg-white text-[var(--gray-700)] border border-[var(--gray-300)] hover:bg-[var(--gray-50)]"
                     }`}
                 >
                   {page}

@@ -83,7 +83,7 @@ export function ProductForm({
   return (
     <div className="p-6 max-w-4xl mx-auto">
       <div className="mb-8">
-        <button 
+        <button
           onClick={() => router.back()}
           className="flex items-center text-sm text-gray-500 hover:text-blue-600 transition-colors mb-4"
         >
@@ -102,13 +102,14 @@ export function ProductForm({
             <h2 className="text-lg font-semibold text-gray-900">Product Media</h2>
             <p className="text-sm text-gray-500">Upload high-quality images of your product.</p>
           </div>
-          
+
           <div className="p-6">
             <ImageUpload
               label="Product Images"
               maxFiles={6}
               value={images}
               onChange={setImages}
+              uploadPath="products"
               helperText="You can upload up to 6 images. The first image will be the cover."
               required={!initialData} // Required only for new products
             />
@@ -120,7 +121,7 @@ export function ProductForm({
             <h2 className="text-lg font-semibold text-gray-900">General Information</h2>
             <p className="text-sm text-gray-500">Essential details about your product.</p>
           </div>
-          
+
           <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="md:col-span-2">
               <Input
@@ -170,7 +171,7 @@ export function ProductForm({
             <h2 className="text-lg font-semibold text-gray-900">Pricing</h2>
             <p className="text-sm text-gray-500">Set the value of your product.</p>
           </div>
-          
+
           <div className="p-6">
             <Input
               label="Price (IDR)"

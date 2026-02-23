@@ -2,11 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { DataTable } from "@/components/table";
-import { type Product } from "@/lib/mockApi";
 import { useSearchParams } from "next/navigation";
 import { RedirectButton } from "@/components/button";
 import { Link } from "@/i18n/routing";
-import { ProductService } from "@/lib/service/productService";
+import { Product, ProductService } from "@/lib/service/product";
 
 export default function ProductPage() {
     const searchParams = useSearchParams();
@@ -94,16 +93,16 @@ export default function ProductPage() {
                     }
                 ]}
                 data={data}
-                bulkActions={[
-                    {
-                        label: "Delete Selected",
-                        onClick: (rows) => alert(`Deleting ${rows.length} items`),
-                    },
-                    {
-                        label: "Export CSV",
-                        onClick: (rows) => console.log("Exporting:", rows),
-                    },
-                ]}
+            // bulkActions={[
+            //     {
+            //         label: "Delete Selected",
+            //         onClick: (rows) => alert(`Deleting ${rows.length} items`),
+            //     },
+            //     {
+            //         label: "Export CSV",
+            //         onClick: (rows) => console.log("Exporting:", rows),
+            //     },
+            // ]}
             />
         </div>
     );

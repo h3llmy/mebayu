@@ -28,6 +28,31 @@ function processQueue(error: any) {
     failedQueue = [];
 }
 
+async function getAccessToken(): Promise<string | null> {
+    // 🟢 SERVER SIDE
+    if (typeof window === "undefined") {
+        try {
+            const { cookies } = await import("next/headers");
+            const cookieStore = await cookies();
+            return cookieStore.get("access_token")?.value ?? null;
+        } catch {
+            return null;
+        }
+    }
+
+    // 🔵 CLIENT SIDE
+    const match = document.cookie.match(/(^| )access_token=([^;]+)/);
+    return match ? decodeURIComponent(match[2]) : null;
+}
+
+api.interceptors.request.use(async (config) => {
+    const token = await getAccessToken();
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+});
+
 api.interceptors.response.use(
     (response) => response,
     async (error: AxiosError) => {
