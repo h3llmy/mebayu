@@ -9,7 +9,7 @@ import { type Category } from "@/lib/mockApi";
 
 interface CategoryFormProps {
   initialData?: Category;
-  onSubmit: (data: any) => Promise<void>;
+  onSubmit: (data: { name: string; description: string; isActive: boolean }) => Promise<void>;
   isSubmitting: boolean;
   title: string;
   description: string;
@@ -31,6 +31,7 @@ export function CategoryForm({
 
   useEffect(() => {
     if (initialData) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setFormData({
         name: initialData.name,
         description: initialData.description,
@@ -46,16 +47,16 @@ export function CategoryForm({
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await onSubmit({ 
-        ...formData, 
-        isActive: formData.isActive === "true" 
+    await onSubmit({
+      ...formData,
+      isActive: formData.isActive === "true"
     });
   };
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
       <div className="mb-8">
-        <button 
+        <button
           onClick={() => router.back()}
           className="flex items-center text-sm text-gray-500 hover:text-blue-600 transition-colors mb-4"
         >
@@ -74,7 +75,7 @@ export function CategoryForm({
             <h2 className="text-lg font-semibold text-gray-900">Category Details</h2>
             <p className="text-sm text-gray-500">Essential details about your product category.</p>
           </div>
-          
+
           <div className="p-6 space-y-6">
             <Input
               label="Category Name"
@@ -86,16 +87,16 @@ export function CategoryForm({
             />
 
             <div className="space-y-1.5">
-                <label className="text-sm font-semibold text-gray-700">Description</label>
-                <textarea
-                    name="description"
-                    rows={4}
-                    placeholder="Describe what this category is for..."
-                    className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all duration-200 resize-none"
-                    value={formData.description}
-                    onChange={handleChange}
-                    required
-                />
+              <label className="text-sm font-semibold text-gray-700">Description</label>
+              <textarea
+                name="description"
+                rows={4}
+                placeholder="Describe what this category is for..."
+                className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all duration-200 resize-none"
+                value={formData.description}
+                onChange={handleChange}
+                required
+              />
             </div>
 
             <Select

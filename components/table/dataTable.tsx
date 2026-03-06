@@ -25,6 +25,7 @@ interface Column<T, P extends DeepKeys<T> = DeepKeys<T>> {
   header: string;
   accessor: P;
   sortable?: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   render?: (value: any, row: T) => React.ReactNode;
 }
 
@@ -41,10 +42,12 @@ interface TableProps<T> {
   rowIdKey?: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getValue(obj: any, path: string) {
   return path.split(".").reduce((acc, key) => acc?.[key], obj);
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function DataTable<T extends Record<string, any>>({
   columns,
   data,
@@ -72,7 +75,7 @@ export function DataTable<T extends Record<string, any>>({
 
   const [searchInput, setSearchInput] = useState(querySearch);
   const [selectedRows, setSelectedRows] =
-    useState<Map<any, T>>(new Map());
+    useState<Map<string | number, T>>(new Map());
   const [visibleColumns, setVisibleColumns] = useState<
     Set<string>
   >(new Set(columns.map((c) => c.accessor)));
@@ -118,6 +121,7 @@ export function DataTable<T extends Record<string, any>>({
   useEffect(() => {
     const handler = setTimeout(() => {
       if (searchInput !== querySearch) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         updateUrl({ q: searchInput, page: 1 });
       }
     }, 500);
@@ -137,6 +141,7 @@ export function DataTable<T extends Record<string, any>>({
 
   useEffect(() => {
     if (queryPage > totalPages && totalPages > 1) {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       updateUrl({ page: totalPages });
     }
   }, [queryPage, totalPages]);
@@ -314,7 +319,8 @@ export function DataTable<T extends Record<string, any>>({
                       checked={visibleColumns.has(col.accessor)}
                       onChange={() => {
                         const newSet = new Set(visibleColumns);
-                        newSet.has(col.accessor) ? newSet.delete(col.accessor) : newSet.add(col.accessor);
+                        if (newSet.has(col.accessor)) newSet.delete(col.accessor);
+                        else newSet.add(col.accessor);
                         setVisibleColumns(newSet);
                       }}
                     />

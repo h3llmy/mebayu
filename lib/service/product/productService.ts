@@ -20,8 +20,8 @@ export class ProductService {
         try {
             const response = await api.get<Product>(`/v1/products/${id}`);
             return response.data;
-        } catch (error: any) {
-            console.log(error.response.data);
+        } catch (error: unknown) {
+            console.log((error as { response?: { data?: unknown } })?.response?.data);
             throw error;
         }
     }

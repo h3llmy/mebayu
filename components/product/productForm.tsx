@@ -28,11 +28,9 @@ export function ProductForm({
   // isSubmitting,
   title,
   description,
-  type,
 }: ProductFormProps) {
   const router = useRouter();
-  const [formData, setFormData] = useState<Product>({
-    id: "",
+  const [formData, setFormData] = useState<Omit<Product, "id">>({
     name: "",
     categories: [],
     product_materials: [],
@@ -44,7 +42,6 @@ export function ProductForm({
   useEffect(() => {
     if (initialData) {
       setFormData({
-        id: initialData.id,
         name: initialData.name,
         categories: initialData.categories,
         product_materials: initialData.product_materials,

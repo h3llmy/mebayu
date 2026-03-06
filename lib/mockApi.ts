@@ -46,7 +46,9 @@ export const fetchProducts = async (params: {
 
     if (params.sort) {
         filtered.sort((a, b) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const aVal = (a as any)[params.sort!];
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const bVal = (b as any)[params.sort!];
             if (aVal < bVal) return params.dir === "asc" ? -1 : 1;
             if (aVal > bVal) return params.dir === "asc" ? 1 : -1;
@@ -101,7 +103,9 @@ export const fetchCategories = async (params: {
 
     if (params.sort) {
         filtered.sort((a, b) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const aVal = (a as any)[params.sort!];
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const bVal = (b as any)[params.sort!];
             if (aVal < bVal) return params.dir === "asc" ? -1 : 1;
             if (aVal > bVal) return params.dir === "asc" ? 1 : -1;

@@ -2,7 +2,7 @@ import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 
-export const ProductCard = ({ product }: { product: any }) => {
+export const ProductCard = ({ product }: { product: { id: string | number; name: string; description?: string; price: string | number; image: string; } }) => {
     const t = useTranslations("Pages.Home.Products");
     return (
         <Link

@@ -1,6 +1,6 @@
 "use client";
 
-import { SubmitEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { CategoryForm } from "@/components/product/categoryForm";
 import { fetchCategoryById, type Category } from "@/lib/mockApi";
@@ -29,7 +29,7 @@ export default function EditCategoryPage() {
     loadCategory();
   }, [id]);
 
-  const handleSubmit = async (data: SubmitEvent) => {
+  const handleSubmit = async (data: { name: string; description: string; isActive: boolean }) => {
     setIsSubmitting(true);
     // Simulate API call
     console.log("Updating category:", { id, ...data });

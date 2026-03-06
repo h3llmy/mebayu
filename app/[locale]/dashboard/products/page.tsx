@@ -72,6 +72,7 @@ export default function ProductPage() {
                             return value?.map((item: Category) => item.name).join(", ")
                         }
                     },
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     { header: "Materials", accessor: "product_materials", sortable: true, render: (value) => value?.map((item: any) => item.name).join(", ") },
                     {
                         header: "Actions",

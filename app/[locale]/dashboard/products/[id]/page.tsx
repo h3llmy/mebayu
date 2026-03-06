@@ -12,9 +12,10 @@ export default async function EditProductPage({
 
   try {
     product = await ProductService.getOne(id);
-  } catch (error: any) {
+  } catch (error: unknown) {
     // if your service throws 404 or not found error
-    if (error?.status === 404) {
+    const err = error as { status?: number };
+    if (err?.status === 404) {
       notFound();
     }
 

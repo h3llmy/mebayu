@@ -164,6 +164,7 @@ export const ImageUpload = ({
                 key={url}
                 className="group relative aspect-square rounded-lg overflow-hidden border border-gray-100 shadow-sm"
               >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={url}
                   alt="Preview"
