@@ -27,11 +27,12 @@ export default async function LoginLayout({
   params
 }: {
   children: React.ReactNode;
-  params: Promise<{ locale: Locale }>;
+  params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const typedLocale = locale as Locale;
 
-  if (!routing.locales.includes(locale)) {
+  if (!routing.locales.includes(typedLocale)) {
     notFound();
   }
 
