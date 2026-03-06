@@ -40,7 +40,7 @@ export default function Page() {
   const paginatedProducts = useMemo(() => {
     const start = (page - 1) * productsPerPage;
     return allProducts.slice(start, start + productsPerPage);
-  }, [page]);
+  }, [page, allProducts]);
 
   // ----- UPDATE URL WHEN FILTER CHANGES -----
   useEffect(() => {
@@ -52,7 +52,7 @@ export default function Page() {
     if (material !== "all") params.set("material", material);
 
     router.push(`${pathname}?${params.toString()}`);
-  }, [page, sort, category, material]);
+  }, [page, sort, category, material, pathname, router]);
 
   return (
     <section className="bg-[#f8f7f4] min-h-screen py-24 px-6">

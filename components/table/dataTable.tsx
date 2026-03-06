@@ -38,6 +38,7 @@ interface TableProps<T> {
   defaultPageSize?: number;
   isLoading?: boolean;
   totalItems?: number; // REQUIRED for proper pagination
+  rowIdKey?: string;
 }
 
 function getValue(obj: any, path: string) {
@@ -51,6 +52,7 @@ export function DataTable<T extends Record<string, any>>({
   defaultPageSize = 10,
   isLoading = false,
   totalItems = 0,
+  rowIdKey = "id",
 }: TableProps<T>) {
   const router = useRouter();
   const pathname = usePathname();
@@ -70,7 +72,7 @@ export function DataTable<T extends Record<string, any>>({
 
   const [searchInput, setSearchInput] = useState(querySearch);
   const [selectedRows, setSelectedRows] =
-    useState<Set<number>>(new Set());
+    useState<Map<any, T>>(new Map());
   const [visibleColumns, setVisibleColumns] = useState<
     Set<string>
   >(new Set(columns.map((c) => c.accessor)));
@@ -90,14 +92,6 @@ export function DataTable<T extends Record<string, any>>({
   useEffect(() => {
     setSearchInput(querySearch);
   }, [querySearch]);
-
-  /* ----------------------- */
-  /* Reset selection on change */
-  /* ----------------------- */
-
-  useEffect(() => {
-    setSelectedRows(new Set());
-  }, [data, queryPage, queryLimit, querySearch, querySort, queryDir]);
 
   /* ----------------------- */
   /* URL Update Helper       */
@@ -229,11 +223,8 @@ export function DataTable<T extends Record<string, any>>({
   }, []);
 
   const selectedData = useMemo(
-    () =>
-      Array.from(selectedRows)
-        .map((i) => paginatedData[i])
-        .filter(Boolean),
-    [selectedRows, paginatedData]
+    () => Array.from(selectedRows.values()),
+    [selectedRows]
   );
 
   /* ----------------------- */
@@ -241,7 +232,7 @@ export function DataTable<T extends Record<string, any>>({
   /* ----------------------- */
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden font-sans relative">
+    <div className="bg-white rounded-xl border border-gray-200 shadow-sm font-sans relative overflow-visible">
       {isLoading && (
         <div className="absolute inset-0 bg-white/60 backdrop-blur-[1px] z-30 flex items-center justify-center">
           <div className="flex flex-col items-center gap-2">
@@ -275,7 +266,7 @@ export function DataTable<T extends Record<string, any>>({
                       onClick={() => {
                         action.onClick(selectedData);
                         setShowBulkDropdown(false);
-                        setSelectedRows(new Set());
+                        setSelectedRows(new Map());
                       }}
                       className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
                     >
@@ -337,7 +328,7 @@ export function DataTable<T extends Record<string, any>>({
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto overflow-hidden rounded-b-xl">
         <table className="w-full text-sm text-left border-collapse">
           <thead className="bg-gray-50 border-b border-gray-200 text-xs uppercase text-gray-500 font-bold">
             <tr>
@@ -345,39 +336,91 @@ export function DataTable<T extends Record<string, any>>({
                 <th className="px-4 py-3 w-10 text-center">
                   <input
                     type="checkbox"
-                    onChange={() =>
-                      setSelectedRows(
-                        selectedRows.size === paginatedData.length
-                          ? new Set()
-                          : new Set(
-                            paginatedData.map((_, i) => i)
-                          )
-                      )
-                    }
+                    onChange={() => {
+                      const allSelectedOnPage = paginatedData.every((row) =>
+                        selectedRows.has(row[rowIdKey])
+                      );
+                      const newMap = new Map(selectedRows);
+                      if (allSelectedOnPage) {
+                        paginatedData.forEach((row) =>
+                          newMap.delete(row[rowIdKey])
+                        );
+                      } else {
+                        paginatedData.forEach((row) =>
+                          newMap.set(row[rowIdKey], row)
+                        );
+                      }
+                      setSelectedRows(newMap);
+                    }}
                     checked={
-                      selectedRows.size ===
-                      paginatedData.length &&
-                      paginatedData.length > 0
+                      paginatedData.length > 0 &&
+                      paginatedData.every((row) =>
+                        selectedRows.has(row[rowIdKey])
+                      )
                     }
                   />
                 </th>
               )}
 
-              {columns.map(
-                (col) =>
-                  visibleColumns.has(col.accessor) && (
+              {columns
+                .filter((col) => visibleColumns.has(col.accessor))
+                .map((col) => {
+                  const isSorted = querySort === col.accessor;
+                  const isAsc = queryDir === "asc";
+
+                  return (
                     <th
-                      key={col.accessor}
-                      onClick={() =>
-                        col.sortable &&
-                        toggleSort(col.accessor)
-                      }
-                      className="px-6 py-3 cursor-pointer"
+                      key={String(col.accessor)}
+                      onClick={() => {
+                        if (col.sortable) toggleSort(col.accessor);
+                      }}
+                      className={`px-6 py-3 text-left select-none ${col.sortable
+                        ? "cursor-pointer hover:text-gray-900"
+                        : "cursor-default"
+                        }`}
                     >
-                      {col.header}
+                      <div className="flex items-center gap-2">
+                        <span>{col.header}</span>
+
+                        {col.sortable && (
+                          <span className="flex items-center">
+                            {!isSorted ? (
+                              <div className="flex flex-col items-center opacity-40">
+                                <svg className="w-3 h-2" viewBox="0 4 20 10" fill="currentColor">
+                                  <path d="M10 5l-5 6h10l-5-6z" />
+                                </svg>
+
+                                <svg className="w-3 h-2 -mt-[2px]" viewBox="0 6 20 10" fill="currentColor">
+                                  <path d="M10 15l5-6H5l5 6z" />
+                                </svg>
+                              </div>
+                            ) : isAsc ? (
+                              <div className="flex flex-col items-center">
+                                <svg className="w-3 h-2 opacity-40" viewBox="0 4 20 10" fill="currentColor">
+                                  <path d="M10 5l-5 6h10l-5-6z" />
+                                </svg>
+
+                                <svg className="w-3 h-2 -mt-[2px] opacity-100" viewBox="0 6 20 10" fill="currentColor">
+                                  <path d="M10 15l5-6H5l5 6z" />
+                                </svg>
+                              </div>
+                            ) : (
+                              <div className="flex flex-col items-center">
+                                <svg className="w-3 h-2 opacity-100" viewBox="0 4 20 10" fill="currentColor">
+                                  <path d="M10 5l-5 6h10l-5-6z" />
+                                </svg>
+
+                                <svg className="w-3 h-2 -mt-[2px] opacity-40" viewBox="0 6 20 10" fill="currentColor">
+                                  <path d="M10 15l5-6H5l5 6z" />
+                                </svg>
+                              </div>
+                            )}
+                          </span>
+                        )}
+                      </div>
                     </th>
-                  )
-              )}
+                  );
+                })}
             </tr>
           </thead>
 
@@ -389,15 +432,16 @@ export function DataTable<T extends Record<string, any>>({
                     <td className="px-4 py-3 text-center">
                       <input
                         type="checkbox"
-                        checked={selectedRows.has(rowIndex)}
+                        checked={selectedRows.has(row[rowIdKey])}
                         onChange={() => {
-                          const newSet = new Set(
-                            selectedRows
-                          );
-                          newSet.has(rowIndex)
-                            ? newSet.delete(rowIndex)
-                            : newSet.add(rowIndex);
-                          setSelectedRows(newSet);
+                          const newMap = new Map(selectedRows);
+                          const id = row[rowIdKey];
+                          if (newMap.has(id)) {
+                            newMap.delete(id);
+                          } else {
+                            newMap.set(id, row);
+                          }
+                          setSelectedRows(newMap);
                         }}
                       />
                     </td>

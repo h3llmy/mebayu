@@ -8,7 +8,7 @@ interface FadeInProps extends HTMLMotionProps<"div"> {
   delay?: number;
   duration?: number;
   direction?: "up" | "down" | "left" | "right" | "none";
-  fullWidth?: boolean; 
+  fullWidth?: boolean;
 }
 
 export const FadeIn = ({
@@ -23,8 +23,8 @@ export const FadeIn = ({
   const getVariants = () => {
     const distance = 20;
 
-    const initial: any = { opacity: 0 };
-    const animate: any = { opacity: 1 };
+    const initial: Record<string, number> = { opacity: 0 };
+    const animate: Record<string, number> = { opacity: 1 };
 
     if (direction === "up") initial.y = distance;
     if (direction === "down") initial.y = -distance;

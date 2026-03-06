@@ -13,8 +13,7 @@ export const Navbar = () => {
     const [open, setOpen] = useState(false);
 
     const toggleLocale = () => {
-        const nextLocale = locale === "en" ? "id" : "en";
-        router.replace(pathname, { locale: nextLocale });
+        router.replace(pathname, { locale });
     };
 
     return (

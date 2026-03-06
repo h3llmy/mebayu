@@ -7,6 +7,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./../../globals.css";
 import { DashboardSidebar } from '@/components/sidebar';
 import { DashboardNavbar } from '@/components/navbar';
+import { Locale } from '@/types';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,12 +29,12 @@ export default async function DashboardLayout({
   params
 }: {
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: Locale }>;
 }) {
   const { locale } = await params;
 
   // Ensure that the incoming `locale` is valid
-  if (!routing.locales.includes(locale as any)) {
+  if (!routing.locales.includes(locale)) {
     notFound();
   }
 

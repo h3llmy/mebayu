@@ -8,8 +8,7 @@ export const DashboardNavbar = () => {
     const pathname = usePathname();
 
     const toggleLocale = () => {
-        const nextLocale = locale === "en" ? "id" : "en";
-        router.replace(pathname, { locale: nextLocale });
+        router.replace(pathname, { locale });
     };
 
     return (
@@ -25,7 +24,7 @@ export const DashboardNavbar = () => {
                 </button>
 
                 <div className="h-8 w-px bg-gray-200 mx-2"></div>
-                
+
                 <button onClick={toggleLocale} className="text-sm font-medium text-gray-700 hover:cursor-pointer">{locale.toUpperCase()}</button>
             </div>
         </header>

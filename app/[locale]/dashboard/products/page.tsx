@@ -5,7 +5,7 @@ import { DataTable } from "@/components/table";
 import { useSearchParams } from "next/navigation";
 import { RedirectButton } from "@/components/button";
 import { Link } from "@/i18n/routing";
-import { Product, ProductService } from "@/lib/service/product";
+import { Category, Product, ProductService } from "@/lib/service/product";
 
 export default function ProductPage() {
     const searchParams = useSearchParams();
@@ -67,22 +67,17 @@ export default function ProductPage() {
                 columns={[
                     { header: "Name", accessor: "name", sortable: true },
                     { header: "Price", accessor: "price", sortable: true },
-                    { header: "Categories", accessor: "categories", sortable: true, render: (value) => value?.map((item: any) => item.name).join(", ") },
+                    {
+                        header: "Categories", accessor: "categories", sortable: true, render: (value) => {
+                            return value?.map((item: Category) => item.name).join(", ")
+                        }
+                    },
                     { header: "Materials", accessor: "product_materials", sortable: true, render: (value) => value?.map((item: any) => item.name).join(", ") },
-                    // {
-                    //     header: "Price",
-                    //     accessor: "price",
-                    //     sortable: true,
-                    //     render: (value) => new Intl.NumberFormat("id-ID", {
-                    //         style: "currency",
-                    //         currency: "IDR",
-                    //         minimumFractionDigits: 0,
-                    //     }).format(value)
-                    // },
                     {
                         header: "Actions",
                         accessor: "id",
-                        render: (id) => (
+                        sortable: false,
+                        render: (id, row) => (
                             <Link
                                 href={`/dashboard/products/${id}`}
                                 className="text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors"
@@ -93,16 +88,16 @@ export default function ProductPage() {
                     }
                 ]}
                 data={data}
-            // bulkActions={[
-            //     {
-            //         label: "Delete Selected",
-            //         onClick: (rows) => alert(`Deleting ${rows.length} items`),
-            //     },
-            //     {
-            //         label: "Export CSV",
-            //         onClick: (rows) => console.log("Exporting:", rows),
-            //     },
-            // ]}
+                bulkActions={[
+                    {
+                        label: "Delete Selected",
+                        onClick: (rows) => alert(`Deleting ${rows.length} items`),
+                    },
+                    {
+                        label: "Export CSV",
+                        onClick: (rows) => console.log("Exporting:", rows),
+                    },
+                ]}
             />
         </div>
     );

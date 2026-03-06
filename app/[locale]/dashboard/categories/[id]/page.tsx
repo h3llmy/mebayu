@@ -1,7 +1,6 @@
-
 "use client";
 
-import { useEffect, useState } from "react";
+import { SubmitEvent, useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { CategoryForm } from "@/components/product/categoryForm";
 import { fetchCategoryById, type Category } from "@/lib/mockApi";
@@ -22,7 +21,7 @@ export default function EditCategoryPage() {
         const data = await fetchCategoryById(id);
         setCategory(data);
       } catch (err) {
-        setError("Category not found");
+        setError((err as Error).message || "Category not found");
       } finally {
         setIsLoading(false);
       }
@@ -30,7 +29,7 @@ export default function EditCategoryPage() {
     loadCategory();
   }, [id]);
 
-  const handleSubmit = async (data: any) => {
+  const handleSubmit = async (data: SubmitEvent) => {
     setIsSubmitting(true);
     // Simulate API call
     console.log("Updating category:", { id, ...data });

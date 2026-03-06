@@ -1,5 +1,5 @@
 export interface Product {
-    id: number;
+    id: string;
     name: string;
     categories: Category[];
     product_materials: Material[];
@@ -7,11 +7,11 @@ export interface Product {
 }
 
 export interface Category {
-    id: number;
+    id: string;
     name: string;
 }
 
 export interface Material {
-    id: number;
+    id: string;
     name: string;
 }

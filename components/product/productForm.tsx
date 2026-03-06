@@ -1,56 +1,59 @@
 
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { Input, Select, ImageUpload } from "@/components/input";
+import { useState, useEffect, SubmitEvent } from "react";
+import { Input, Select, ImageUpload, UploadedFile } from "@/components/input";
 import { Button } from "@/components/button";
-import { type Product, mockCategories } from "@/lib/mockApi";
+import { mockCategories } from "@/lib/mockApi";
+import { useRouter } from "@/i18n/routing";
+import { Product } from "@/lib/service/product";
 
 interface ProductFormProps {
   initialData?: Product;
-  onSubmit: (data: any) => Promise<void>;
-  isSubmitting: boolean;
+  // onSubmit: (data: any) => Promise<void>;
+  // isSubmitting: boolean;
   title: string;
   description: string;
+  type: ProductFormType;
+}
+
+export enum ProductFormType {
+  CREATE = "CREATE",
+  EDIT = "EDIT",
 }
 
 export function ProductForm({
   initialData,
-  onSubmit,
-  isSubmitting,
+  // onSubmit,
+  // isSubmitting,
   title,
   description,
+  type,
 }: ProductFormProps) {
   const router = useRouter();
   const [formData, setFormData] = useState<Product>({
-    id: 0,
+    id: "",
     name: "",
-    category: {
-      description: "",
+    categories: [{
+      id: "",
       name: "",
-      id: 0,
-      isActive: true,
-      productCount: 0,
-    },
-    material: "",
+    }],
+    product_materials: [{
+      id: "",
+      name: "",
+    }],
     price: 0,
   });
-  const [images, setImages] = useState<File[]>([]);
+  const [images, setImages] = useState<UploadedFile[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (initialData) {
       setFormData({
         id: initialData.id,
         name: initialData.name,
-        category: {
-          description: initialData.category.description,
-          id: initialData.category.id,
-          name: initialData.category.name,
-          isActive: initialData.category.isActive,
-          productCount: initialData.category.productCount,
-        },
-        material: initialData.material,
+        categories: initialData.categories,
+        product_materials: initialData.product_materials,
         price: initialData.price,
       });
     }
@@ -62,8 +65,13 @@ export function ProductForm({
     if (name === "category") {
       const selectedCategory = mockCategories.find((c) => c.name === value);
       if (selectedCategory) {
-        setFormData((prev) => ({ ...prev, category: selectedCategory }));
+        setFormData((prev) => ({ ...prev, categories: [{ id: selectedCategory.id.toString(), name: selectedCategory.name }] }));
       }
+      return;
+    }
+
+    if (name === "material") {
+      setFormData((prev) => ({ ...prev, product_materials: [{ id: value.toLowerCase().replace(/\s+/g, '-'), name: value }] }));
       return;
     }
 
@@ -75,9 +83,18 @@ export function ProductForm({
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFormSubmit = async (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
-    await onSubmit({ ...formData, images });
+    setIsSubmitting(true);
+    try {
+      // await onSubmit({ ...formData, images });
+      console.log("Form Data:", formData);
+      console.log("Images:", images);
+    } catch (error) {
+      console.error("Failed to submit product:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -138,7 +155,7 @@ export function ProductForm({
               label="Category"
               name="category"
               placeholder="Select Category"
-              value={formData.category.name}
+              value={formData.categories?.[0]?.name || ""}
               onChange={handleChange}
               options={[
                 { label: "Bags", value: "Bags" },
@@ -153,7 +170,7 @@ export function ProductForm({
               label="Material"
               name="material"
               placeholder="Select Material"
-              value={formData.material}
+              value={formData.product_materials?.[0]?.name || ""}
               onChange={handleChange}
               options={[
                 { label: "Full Grain Leather", value: "Full Grain" },

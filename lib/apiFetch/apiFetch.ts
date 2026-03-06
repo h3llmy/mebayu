@@ -13,10 +13,10 @@ export const api = axios.create({
 let isRefreshing = false;
 let failedQueue: {
     resolve: (value?: unknown) => void;
-    reject: (reason?: any) => void;
+    reject: (reason?: unknown) => void;
 }[] = [];
 
-function processQueue(error: any) {
+function processQueue(error: unknown) {
     failedQueue.forEach((prom) => {
         if (error) {
             prom.reject(error);

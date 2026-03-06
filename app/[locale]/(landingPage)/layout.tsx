@@ -8,6 +8,7 @@ import "./../../globals.css";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { WhatsAppButton } from "@/components/floatingButton";
+import { Locale } from '@/types';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -83,12 +84,12 @@ export default async function LandingPageLayout({
   params
 }: {
   children: React.ReactNode;
-  params: Promise<{locale: string}>;
+  params: Promise<{ locale: Locale }>;
 }) {
   const { locale } = await params;
 
   // Ensure that the incoming `locale` is valid
-  if (!routing.locales.includes(locale as any)) {
+  if (!routing.locales.includes(locale)) {
     notFound();
   }
 

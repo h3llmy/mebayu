@@ -17,7 +17,12 @@ export class ProductService {
     }
 
     static async getOne(id: string): Promise<Product> {
-        const response = await api.get<Product>(`/v1/products/${id}`);
-        return response.data;
+        try {
+            const response = await api.get<Product>(`/v1/products/${id}`);
+            return response.data;
+        } catch (error: any) {
+            console.log(error.response.data);
+            throw error;
+        }
     }
 }

@@ -93,8 +93,8 @@ export const fetchCategories = async (params: {
 
     if (params.search) {
         const q = params.search.toLowerCase();
-        filtered = filtered.filter((c) => 
-            c.name.toLowerCase().includes(q) || 
+        filtered = filtered.filter((c) =>
+            c.name.toLowerCase().includes(q) ||
             c.description.toLowerCase().includes(q)
         );
     }

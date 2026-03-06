@@ -8,7 +8,7 @@ export default async function LoginPage() {
   const cookieStore = await cookies();
   const token = cookieStore.get("access_token")?.value;
 
-  if (!token) {
+  if (token) {
     return redirect({
       href: `/dashboard`,
       locale: await getLocale(),
