@@ -234,7 +234,7 @@ export function DataTable<T extends Record<string, any>>({
   return (
     <div className="bg-white rounded-xl border border-gray-200 shadow-sm font-sans relative overflow-visible">
       {isLoading && (
-        <div className="absolute inset-0 bg-white/60 backdrop-blur-[1px] z-30 flex items-center justify-center">
+        <div className="absolute inset-0 bg-white/60 backdrop-blur-[1px] z-30 flex items-center justify-center rounded-t-xl">
           <div className="flex flex-col items-center gap-2">
             <div className="w-8 h-8 border-4 border-[var(--primary)] border-t-transparent rounded-full animate-spin"></div>
             <span className="text-sm font-medium text-[var(--primary)]">
@@ -245,7 +245,7 @@ export function DataTable<T extends Record<string, any>>({
       )}
 
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 px-6 py-4 bg-gray-50 border-b border-gray-200">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 px-6 py-4 bg-gray-50 border-b border-gray-200 rounded-t-xl">
         <div>
           {selectedRows.size > 0 && bulkActions.length > 0 && (
             <div className="relative" ref={bulkRef}>
@@ -328,7 +328,7 @@ export function DataTable<T extends Record<string, any>>({
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto overflow-hidden rounded-b-xl">
+      <div className="overflow-x-auto overflow-hidden">
         <table className="w-full text-sm text-left border-collapse">
           <thead className="bg-gray-50 border-b border-gray-200 text-xs uppercase text-gray-500 font-bold">
             <tr>
@@ -490,7 +490,7 @@ export function DataTable<T extends Record<string, any>>({
       </div>
 
       {/* Footer / Pagination */}
-      <div className="flex flex-col sm:flex-row items-center justify-between px-6 py-4 bg-gray-50 border-t border-gray-200 gap-4">
+      <div className="flex flex-col sm:flex-row items-center justify-between px-6 py-4 bg-gray-50 border-t border-gray-200 gap-4 rounded-b-xl">
         <div className="flex items-center gap-4 text-sm text-gray-600">
           <div className="flex items-center gap-2 bg-white border border-gray-300 rounded-md px-2 py-1 shadow-sm">
             <span className="text-gray-500">Show</span>

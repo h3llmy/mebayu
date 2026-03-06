@@ -41,7 +41,7 @@ export const LoginForm = () => {
 
       // Redirect to dashboard
       router.push("/dashboard");
-    } catch (err: any) {
+    } catch {
       setError(t("error"));
     } finally {
       setIsLoading(false);
