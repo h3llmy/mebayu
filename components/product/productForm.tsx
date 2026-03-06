@@ -4,9 +4,11 @@
 import { useState, useEffect, SubmitEvent } from "react";
 import { Input, MultiSelect, ImageUpload, UploadedFile } from "@/components/input";
 import { Button } from "@/components/button";
-import { mockCategories } from "@/lib/mockApi";
 import { useRouter } from "@/i18n/routing";
 import { Product } from "@/lib/service/product";
+import { CategoryService } from "@/lib/service/category/categoryService";
+import { MaterialService } from "@/lib/service/material/materialService";
+import { useServiceSearch } from "@/hooks/useServiceSearch";
 
 interface ProductFormProps {
   initialData?: Product;
@@ -38,6 +40,28 @@ export function ProductForm({
   });
   const [images, setImages] = useState<UploadedFile[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const {
+    items: categoryOptions,
+    setSearch: setCategorySearch,
+    hasMore: categoryHasMore,
+    isLoading: categoryLoading,
+    onLoadMore: loadMoreCategories,
+  } = useServiceSearch({
+    fetchFn: CategoryService.getAll,
+    mapFn: (c) => ({ label: c.name, value: c.id, original: c }),
+  });
+
+  const {
+    items: materialOptions,
+    setSearch: setMaterialSearch,
+    hasMore: materialHasMore,
+    isLoading: materialLoading,
+    onLoadMore: loadMoreMaterials,
+  } = useServiceSearch({
+    fetchFn: MaterialService.getAll,
+    mapFn: (m) => ({ label: m.name, value: m.id, original: m }),
+  });
 
   useEffect(() => {
     if (initialData) {
@@ -134,42 +158,54 @@ export function ProductForm({
             <MultiSelect
               label="Categories"
               placeholder="Select Categories"
-              value={formData.categories?.map(c => c.name) || []}
+              value={formData.categories?.map(c => c.id) || []}
               onChange={(values: string[]) => {
                 const newCategories = values.map(val => {
-                  const selectedCategory = mockCategories.find((c) => c.name === val);
-                  return selectedCategory
-                    ? { id: selectedCategory.id.toString(), name: selectedCategory.name }
-                    : { id: Date.now().toString(), name: val };
+                  const selectedCategory = categoryOptions.find((c) => c.value === val)?.original;
+                  const existingCategory = formData.categories.find((c) => c.id === val);
+                  return selectedCategory || existingCategory || { id: val, name: "" };
                 });
                 setFormData(prev => ({ ...prev, categories: newCategories }));
               }}
-              options={[
-                { label: "Bags", value: "Bags" },
-                { label: "Accessories", value: "Accessories" },
-                { label: "Wallets", value: "Wallets" },
-                { label: "Belts", value: "Belts" },
-              ]}
+              options={
+                [
+                  ...categoryOptions,
+                  ...formData.categories
+                    .filter((c) => !categoryOptions.find((co) => co.value === c.id))
+                    .map((c) => ({ label: c.name, value: c.id }))
+                ]
+              }
+              onSearch={setCategorySearch}
+              onLoadMore={loadMoreCategories}
+              hasMore={categoryHasMore}
+              isLoading={categoryLoading}
               required
             />
 
             <MultiSelect
               label="Materials"
               placeholder="Select Materials"
-              value={formData.product_materials?.map(m => m.name) || []}
+              value={formData.product_materials?.map(m => m.id) || []}
               onChange={(values: string[]) => {
-                const newMaterials = values.map(val => ({
-                  id: val.toLowerCase().replace(/\s+/g, '-'),
-                  name: val
-                }));
+                const newMaterials = values.map(val => {
+                  const selectedMaterial = materialOptions.find((m) => m.value === val)?.original;
+                  const existingMaterial = formData.product_materials.find((m) => m.id === val);
+                  return selectedMaterial || existingMaterial || { id: val, name: "" };
+                });
                 setFormData(prev => ({ ...prev, product_materials: newMaterials }));
               }}
-              options={[
-                { label: "Full Grain Leather", value: "Full Grain" },
-                { label: "Veg Tan Leather", value: "Veg Tan" },
-                { label: "Suede", value: "Suede" },
-                { label: "Canvas", value: "Canvas" },
-              ]}
+              options={
+                [
+                  ...materialOptions,
+                  ...formData.product_materials
+                    .filter((m) => !materialOptions.find((mo) => mo.value === m.id))
+                    .map((m) => ({ label: m.name, value: m.id }))
+                ]
+              }
+              onSearch={setMaterialSearch}
+              onLoadMore={loadMoreMaterials}
+              hasMore={materialHasMore}
+              isLoading={materialLoading}
               required
             />
           </div>

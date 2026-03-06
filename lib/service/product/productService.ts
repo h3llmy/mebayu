@@ -1,15 +1,9 @@
-import { PaginationResponse } from "@/types";
+import { PaginationRequest, PaginationResponse } from "@/types";
 import { api } from "../../apiFetch/apiFetch";
 import { Product } from "./productModel";
 
 export class ProductService {
-    static async getAllPagination(params: {
-        page: number;
-        limit: number;
-        search?: string;
-        sort?: string;
-        dir?: "asc" | "desc";
-    }): Promise<PaginationResponse<Product>> {
+    static async getAllPagination(params: PaginationRequest): Promise<PaginationResponse<Product>> {
         const response = await api.get<PaginationResponse<Product>>("/v1/products", {
             params,
         });
