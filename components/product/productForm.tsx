@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useEffect, SubmitEvent } from "react";
-import { Input, Select, ImageUpload, UploadedFile } from "@/components/input";
+import { Input, MultiSelect, ImageUpload, UploadedFile } from "@/components/input";
 import { Button } from "@/components/button";
 import { mockCategories } from "@/lib/mockApi";
 import { useRouter } from "@/i18n/routing";
@@ -34,14 +34,8 @@ export function ProductForm({
   const [formData, setFormData] = useState<Product>({
     id: "",
     name: "",
-    categories: [{
-      id: "",
-      name: "",
-    }],
-    product_materials: [{
-      id: "",
-      name: "",
-    }],
+    categories: [],
+    product_materials: [],
     price: 0,
   });
   const [images, setImages] = useState<UploadedFile[]>([]);
@@ -62,19 +56,6 @@ export function ProductForm({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
 
-    if (name === "category") {
-      const selectedCategory = mockCategories.find((c) => c.name === value);
-      if (selectedCategory) {
-        setFormData((prev) => ({ ...prev, categories: [{ id: selectedCategory.id.toString(), name: selectedCategory.name }] }));
-      }
-      return;
-    }
-
-    if (name === "material") {
-      setFormData((prev) => ({ ...prev, product_materials: [{ id: value.toLowerCase().replace(/\s+/g, '-'), name: value }] }));
-      return;
-    }
-
     if (name === "price") {
       setFormData((prev) => ({ ...prev, price: Number(value) }));
       return;
@@ -87,6 +68,8 @@ export function ProductForm({
     e.preventDefault();
     setIsSubmitting(true);
     try {
+      console.log({ formData, images });
+
       // await onSubmit({ ...formData, images });
       console.log("Form Data:", formData);
       console.log("Images:", images);
@@ -114,8 +97,8 @@ export function ProductForm({
       </div>
 
       <form onSubmit={handleFormSubmit} className="space-y-6">
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-          <div className="p-6 border-b border-gray-100 bg-gray-50/50">
+        <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
+          <div className="p-6 border-b border-gray-100 bg-gray-50/50 rounded-t-xl">
             <h2 className="text-lg font-semibold text-gray-900">Product Media</h2>
             <p className="text-sm text-gray-500">Upload high-quality images of your product.</p>
           </div>
@@ -133,8 +116,8 @@ export function ProductForm({
           </div>
         </div>
 
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-          <div className="p-6 border-b border-gray-100 bg-gray-50/50">
+        <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
+          <div className="p-6 border-b border-gray-100 bg-gray-50/50 rounded-t-xl">
             <h2 className="text-lg font-semibold text-gray-900">General Information</h2>
             <p className="text-sm text-gray-500">Essential details about your product.</p>
           </div>
@@ -151,12 +134,19 @@ export function ProductForm({
               />
             </div>
 
-            <Select
-              label="Category"
-              name="category"
-              placeholder="Select Category"
-              value={formData.categories?.[0]?.name || ""}
-              onChange={handleChange}
+            <MultiSelect
+              label="Categories"
+              placeholder="Select Categories"
+              value={formData.categories?.map(c => c.name) || []}
+              onChange={(values: string[]) => {
+                const newCategories = values.map(val => {
+                  const selectedCategory = mockCategories.find((c) => c.name === val);
+                  return selectedCategory
+                    ? { id: selectedCategory.id.toString(), name: selectedCategory.name }
+                    : { id: Date.now().toString(), name: val };
+                });
+                setFormData(prev => ({ ...prev, categories: newCategories }));
+              }}
               options={[
                 { label: "Bags", value: "Bags" },
                 { label: "Accessories", value: "Accessories" },
@@ -166,12 +156,17 @@ export function ProductForm({
               required
             />
 
-            <Select
-              label="Material"
-              name="material"
-              placeholder="Select Material"
-              value={formData.product_materials?.[0]?.name || ""}
-              onChange={handleChange}
+            <MultiSelect
+              label="Materials"
+              placeholder="Select Materials"
+              value={formData.product_materials?.map(m => m.name) || []}
+              onChange={(values: string[]) => {
+                const newMaterials = values.map(val => ({
+                  id: val.toLowerCase().replace(/\s+/g, '-'),
+                  name: val
+                }));
+                setFormData(prev => ({ ...prev, product_materials: newMaterials }));
+              }}
               options={[
                 { label: "Full Grain Leather", value: "Full Grain" },
                 { label: "Veg Tan Leather", value: "Veg Tan" },
@@ -183,8 +178,8 @@ export function ProductForm({
           </div>
         </div>
 
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-          <div className="p-6 border-b border-gray-100 bg-gray-50/50">
+        <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
+          <div className="p-6 border-b border-gray-100 bg-gray-50/50 rounded-t-xl">
             <h2 className="text-lg font-semibold text-gray-900">Pricing</h2>
             <p className="text-sm text-gray-500">Set the value of your product.</p>
           </div>
