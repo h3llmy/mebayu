@@ -77,6 +77,16 @@ export const metadata: Metadata = {
   },
 
   category: "fashion",
+  alternates: {
+    canonical: "https://mebayu.dwikihome.my.id",
+    languages: {
+      "en": "https://mebayu.dwikihome.my.id/en",
+      "id": "https://mebayu.dwikihome.my.id/id",
+    },
+  },
+  verification: {
+    google: "your-google-verification-code", // Replace with actual code from Google Search Console
+  },
 };
 
 export default async function LandingPageLayout({
