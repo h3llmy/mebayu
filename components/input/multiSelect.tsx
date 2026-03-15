@@ -101,7 +101,7 @@ export function MultiSelect({
     return (
         <div className="flex flex-col gap-1.5 w-full" ref={containerRef}>
             {label && (
-                <label className="text-sm font-medium text-gray-700 ml-0.5">
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300 ml-0.5">
                     {label}
                     {required && <span className="text-red-500 ml-1">*</span>}
                 </label>
@@ -111,18 +111,18 @@ export function MultiSelect({
                 <div
                     onClick={toggleOpen}
                     className={`
-            min-h-[44px] w-full px-4 border-r-[32px] border-r-transparent py-2 rounded-lg border bg-white cursor-pointer
+            min-h-[44px] w-full px-4 border-r-[32px] border-r-transparent py-2 rounded-lg border bg-white dark:bg-gray-900 cursor-pointer
             flex flex-wrap items-center gap-2 transition-all duration-200 outline-none
             ${error
                             ? "border-red-500 focus:ring-4 focus:ring-red-500/10 hover:border-red-600"
-                            : "border-[var(--gray-200)] focus:border-[var(--primary)] focus:ring-4 focus:ring-[var(--primary)]/10 hover:border-gray-300"
+                            : "border-gray-200 dark:border-gray-700 focus:border-[var(--primary)] focus:ring-4 focus:ring-[var(--primary)]/10 hover:border-gray-300 dark:hover:border-gray-600"
                         }
             ${isOpen ? "!border-[var(--primary)] ring-4 ring-[var(--primary)]/10" : ""}
             ${className}
           `}
                 >
                     {value.length === 0 ? (
-                        <span className="text-sm text-gray-500 select-none">{placeholder}</span>
+                        <span className="text-sm text-gray-500 dark:text-gray-400 select-none">{placeholder}</span>
                     ) : (
                         value.map((val) => {
                             const option = options.find((o) => o.value === val);
@@ -130,13 +130,13 @@ export function MultiSelect({
                             return (
                                 <span
                                     key={val}
-                                    className="inline-flex items-center gap-1 bg-gray-100 border border-gray-200 text-gray-800 px-2.5 py-1 rounded-md text-xs font-semibold animate-in fade-in zoom-in-95 duration-200"
+                                    className="inline-flex items-center gap-1 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200 px-2.5 py-1 rounded-md text-xs font-semibold animate-in fade-in zoom-in-95 duration-200"
                                 >
                                     {option.label}
                                     <button
                                         type="button"
                                         onClick={(e) => handleRemove(e, val)}
-                                        className="hover:bg-gray-200 p-0.5 rounded-full text-gray-500 hover:text-gray-700 transition-colors"
+                                        className="hover:bg-gray-200 dark:hover:bg-gray-700 p-0.5 rounded-full text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
                                     >
                                         <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -147,7 +147,7 @@ export function MultiSelect({
                         })
                     )}
 
-                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 group-hover:text-gray-600 transition-colors">
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 dark:text-gray-500 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors">
                         <svg
                             className={`w-4 h-4 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
                             fill="none"
@@ -160,21 +160,21 @@ export function MultiSelect({
                 </div>
 
                 {isOpen && (
-                    <div className="absolute z-50 w-full mt-2 bg-white rounded-xl border border-gray-100 shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200 py-1">
+                    <div className="absolute z-50 w-full mt-2 bg-white dark:bg-gray-950 rounded-xl border border-gray-100 dark:border-gray-800 shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200 py-1">
                         {onSearch && (
-                            <div className="px-3 py-2 border-b border-gray-100 sticky top-0 bg-white z-10">
+                            <div className="px-3 py-2 border-b border-gray-100 dark:border-gray-800 sticky top-0 bg-white dark:bg-gray-950 z-10">
                                 <input
                                     type="text"
                                     value={searchTerm}
                                     onChange={handleSearchChange}
                                     placeholder="Search..."
-                                    className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent"
+                                    className="w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-1.5 text-sm text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent"
                                 />
                             </div>
                         )}
                         <div className="max-h-60 overflow-y-auto">
                             {options.length === 0 && !isLoading ? (
-                                <div className="px-4 py-3 text-sm text-gray-500 text-center">No options available</div>
+                                <div className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400 text-center">No options available</div>
                             ) : (
                                 options.map((option) => {
                                     const isSelected = value.includes(option.value);
@@ -182,21 +182,21 @@ export function MultiSelect({
                                         <div
                                             key={option.value}
                                             onClick={() => handleToggle(option.value)}
-                                            className="flex items-center px-4 py-2.5 cursor-pointer hover:bg-gray-50 transition-colors"
+                                            className="flex items-center px-4 py-2.5 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors"
                                         >
                                             <div
                                                 className={`
                           w-4 h-4 rounded border flex items-center justify-center mr-3 transition-colors
-                          ${isSelected ? "bg-gray-900 border-gray-900" : "border-gray-300"}
+                          ${isSelected ? "bg-gray-900 border-gray-900 dark:bg-white dark:border-white" : "border-gray-300 dark:border-gray-600"}
                         `}
                                             >
                                                 {isSelected && (
-                                                    <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <svg className="w-3 h-3 text-white dark:text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                                                     </svg>
                                                 )}
                                             </div>
-                                            <span className={`text-sm ${isSelected ? "text-gray-900 font-medium" : "text-gray-700"}`}>
+                                            <span className={`text-sm ${isSelected ? "text-gray-900 dark:text-white font-medium" : "text-gray-700 dark:text-gray-300"}`}>
                                                 {option.label}
                                             </span>
                                         </div>
@@ -221,7 +221,7 @@ export function MultiSelect({
             {error ? (
                 <p className="text-xs text-red-500 mt-1 ml-0.5">{error}</p>
             ) : helperText ? (
-                <p className="text-xs text-gray-500 mt-1 ml-0.5">{helperText}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 ml-0.5">{helperText}</p>
             ) : null}
         </div>
     );

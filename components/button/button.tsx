@@ -20,10 +20,10 @@ export const Button = ({
   
   const variants = {
     primary: "bg-[var(--primary)] text-white hover:bg-[var(--primary-hover)] focus:ring-[var(--primary)]/20 shadow-sm",
-    secondary: "bg-[var(--gray-100)] text-[var(--gray-900)] hover:bg-[var(--gray-200)] focus:ring-[var(--gray-100)]/20",
-    outline: "bg-transparent border border-[var(--gray-200)] text-[var(--gray-700)] hover:bg-[var(--gray-50)] focus:ring-[var(--gray-200)]/20",
+    secondary: "bg-[var(--gray-100)] dark:bg-gray-800 text-[var(--gray-900)] dark:text-gray-100 hover:bg-[var(--gray-200)] dark:hover:bg-gray-700 focus:ring-[var(--gray-100)]/20 dark:focus:ring-gray-700/20",
+    outline: "bg-transparent border border-[var(--gray-200)] dark:border-gray-700 text-[var(--gray-700)] dark:text-gray-300 hover:bg-[var(--gray-50)] dark:hover:bg-gray-800 focus:ring-[var(--gray-200)]/20 dark:focus:ring-gray-700/20",
     danger: "bg-[var(--danger)] text-white hover:bg-red-700 focus:ring-red-600/20 shadow-sm",
-    ghost: "bg-transparent text-[var(--gray-600)] hover:bg-[var(--gray-100)] hover:text-[var(--gray-900)] focus:ring-[var(--gray-100)]/20",
+    ghost: "bg-transparent text-[var(--gray-600)] dark:text-gray-400 hover:bg-[var(--gray-100)] dark:hover:bg-gray-800 hover:text-[var(--gray-900)] dark:hover:text-gray-100 focus:ring-[var(--gray-100)]/20 dark:focus:ring-gray-800/20",
   };
 
   const sizes = {

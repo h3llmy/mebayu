@@ -8,6 +8,7 @@ import "./../../globals.css";
 import { DashboardSidebar } from '@/components/sidebar';
 import { DashboardNavbar } from '@/components/navbar';
 import { Locale } from '@/types';
+import { ThemeProvider } from '@/components/theme-provider';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,27 +45,34 @@ export default async function DashboardLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 dark:bg-gray-950 dark:text-gray-100 transition-colors duration-200`}
       >
-        <NextIntlClientProvider messages={messages}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <NextIntlClientProvider messages={messages}>
 
-          <div className="flex min-h-screen">
-            {/* Sidebar */}
-            <DashboardSidebar />
+            <div className="flex min-h-screen">
+              {/* Sidebar */}
+              <DashboardSidebar />
 
-            {/* Main Content Area */}
-            <div className="flex-1 flex flex-col ml-64 transition-all duration-300 ease-in-out">
-              <DashboardNavbar />
+              {/* Main Content Area */}
+              <div className="flex-1 flex flex-col ml-64 transition-all duration-300 ease-in-out">
+                <DashboardNavbar />
 
-              <main className="flex-1 p-6 md:p-8 mt-16 overflow-y-auto">
-                {children}
-              </main>
+                <main className="flex-1 p-6 md:p-8 mt-16 overflow-y-auto bg-gray-50 dark:bg-gray-950">
+                  {children}
+                </main>
+              </div>
             </div>
-          </div>
 
-        </NextIntlClientProvider>
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

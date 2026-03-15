@@ -106,22 +106,22 @@ export function ProductForm({
       <div className="mb-8">
         <button
           onClick={() => router.back()}
-          className="flex items-center text-sm text-gray-500 hover:text-blue-600 transition-colors mb-4"
+          className="flex items-center text-sm text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors mb-4"
         >
           <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
           Back to Products
         </button>
-        <h1 className="text-2xl font-bold text-gray-900">{title}</h1>
-        <p className="text-gray-500">{description}</p>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{title}</h1>
+        <p className="text-gray-500 dark:text-gray-400">{description}</p>
       </div>
 
       <form onSubmit={handleFormSubmit} className="space-y-6">
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
-          <div className="p-6 border-b border-gray-100 bg-gray-50/50 rounded-t-xl">
-            <h2 className="text-lg font-semibold text-gray-900">Product Media</h2>
-            <p className="text-sm text-gray-500">Upload high-quality images of your product.</p>
+        <div className="bg-white dark:bg-gray-950 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm">
+          <div className="p-6 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/50 rounded-t-xl">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Product Media</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Upload high-quality images of your product.</p>
           </div>
 
           <div className="p-6">
@@ -137,10 +137,10 @@ export function ProductForm({
           </div>
         </div>
 
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
-          <div className="p-6 border-b border-gray-100 bg-gray-50/50 rounded-t-xl">
-            <h2 className="text-lg font-semibold text-gray-900">General Information</h2>
-            <p className="text-sm text-gray-500">Essential details about your product.</p>
+        <div className="bg-white dark:bg-gray-950 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm">
+          <div className="p-6 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/50 rounded-t-xl">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">General Information</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Essential details about your product.</p>
           </div>
 
           <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -211,10 +211,10 @@ export function ProductForm({
           </div>
         </div>
 
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
-          <div className="p-6 border-b border-gray-100 bg-gray-50/50 rounded-t-xl">
-            <h2 className="text-lg font-semibold text-gray-900">Pricing</h2>
-            <p className="text-sm text-gray-500">Set the value of your product.</p>
+        <div className="bg-white dark:bg-gray-950 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm">
+          <div className="p-6 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/50 rounded-t-xl">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Pricing</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Set the value of your product.</p>
           </div>
 
           <div className="p-6">
@@ -226,7 +226,7 @@ export function ProductForm({
               value={formData.price}
               onChange={handleChange}
               icon={
-                <span className="text-xs font-bold text-gray-400">Rp</span>
+                <span className="text-xs font-bold text-gray-400 dark:text-gray-500">Rp</span>
               }
               required
             />

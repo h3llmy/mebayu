@@ -237,9 +237,9 @@ export function DataTable<T extends Record<string, any>>({
   /* ----------------------- */
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 shadow-sm font-sans relative overflow-visible">
+    <div className="bg-white dark:bg-gray-950 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm font-sans relative overflow-visible">
       {isLoading && (
-        <div className="absolute inset-0 bg-white/60 backdrop-blur-[1px] z-30 flex items-center justify-center rounded-t-xl">
+        <div className="absolute inset-0 bg-white/60 backdrop-blur-[1px] z-30 flex items-center justify-center rounded-xl">
           <div className="flex flex-col items-center gap-2">
             <div className="w-8 h-8 border-4 border-[var(--primary)] border-t-transparent rounded-full animate-spin"></div>
             <span className="text-sm font-medium text-[var(--primary)]">
@@ -250,7 +250,7 @@ export function DataTable<T extends Record<string, any>>({
       )}
 
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 px-6 py-4 bg-gray-50 border-b border-gray-200 rounded-t-xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 px-6 py-4 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 rounded-t-xl">
         <div>
           {selectedRows.size > 0 && bulkActions.length > 0 && (
             <div className="relative" ref={bulkRef}>
@@ -264,7 +264,7 @@ export function DataTable<T extends Record<string, any>>({
               </button>
 
               {showBulkDropdown && (
-                <div className="absolute left-0 mt-2 w-44 bg-white border border-gray-200 rounded-md shadow-lg z-20">
+                <div className="absolute left-0 mt-2 w-44 bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-800 rounded-md shadow-lg z-20">
                   {bulkActions.map((action, i) => (
                     <button
                       key={i}
@@ -273,7 +273,7 @@ export function DataTable<T extends Record<string, any>>({
                         setShowBulkDropdown(false);
                         setSelectedRows(new Map());
                       }}
-                      className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                      className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-gray-300"
                     >
                       {action.label}
                     </button>
@@ -289,7 +289,7 @@ export function DataTable<T extends Record<string, any>>({
             <input
               type="text"
               placeholder="Search..."
-              className="h-9 pl-9 pr-3 text-sm border border-[var(--gray-300)] rounded-md focus:ring-2 focus:ring-[var(--primary)] focus:border-[var(--primary)] outline-none w-full transition-all"
+              className="h-9 pl-9 pr-3 text-sm border border-[var(--gray-300)] dark:border-gray-700 bg-white dark:bg-gray-900 dark:text-white rounded-md focus:ring-2 focus:ring-[var(--primary)] focus:border-[var(--primary)] outline-none w-full transition-all"
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
             />
@@ -301,7 +301,7 @@ export function DataTable<T extends Record<string, any>>({
           <div className="relative" ref={columnRef}>
             <button
               onClick={() => setShowColumnDropdown(!showColumnDropdown)}
-              className="h-9 px-4 text-sm border border-gray-300 rounded-md bg-white hover:bg-gray-100 flex items-center gap-2 transition-colors"
+              className="h-9 px-4 text-sm border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-900 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center gap-2 transition-colors"
             >
               <span>Columns</span>
               <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -309,8 +309,8 @@ export function DataTable<T extends Record<string, any>>({
               </svg>
             </button>
             {showColumnDropdown && (
-              <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-20 p-2">
-                <div className="text-xs font-semibold text-gray-400 px-2 py-1 mb-1 uppercase tracking-wider">Visible Columns</div>
+              <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-800 rounded-md shadow-lg z-20 p-2">
+                <div className="text-xs font-semibold text-gray-400 dark:text-gray-500 px-2 py-1 mb-1 uppercase tracking-wider">Visible Columns</div>
                 {columns.map((col) => (
                   <label key={col.accessor} className="flex items-center gap-2 text-sm py-1.5 px-2 hover:bg-gray-50 cursor-pointer rounded transition-colors text-gray-700">
                     <input
@@ -336,7 +336,7 @@ export function DataTable<T extends Record<string, any>>({
       {/* Table */}
       <div className="overflow-x-auto overflow-hidden">
         <table className="w-full text-sm text-left border-collapse">
-          <thead className="bg-gray-50 border-b border-gray-200 text-xs uppercase text-gray-500 font-bold">
+          <thead className="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 text-xs uppercase text-gray-500 dark:text-gray-400 font-bold">
             <tr>
               {bulkActions.length > 0 && (
                 <th className="px-4 py-3 w-10 text-center">
@@ -381,7 +381,7 @@ export function DataTable<T extends Record<string, any>>({
                         if (col.sortable) toggleSort(col.accessor);
                       }}
                       className={`px-6 py-3 text-left select-none ${col.sortable
-                        ? "cursor-pointer hover:text-gray-900"
+                        ? "cursor-pointer hover:text-gray-900 dark:hover:text-gray-200"
                         : "cursor-default"
                         }`}
                     >
@@ -430,7 +430,7 @@ export function DataTable<T extends Record<string, any>>({
             </tr>
           </thead>
 
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
             {paginatedData.length > 0 ? (
               paginatedData.map((row, rowIndex) => (
                 <tr key={rowIndex}>
@@ -485,7 +485,7 @@ export function DataTable<T extends Record<string, any>>({
               <tr>
                 <td
                   colSpan={columns.length + 1}
-                  className="px-6 py-12 text-center text-gray-400"
+                  className="px-6 py-12 text-center text-gray-400 dark:text-gray-500"
                 >
                   No records found.
                 </td>
@@ -496,14 +496,14 @@ export function DataTable<T extends Record<string, any>>({
       </div>
 
       {/* Footer / Pagination */}
-      <div className="flex flex-col sm:flex-row items-center justify-between px-6 py-4 bg-gray-50 border-t border-gray-200 gap-4 rounded-b-xl">
+      <div className="flex flex-col sm:flex-row items-center justify-between px-6 py-4 bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 gap-4 rounded-b-xl">
         <div className="flex items-center gap-4 text-sm text-gray-600">
-          <div className="flex items-center gap-2 bg-white border border-gray-300 rounded-md px-2 py-1 shadow-sm">
+          <div className="flex items-center gap-2 bg-white dark:bg-gray-950 border border-gray-300 dark:border-gray-700 rounded-md px-2 py-1 shadow-sm">
             <span className="text-gray-500">Show</span>
             <select
               value={queryLimit}
               onChange={(e) => updateUrl({ limit: e.target.value, page: 1 })}
-              className="bg-transparent outline-none font-medium text-gray-900"
+              className="bg-transparent outline-none font-medium text-gray-900 dark:text-gray-100"
             >
               {[10, 20, 50, 100].map(size => (
                 <option key={size} value={size}>{size}</option>
@@ -513,7 +513,7 @@ export function DataTable<T extends Record<string, any>>({
           </div>
           <span className="hidden lg:inline text-gray-300">|</span>
           <span className="text-gray-500 hidden lg:inline">
-            Showing <strong className="text-gray-900">{totalRecords === 0 ? 0 : (queryPage - 1) * queryLimit + 1}</strong> to <strong className="text-gray-900">{Math.min(queryPage * queryLimit, totalRecords)}</strong> of <strong className="text-gray-900">{totalRecords}</strong> results
+            Showing <strong className="text-gray-900 dark:text-white">{totalRecords === 0 ? 0 : (queryPage - 1) * queryLimit + 1}</strong> to <strong className="text-gray-900 dark:text-white">{Math.min(queryPage * queryLimit, totalRecords)}</strong> of <strong className="text-gray-900 dark:text-white">{totalRecords}</strong> results
           </span>
         </div>
 
@@ -521,7 +521,7 @@ export function DataTable<T extends Record<string, any>>({
           <button
             disabled={queryPage <= 1 || isLoading}
             onClick={() => updateUrl({ page: queryPage - 1 })}
-            className="w-9 h-9 flex items-center justify-center text-sm font-medium border border-gray-300 rounded-md bg-white hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-sm"
+            className="w-9 h-9 flex items-center justify-center text-sm font-medium border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-sm"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -538,7 +538,7 @@ export function DataTable<T extends Record<string, any>>({
                   onClick={() => updateUrl({ page: page as number })}
                   className={`w-9 h-9 flex items-center justify-center text-sm font-medium rounded-md transition-all shadow-sm ${queryPage === page
                     ? "bg-[var(--primary)] text-white border border-[var(--primary)]"
-                    : "bg-white text-[var(--gray-700)] border border-[var(--gray-300)] hover:bg-[var(--gray-50)]"
+                    : "bg-white text-[var(--gray-700)] dark:text-[var(--gray-300)] dark:bg-gray-900 border border-[var(--gray-300)] dark:border-gray-700 hover:bg-[var(--gray-50)] dark:hover:bg-gray-800"
                     }`}
                 >
                   {page}
@@ -550,7 +550,7 @@ export function DataTable<T extends Record<string, any>>({
           <button
             disabled={queryPage >= totalPages || isLoading}
             onClick={() => updateUrl({ page: queryPage + 1 })}
-            className="w-9 h-9 flex items-center justify-center text-sm font-medium border border-gray-300 rounded-md bg-white hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-sm"
+            className="w-9 h-9 flex items-center justify-center text-sm font-medium border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-sm"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

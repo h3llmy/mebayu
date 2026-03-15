@@ -3,16 +3,16 @@ import { SidebarLink } from "./sidebarLink";
 
 export const DashboardSidebar = () => {
     return (
-        <aside className="w-64 bg-white border-r border-gray-200 h-screen fixed left-0 top-0 flex flex-col z-50">
+        <aside className="w-64 bg-white dark:bg-gray-950 border-r border-gray-200 dark:border-gray-800 h-screen fixed left-0 top-0 flex flex-col z-50 transition-colors duration-200">
             {/* Logo */}
-            <div className="h-16 flex items-center px-6 border-b border-gray-100 mb-2">
+            <div className="h-16 flex items-center px-6 border-b border-gray-100 dark:border-gray-800 mb-2">
                 <Link href="/" className="flex items-center gap-2 group">
                     <div className="bg-[var(--primary)] p-1.5 rounded-lg group-hover:scale-110 transition-transform duration-200">
                         <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                         </svg>
                     </div>
-                    <span className="text-xl font-bold tracking-tight text-gray-900">
+                    <span className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
                         Mebayu<span className="text-[var(--primary)]">.</span>
                     </span>
                 </Link>
@@ -21,7 +21,7 @@ export const DashboardSidebar = () => {
             {/* Navigation */}
             <nav className="flex-1 overflow-y-auto pt-4 px-4 space-y-8">
                 <div>
-                    <p className="px-3 text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-4">
+                    <p className="px-3 text-[11px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-4">
                         Main Menu
                     </p>
                     <div className="space-y-1">
@@ -49,7 +49,7 @@ export const DashboardSidebar = () => {
                 </div>
 
                 <div>
-                    <p className="px-3 text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-4">
+                    <p className="px-3 text-[11px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-4">
                         Configuration
                     </p>
                     <div className="space-y-1">
@@ -63,16 +63,16 @@ export const DashboardSidebar = () => {
             </nav>
 
             {/* User Profile */}
-            <div className="p-4 border-t border-gray-100">
-                <button className="flex items-center gap-3 w-full px-2 py-2.5 rounded-xl hover:bg-gray-50 transition-colors duration-200">
-                    <div className="w-9 h-9 rounded-full bg-[var(--primary-light)] flex items-center justify-center text-[var(--primary)] font-bold text-xs ring-2 ring-white shadow-sm">
+            <div className="p-4 border-t border-gray-100 dark:border-gray-800">
+                <button className="flex items-center gap-3 w-full px-2 py-2.5 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200">
+                    <div className="w-9 h-9 rounded-full bg-[var(--primary-light)] flex items-center justify-center text-[var(--primary)] font-bold text-xs ring-2 ring-white dark:ring-gray-950 shadow-sm">
                         AD
                     </div>
                     <div className="flex-1 text-left min-w-0">
-                        <p className="text-sm font-semibold text-gray-900 truncate">Admin</p>
-                        <p className="text-xs text-gray-500 truncate font-medium">admin@mebayu.com</p>
+                        <p className="text-sm font-semibold text-gray-900 dark:text-white truncate">Admin</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 truncate font-medium">admin@mebayu.com</p>
                     </div>
-                    <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                 </button>

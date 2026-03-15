@@ -47,8 +47,8 @@ export default function CategoryPage() {
         <div className="p-6">
             <div className="mb-6 flex items-center justify-between">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-900">Product Categories</h1>
-                    <p className="text-gray-500">Organize your products into logical sections.</p>
+                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Product Categories</h1>
+                    <p className="text-gray-500 dark:text-gray-400">Organize your products into logical sections.</p>
                 </div>
                 <div>
                     <RedirectButton href="/dashboard/categories/create" label="Add Category" />
@@ -66,7 +66,7 @@ export default function CategoryPage() {
                         accessor: "productCount", 
                         sortable: true,
                         render: (val) => (
-                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300">
                                 {val} products
                             </span>
                         )
@@ -76,8 +76,8 @@ export default function CategoryPage() {
                         accessor: "isActive",
                         render: (active) => (
                             <div className="flex items-center gap-1.5">
-                                <div className={`w-2 h-2 rounded-full ${active ? "bg-green-500" : "bg-gray-300"}`} />
-                                <span className="text-sm text-gray-600">{active ? "Active" : "Inactive"}</span>
+                                <div className={`w-2 h-2 rounded-full ${active ? "bg-green-500" : "bg-gray-300 dark:bg-gray-600"}`} />
+                                <span className="text-sm text-gray-600 dark:text-gray-400">{active ? "Active" : "Inactive"}</span>
                             </div>
                         )
                     },
