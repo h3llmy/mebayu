@@ -1,15 +1,18 @@
-
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { CategoryForm } from "@/components/product/categoryForm";
+import { CategoryForm } from "@/components/form/categoryForm";
 
 export default function CreateCategoryPage() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (data: { name: string; description: string; isActive: boolean }) => {
+  const handleSubmit = async (data: {
+    name: string;
+    description: string;
+    isActive: boolean;
+  }) => {
     setIsSubmitting(true);
 
     // Simulate API call

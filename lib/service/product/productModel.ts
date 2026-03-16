@@ -1,9 +1,11 @@
 export interface Product {
     id: string;
     name: string;
+    description: string;
     categories: Category[];
     product_materials: Material[];
     price: number;
+    images?: string[];
 }
 
 export interface Category {

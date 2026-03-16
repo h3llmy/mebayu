@@ -1,6 +1,7 @@
 import { PaginationRequest, PaginationResponse } from "@/types";
 import { api } from "../../apiFetch/apiFetch";
 import { Product } from "./productModel";
+import { CreateProductDto } from "./dto";
 
 export class ProductService {
     static async getAllPagination(params: PaginationRequest): Promise<PaginationResponse<Product>> {
@@ -10,10 +11,20 @@ export class ProductService {
         return response.data;
     }
 
+    static async create(data: CreateProductDto): Promise<Product> {
+        const response = await api.post<Product>("/v1/products", data);
+        return response.data;
+    }
+
+    static async update(id: string, data: Omit<Product, "id">): Promise<Product> {
+        const response = await api.put<Product>(`/v1/products/${id}`, data);
+        return response.data;
+    }
+
     static async getOne(id: string): Promise<Product> {
         try {
-            const response = await api.get<Product>(`/v1/products/${id}`);
-            return response.data;
+            const response = await api.get<{ data: Product }>(`/v1/products/${id}`);
+            return response.data.data;
         } catch (error: unknown) {
             console.log((error as { response?: { data?: unknown } })?.response?.data);
             throw error;

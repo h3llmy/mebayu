@@ -9,8 +9,8 @@ export class MaterialService {
     }
 
     static async getOne(id: string): Promise<Material> {
-        const response = await api.get<Material>(`/v1/product-materials/${id}`);
-        return response.data;
+        const response = await api.get<{ data: Material }>(`/v1/product-materials/${id}`);
+        return response.data.data;
     }
 
     // static async create(data: Omit<Material, "id">): Promise<Material> {

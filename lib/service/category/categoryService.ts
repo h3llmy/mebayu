@@ -9,8 +9,8 @@ export class CategoryService {
     }
 
     static async getOne(id: string): Promise<Category> {
-        const response = await api.get<Category>(`/v1/product-categories/${id}`);
-        return response.data;
+        const response = await api.get<{ data: Category }>(`/v1/product-categories/${id}`);
+        return response.data.data;
     }
 
     // static async create(data: Omit<Category, "id">): Promise<Category> {
