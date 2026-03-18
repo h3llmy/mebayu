@@ -41,6 +41,43 @@
                 "description": "Every piece begins with carefully selected leather and is shaped through time, patience, and skilled hands.",
                 "storyTitle": "Honest Materials",
                 "story": "We source premium genuine leather from trusted local suppliers and use traditional vegetable tanning methods that allow the material to age beautifully. Each stitch is done by hand, ensuring strength, character, and a finish that carries the mark of the artisan behind it."
+            },
+            "Features": {
+                "title": "The Mebayu Standard",
+                "sustainable": {
+                    "title": "Sustainably Sourced",
+                    "desc": "We use ethically sourced local leather, minimizing our environmental footprint."
+                },
+                "handcrafted": {
+                    "title": "Masterfully Handcrafted",
+                    "desc": "Every stitch and cut is executed by hand by our master artisans in Bali."
+                },
+                "timeless": {
+                    "title": "Timeless Design",
+                    "desc": "Aesthetic that transcends trends, designed to complement your lifestyle for years."
+                },
+                "guarantee": {
+                    "title": "Lifetime Quality",
+                    "desc": "Our goods are built to endure and age beautifully over time."
+                }
+            },
+            "Testimonials": {
+                "title": "Stories from our Community",
+                "t1": {
+                    "text": "The craftsmanship is unparalleled. You can feel the soul of the artisan in every stitch. It's not just a bag, it's a piece of art.",
+                    "author": "Elena Rossi",
+                    "role": "Designer"
+                },
+                "t2": {
+                    "text": "I've carried my Mebayu tote for two years now, and it only gets more beautiful with age. The leather has developed a stunning patina.",
+                    "author": "James Chen",
+                    "role": "Travel Photographer"
+                },
+                "t3": {
+                    "text": "Minimalist, functional, and exceptionally made. It's rare to find this level of quality in a world of fast fashion.",
+                    "author": "Sarah Miller",
+                    "role": "Architect"
+                }
             }
         },
         "Products": {

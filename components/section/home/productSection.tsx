@@ -1,63 +1,75 @@
+"use client";
+
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { FadeIn } from "@/components/ui/fade-in";
 import { ProductCard } from "@/components/card";
+import { ChevronRight } from "lucide-react";
 
 export const ProductSection = () => {
   const t = useTranslations("Pages.Home.Products");
 
   // Replace later with real data
-  const products = Array.from({ length: 8 }).map((_, i) => ({
+  const products = Array.from({ length: 4 }).map((_, i) => ({
     id: i + 1,
-    name: `Leather Bag ${i + 1}`,
+    name: i % 2 === 0 ? `The Mebayu Tote ${i + 1}` : `Bali Canvas Bag ${i + 1}`,
     price: "Rp 1.250.000",
-    image: "/hero-1.png",
-    description: "Handmade in Bali",
+    image: i % 2 === 0 ? "/leather-hero.png" : "/leather-collection.png",
+    description: "Handcrafted in Bali • Limited Edition",
   }));
 
   return (
     <section
       id="products"
-      className="bg-[#f8f7f4] py-28 px-6"
+      className="bg-white py-32 px-6"
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
 
-        {/* Header */}
-        <div className="text-center mb-20">
-          <FadeIn direction="up" delay={0.2} duration={0.8}>
-            <h2 className="text-4xl md:text-5xl font-medium tracking-wide text-[#2D2D2A]">
+        {/* Header with high-end aesthetic */}
+        <div className="grid md:grid-cols-2 items-end gap-10 mb-24 border-b border-black/5 pb-10">
+          <FadeIn direction="up">
+            <span className="block text-[#507c59] tracking-[0.4em] uppercase text-xs font-semibold mb-6">
+                Featured collection
+            </span>
+            <h2 className="text-4xl md:text-6xl font-extralight tracking-tight text-[#2D2D2A]">
               {t("title")}
             </h2>
-            <div className="w-16 h-[2px] bg-[#507c59] mx-auto mt-6" />
-            <p className="mt-6 text-gray-500 max-w-xl mx-auto text-lg">
+          </FadeIn>
+          
+          <FadeIn direction="up" delay={0.2} className="flex justify-start md:justify-end">
+            <p className="mt-6 text-gray-500 max-w-sm text-lg font-light leading-relaxed">
               {t("description")}
             </p>
           </FadeIn>
         </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
+        {/* Grid with better spacing and visual balance */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
           {products.map((product, index) => (
             <FadeIn
               key={product.id}
               direction="up"
-              delay={0.1 * (index % 4)}
+              delay={0.1 * index}
               duration={0.6}
             >
-              <ProductCard product={product} />
+              <div className="relative group p-4 border border-transparent hover:border-black/5 rounded-xl transition-all duration-300">
+                <ProductCard product={product} />
+              </div>
             </FadeIn>
           ))}
         </div>
 
-        {/* Show More */}
-        <div className="mt-20 flex justify-center">
-          <FadeIn direction="up" delay={0.2} duration={0.6}>
+        {/* View All Button with premium interactions */}
+        <div className="mt-28 flex justify-center">
+          <FadeIn direction="up" delay={0.2}>
             <Link
               href="/products"
-              className="group relative px-10 py-3 border border-[#507c59] text-[#507c59] uppercase tracking-widest text-sm transition duration-300 hover:bg-[#507c59] hover:text-white"
+              className="group flex items-center gap-4 px-12 py-5 bg-[#2D2D2A] text-white tracking-[0.25em] uppercase text-xs font-semibold hover:bg-[#507c59] transition-all duration-500 rounded-full"
             >
               {t("showMore")}
-              <span className="absolute left-1/2 -bottom-2 w-0 h-[1px] bg-[#507c59] transition-all duration-300 group-hover:w-full group-hover:left-0" />
+              <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-[#507c59] transition-all duration-500">
+                <ChevronRight className="w-4 h-4" />
+              </div>
             </Link>
           </FadeIn>
         </div>

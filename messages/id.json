@@ -41,6 +41,43 @@
                 "description": "Setiap produk dimulai dari kulit pilihan dan dibentuk melalui waktu, kesabaran, dan keahlian tangan pengrajin.",
                 "storyTitle": "Material yang Jujur",
                 "story": "Kami menggunakan kulit asli premium dari pemasok lokal terpercaya dengan proses penyamakan nabati tradisional agar kulit dapat menua dengan indah. Setiap jahitan dilakukan secara manual untuk memastikan kekuatan, karakter, dan sentuhan personal dari pengrajin di baliknya."
+            },
+            "Features": {
+                "title": "Standar Mebayu",
+                "sustainable": {
+                    "title": "Sumber Berkelanjutan",
+                    "desc": "Kami menggunakan kulit lokal yang diperoleh secara etis, meminimalkan jejak lingkungan kami."
+                },
+                "handcrafted": {
+                    "title": "Kriya Tangan Ahli",
+                    "desc": "Setiap jahitan dan potongan dilakukan dengan tangan oleh pengrajin ahli kami di Bali."
+                },
+                "timeless": {
+                    "title": "Desain Abadi",
+                    "desc": "Estetika yang melampaui tren, dirancang untuk melengkapi gaya hidup Anda selama bertahun-tahun."
+                },
+                "guarantee": {
+                    "title": "Kualitas Seumur Hidup",
+                    "desc": "Barang-barang kami dibuat untuk bertahan lama dan menua dengan indah seiring waktu."
+                }
+            },
+            "Testimonials": {
+                "title": "Cerita dari Komunitas Kami",
+                "t1": {
+                    "text": "Keahliannya tidak tertandingi. Anda dapat merasakan jiwa sang pengrajin dalam setiap jahitan. Ini bukan sekadar tas, ini adalah karya seni.",
+                    "author": "Elena Rossi",
+                    "role": "Desainer"
+                },
+                "t2": {
+                    "text": "Saya telah membawa tas Mebayu saya selama dua tahun sekarang, dan itu hanya menjadi lebih indah seiring bertambahnya usia. Kulitnya memiliki patina yang menakjubkan.",
+                    "author": "James Chen",
+                    "role": "Fotografer Perjalanan"
+                },
+                "t3": {
+                    "text": "Minimalis, fungsional, dan dibuat dengan sangat baik. Jarang sekali menemukan tingkat kualitas seperti ini di dunia fesyen cepat.",
+                    "author": "Sarah Miller",
+                    "role": "Arsitek"
+                }
             }
         },
         "Products": {

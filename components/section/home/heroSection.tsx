@@ -4,10 +4,10 @@ import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowDown } from "lucide-react";
 
-import { FadeIn } from "@/components/ui/fade-in";
-
-const images = ["/hero-2.png", "/hero-1.png"];
+const images = ["/leather-hero.png", "/leather-collection.png"];
 
 export const HeroSection = () => {
     const t = useTranslations("Pages.Home.Hero");
@@ -22,61 +22,106 @@ export const HeroSection = () => {
 
     useEffect(() => {
         resetTimeout();
-
         timeoutRef.current = setTimeout(() => {
             setCurrent((prev) => (prev + 1) % images.length);
-        }, 5000);
-
+        }, 6000);
         return () => resetTimeout();
     }, [current]);
 
     return (
-        <section className="relative w-full min-h-[70vh] md:min-h-screen overflow-hidden">
-            {/* Slides */}
-            {images.map((img, index) => (
-                <div
-                    key={index}
-                    className={`
-                        absolute inset-0 transition-opacity duration-1000
-                        ${index === current ? "opacity-100 z-20" : "opacity-0 z-10"}
-                    `}
+        <section className="relative w-full h-[85vh] md:h-screen overflow-hidden bg-[#2D2D2A]">
+            {/* Slides with AnimatePresence for smoother transitions */}
+            <AnimatePresence initial={false}>
+                <motion.div
+                    key={current}
+                    initial={{ opacity: 0, scale: 1.05 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 1.5, ease: "easeInOut" }}
+                    className="absolute inset-0"
                 >
                     <Image
-                        src={img}
-                        alt={`Hero Image ${index + 1}`}
+                        src={images[current]}
+                        alt={`Hero Image ${current + 1}`}
                         fill
                         sizes="100vw"
-                        priority={index === 0}
-                        className="object-cover object-center"
+                        priority
+                        className="object-cover object-center grayscale-[0.1] contrast-[1.1]"
                     />
-                </div>
-            ))}
+                    {/* Professional Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60 z-20" />
+                </motion.div>
+            </AnimatePresence>
 
-            {/* Dark Overlay */}
-            <div className="absolute inset-0 bg-black/40 z-25" />
-
-            {/* Content */}
-            <div className="relative z-30 flex flex-col justify-center items-center text-center min-h-[70vh] md:min-h-screen px-6 text-white">
-                <FadeIn direction="up" delay={0.2} duration={1}>
-                    <h1 className="text-3xl sm:text-4xl md:text-6xl font-semibold tracking-wide mb-6">
+            {/* Content Container */}
+            <div className="relative z-30 h-full flex flex-col justify-center items-center text-center px-6 max-w-5xl mx-auto">
+                <motion.div
+                    initial={{ y: 30, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.5, duration: 1 }}
+                >
+                    <span className="block text-white/70 tracking-[0.4em] uppercase text-xs md:text-sm mb-6 font-light">
+                        Handcrafted in Bali
+                    </span>
+                    <h1 className="text-4xl sm:text-5xl md:text-7xl font-extralight tracking-tight mb-8 text-white leading-[1.1]">
                         {t("title")}
                     </h1>
-                </FadeIn>
+                </motion.div>
 
-                <FadeIn direction="up" delay={0.4} duration={1}>
-                    <p className="text-base sm:text-lg md:text-xl max-w-2xl mb-8">
+                <motion.div
+                    initial={{ y: 30, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.7, duration: 1 }}
+                    className="max-w-2xl mx-auto"
+                >
+                    <p className="text-lg md:text-xl text-white/80 font-light leading-relaxed mb-12 tracking-wide font-sans">
                         {t("description")}
                     </p>
-                </FadeIn>
+                </motion.div>
 
-                <FadeIn direction="up" delay={0.6} duration={1}>
+                <motion.div
+                    initial={{ y: 30, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.9, duration: 1 }}
+                    className="flex flex-col sm:flex-row gap-6"
+                >
                     <Link
                         href="/products"
-                        className="inline-block px-7 py-3 bg-white text-black font-medium rounded hover:bg-[#6F8F6B] hover:text-white transition"
+                        className="group relative px-10 py-4 bg-white text-black font-medium tracking-[0.2em] uppercase text-xs overflow-hidden transition-all duration-500 hover:text-white"
                     >
-                        {t("cta")}
+                        <span className="relative z-10">{t("cta")}</span>
+                        <div className="absolute inset-0 bg-[#507c59] translate-y-full transition-transform duration-500 group-hover:translate-y-0" />
                     </Link>
-                </FadeIn>
+                </motion.div>
+            </div>
+
+            {/* Scroll Indicator */}
+            <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 2, duration: 1 }}
+                className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 text-white/50"
+            >
+                <span className="text-[10px] uppercase tracking-[0.3em] font-light">Scroll Explore</span>
+                <motion.div
+                    animate={{ y: [0, 8, 0] }}
+                    transition={{ repeat: Infinity, duration: 2 }}
+                >
+                    <ArrowDown className="w-5 h-5 stroke-1" />
+                </motion.div>
+            </motion.div>
+
+            {/* Slide Indicators */}
+            <div className="absolute right-10 top-1/2 -translate-y-1/2 z-30 hidden md:flex flex-col gap-4">
+                {images.map((_, i) => (
+                    <button
+                        key={i}
+                        onClick={() => setCurrent(i)}
+                        className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${
+                            i === current ? "bg-white h-8" : "bg-white/30 hover:bg-white/50"
+                        }`}
+                    />
+                ))}
             </div>
         </section>
     );

@@ -1,85 +1,93 @@
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import Image from "next/image";
+import { Instagram, Mail, MapPin, ArrowUpRight } from "lucide-react";
 
 export const Footer = () => {
   const t = useTranslations("Components.Footer");
 
   return (
-    <footer className="bg-gradient-to-b from-[#507c59] to-[#3f6247] text-white">
-      <div className="max-w-5xl mx-auto px-6 md:px-8 py-24">
+    <footer className="bg-[#2D2D2A] text-white overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 md:px-10 pt-32 pb-16">
 
-        {/* Top Section */}
-        <div className="grid md:grid-cols-2 gap-16 border-b border-white/10 pb-16">
+        {/* Brand and Connect */}
+        <div className="grid lg:grid-cols-12 gap-16 mb-24 items-start">
 
-          {/* Brand */}
-          <div className="space-y-6">
-            <h2 className="text-2xl tracking-[0.3em] uppercase font-light">
-              Mebayu
+          {/* Large Brand Title */}
+          <div className="lg:col-span-6">
+            <h2 className="text-[12vw] lg:text-[7vw] font-black uppercase tracking-tighter leading-[0.8] text-white/5 select-none pointer-events-none mb-10 translate-x-[-0.5vw]">
+              MEBAYU
             </h2>
-
-            <p className="text-white/80 leading-relaxed max-w-md">
-              {t("description")}
-            </p>
-
-            {/* Social Links (Text Style) */}
-            <div className="flex items-center gap-6 pt-4 text-sm tracking-widest uppercase">
-              <a
-                href="https://www.instagram.com/mebayu.idn/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white/70 hover:text-white transition duration-300"
-              >
-                Instagram
-              </a>
-              <a
-                href="mailto:hello@mebayu.com"
-                className="text-white/70 hover:text-white transition duration-300"
-              >
-                Email
-              </a>
+            <div className="max-w-md relative z-10">
+              <p className="text-white/60 text-xl font-light leading-relaxed mb-10 border-l border-[#507c59] pl-8">
+                {t("description")}
+              </p>
+              
+              <div className="flex items-center gap-8 pt-4">
+                 <a 
+                   href="https://www.instagram.com/mebayu.idn/" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   className="group p-4 bg-white/5 rounded-full hover:bg-white hover:text-black transition-all duration-500"
+                 >
+                   <Instagram className="w-5 h-5" />
+                 </a>
+                 <a 
+                   href="mailto:hello@mebayu.com" 
+                   className="group p-4 bg-white/5 rounded-full hover:bg-white hover:text-black transition-all duration-500"
+                 >
+                   <Mail className="w-5 h-5" />
+                 </a>
+              </div>
             </div>
           </div>
 
-          {/* Navigation */}
-          <div className="grid grid-cols-2 gap-10 text-sm">
-
-            <div className="space-y-4">
-              <h3 className="tracking-[0.25em] uppercase text-white/60">
+          {/* Navigation Links */}
+          <div className="lg:col-span-3 grid grid-cols-1 gap-12">
+            <div>
+              <h3 className="text-[#507c59] tracking-[0.4em] uppercase text-[10px] font-bold mb-10">
                 {t("explore")}
               </h3>
-
-              <div className="flex flex-col gap-3 text-white/80">
-                <Link href="#about" className="hover:text-white transition">
-                  {t("about")}
-                </Link>
-                <Link href="#products" className="hover:text-white transition">
-                  {t("products")}
-                </Link>
-              </div>
+              <ul className="space-y-6 text-sm tracking-widest font-light">
+                {["about", "products"].map((i) => (
+                  <li key={i}>
+                    <Link href={`/#${i}`} className="group inline-flex items-center gap-2 hover:text-[#507c59] transition-all">
+                      {t(i)}
+                      <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity translate-y-1 group-hover:translate-y-0" />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
+          </div>
 
-            <div className="space-y-4">
-              <h3 className="tracking-[0.25em] uppercase text-white/60">
+          {/* Contact Details */}
+          <div className="lg:col-span-3">
+             <h3 className="text-[#507c59] tracking-[0.4em] uppercase text-[10px] font-bold mb-10">
                 {t("connect")}
               </h3>
-
-              <div className="flex flex-col gap-3 text-white/80">
-                <p>Bali, Indonesia</p>
-                <a
-                  href="mailto:hello@mebayu.com"
-                  className="hover:text-white transition"
-                >
-                  hello@mebayu.com
-                </a>
-              </div>
-            </div>
-
+              <ul className="space-y-8 text-sm tracking-widest font-light">
+                <li className="flex items-start gap-4">
+                  <MapPin className="w-4 h-4 text-[#507c59] mt-0.5 shrink-0" />
+                  <span className="text-white/60">Bali, Indonesia<br/>Denpasar, 80234</span>
+                </li>
+                <li className="flex items-center gap-4">
+                  <Mail className="w-4 h-4 text-[#507c59] shrink-0" />
+                  <a href="mailto:hello@mebayu.com" className="hover:text-white transition">hello@mebayu.com</a>
+                </li>
+              </ul>
           </div>
         </div>
 
-        {/* Bottom */}
-        <div className="pt-8 text-center text-xs tracking-widest text-white/50">
-          © {new Date().getFullYear()} Mebayu — Crafted in Bali.
+        {/* Bottom Bar */}
+        <div className="pt-16 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-8 text-[10px] tracking-[0.5em] uppercase text-white/30 font-bold">
+          <div>
+            © {new Date().getFullYear()} Mebayu — Handcrafted in Bali.
+          </div>
+          <div className="flex gap-10">
+            <Link href="#" className="hover:text-white transition decoration-transparent hover:decoration-[#507c59] underline underline-offset-8">Privacy Policy</Link>
+            <Link href="#" className="hover:text-white transition decoration-transparent hover:decoration-[#507c59] underline underline-offset-8">Terms of Service</Link>
+          </div>
         </div>
 
       </div>

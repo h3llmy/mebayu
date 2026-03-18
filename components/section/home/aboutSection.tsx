@@ -1,6 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { FadeIn } from "@/components/ui/fade-in";
+import { MoveRight } from "lucide-react";
+import { Link } from "@/i18n/routing";
 
 export const AboutSection = () => {
     const t = useTranslations("Pages.Home.About");
@@ -8,39 +12,54 @@ export const AboutSection = () => {
     return (
         <section
             id="about"
-            className="bg-[#F9F7F4] py-24 px-6"
+            className="bg-[#f8f7f4] py-32 px-6"
         >
-            <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-                
-                {/* Image */}
-                <FadeIn direction="left" delay={0.2} duration={0.8}>
-                    <div className="relative w-full h-[400px] rounded-xl overflow-hidden shadow-lg">
-                        <Image
-                            src="/hero-2.png" // replace with workshop or leather image
-                            alt="Craftsmanship"
-                            fill
-                            className="object-cover"
-                        />
+            <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
+
+                {/* Image Composition */}
+                <FadeIn direction="left" duration={1}>
+                    <div className="relative group">
+                        <div className="relative w-full aspect-[4/5] rounded-lg overflow-hidden shadow-2xl z-10">
+                            <Image
+                                src="/artisan-hands.png"
+                                alt="Craftsmanship at Mebayu"
+                                fill
+                                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                            />
+                        </div>
                     </div>
                 </FadeIn>
 
-                {/* Content */}
-                <FadeIn direction="right" delay={0.3} duration={0.8}>
-                    <div>
-                        <h2 className="text-3xl md:text-4xl font-semibold tracking-wide mb-6 text-[#2D2D2A]">
+                {/* Content with luxury typography */}
+                <div className="relative">
+                    <FadeIn direction="up" delay={0.2}>
+                        <span className="block text-[#507c59] tracking-[0.4em] uppercase text-xs font-semibold mb-6">
+                            Our Heritage
+                        </span>
+                        <h2 className="text-4xl md:text-6xl font-light tracking-tight mb-10 text-[#2D2D2A] leading-[1.1]">
                             {t("title")}
                         </h2>
 
-                        <div className="text-gray-600 leading-relaxed space-y-5 text-lg">
-                            <p>{t("p1")}</p>
-                            <p>{t("p2")}</p>
+                        <div className="text-gray-500 leading-relaxed space-y-8 text-lg font-light">
+                            <p className="border-l-2 border-[#507c59]/20 pl-6 border-b-0 border-t-0 border-r-0">
+                                {t("p1")}
+                            </p>
+                            <p className="pl-6">
+                                {t("p2")}
+                            </p>
                         </div>
 
-                        <div className="mt-8">
-                            <span className="inline-block w-16 h-[2px] bg-[#6F8F6B]" />
+                        <div className="mt-14 flex items-center gap-6">
+                            <Link
+                                href="/#products"
+                                className="group inline-flex items-center gap-3 text-[#2D2D2A] tracking-[0.2em] uppercase text-xs font-bold hover:text-[#507c59] transition-colors"
+                            >
+                                Explore Our Philosophy
+                                <MoveRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-2" />
+                            </Link>
                         </div>
-                    </div>
-                </FadeIn>
+                    </FadeIn>
+                </div>
 
             </div>
         </section>
