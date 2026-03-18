@@ -3,5 +3,5 @@ export interface PaginationRequest {
     limit: number;
     search?: string;
     sort?: string;
-    dir?: "asc" | "desc";
+    sort_order?: "Asc" | "Desc";
 }

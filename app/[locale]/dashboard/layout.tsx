@@ -55,7 +55,8 @@ export default async function DashboardLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <NextIntlClientProvider messages={messages}>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+
 
             <div className="flex min-h-screen">
               {/* Sidebar */}

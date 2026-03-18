@@ -1,7 +1,8 @@
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-export const ProductsHeader = () => {
-  const t = useTranslations("Pages.Products");
+export const ProductsHeader = async () => {
+  const t = await getTranslations("Pages.Products");
+
   return (
     <div className="text-center mb-20">
       <h1 className="text-4xl md:text-5xl font-light tracking-wide text-[#2D2D2A]">

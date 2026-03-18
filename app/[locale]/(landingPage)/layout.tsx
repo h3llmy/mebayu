@@ -113,7 +113,8 @@ export default async function LandingPageLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+
           <Navbar />
           {children}
           <WhatsAppButton phoneNumber="0817085750446" />

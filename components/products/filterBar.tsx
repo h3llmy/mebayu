@@ -1,29 +1,42 @@
+"use client";
+
 import { useTranslations } from "next-intl";
+import { usePathname, useRouter } from "@/i18n/routing";
+import { useSearchParams } from "next/navigation";
 
 interface FilterBarProps {
   totalItems: number;
   sort: string;
-  setSort: (v: string) => void;
-  setPage: (v: number) => void;
+  sortOrder: "Asc" | "Desc";
   category: string;
-  setCategory: (v: string) => void;
   material: string;
-  setMaterial: (v: string) => void;
 }
 
 export const FilterBar = ({
   totalItems,
   sort,
-  setSort,
-  setPage,
+  sortOrder,
   category,
-  setCategory,
   material,
-  setMaterial,
 }: FilterBarProps) => {
-  const t = useTranslations("Pages.Products");
+    const t = useTranslations("Pages.Products");
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
 
-  return (
+    const updateFilters = (updates: Record<string, string>) => {
+        const params = new URLSearchParams(searchParams.toString());
+        Object.entries(updates).forEach(([name, value]) => {
+            params.set(name, value);
+        });
+        params.set("page", "1"); // Reset to page 1 on filter change
+        router.push(`${pathname}?${params.toString()}`);
+    };
+
+
+    return (
+
+
     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8 mb-16 border-y border-gray-200 py-6">
       <p className="text-sm text-gray-500">
         {t("showing")} {totalItems} {t("items")}
@@ -33,26 +46,24 @@ export const FilterBar = ({
         {/* Sort */}
         <FilterSelect
           label={t("sort")}
-          value={sort}
+          value={`${sort}:${sortOrder}`}
           onChange={(v) => {
-            setSort(v);
-            setPage(1);
+            const [field, order] = v.split(":");
+            updateFilters({ sort: field, sort_order: order });
           }}
           options={[
-            { value: "newest", label: t("newest") },
-            { value: "low", label: t("lowToHigh") },
-            { value: "high", label: t("highToLow") },
+            { value: "created_at:Desc", label: t("newest") },
+            { value: "price:Asc", label: t("lowToHigh") },
+            { value: "price:Desc", label: t("highToLow") },
           ]}
         />
+
 
         {/* Category */}
         <FilterSelect
           label={t("category")}
           value={category}
-          onChange={(v) => {
-            setCategory(v);
-            setPage(1);
-          }}
+          onChange={(v) => updateFilters({ category: v })}
           options={[
             { value: "all", label: t("all") },
             { value: "bags", label: t("bags") },
@@ -65,10 +76,7 @@ export const FilterBar = ({
         <FilterSelect
           label={t("material")}
           value={material}
-          onChange={(v) => {
-            setMaterial(v);
-            setPage(1);
-          }}
+          onChange={(v) => updateFilters({ material: v })}
           options={[
             { value: "all", label: t("all") },
             { value: "fullgrain", label: "Full Grain" },
@@ -77,6 +85,7 @@ export const FilterBar = ({
             { value: "vegan", label: "Vegan Leather" },
           ]}
         />
+
       </div>
     </div>
   );

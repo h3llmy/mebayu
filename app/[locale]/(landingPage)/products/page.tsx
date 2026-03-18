@@ -1,58 +1,39 @@
-"use client";
-
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
 import {
   ProductsHeader,
   FilterBar,
   ProductGrid,
   Pagination,
 } from "@/components/products";
+import { ProductService } from "@/lib/service/product";
 
-export default function Page() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+interface Props {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}
 
-  // ----- READ FROM URL -----
-  const pageParam = searchParams.get("page") || "1";
-  const sortParam = searchParams.get("sort") || "newest";
-  const categoryParam = searchParams.get("category") || "all";
-  const materialParam = searchParams.get("material") || "all";
+export default async function Page({ searchParams }: Props) {
+  const resolvedParams = await searchParams;
 
-  const [page, setPage] = useState(Number(pageParam));
-  const [sort, setSort] = useState(sortParam);
-  const [category, setCategory] = useState(categoryParam);
-  const [material, setMaterial] = useState(materialParam);
+  const page = Number(resolvedParams.page) || 1;
+  const sort = (resolvedParams.sort as string) || "created_at";
+  const sortOrder = (resolvedParams.sort_order as "Asc" | "Desc") || "Desc";
 
-  // ----- MOCK DATA -----
-  const allProducts = Array.from({ length: 48 }).map((_, i) => ({
-    id: i + 1,
-    name: `Leather Bag ${i + 1}`,
-    price: "Rp 1.250.000",
-    image: "/hero-1.png",
-    description: "Handmade in Bali",
-  }));
+  const category = (resolvedParams.category as string) || "all";
+  const material = (resolvedParams.material as string) || "all";
+
   const productsPerPage = 8;
 
-  const totalPages = Math.ceil(allProducts.length / productsPerPage);
+  const productsResponse = await ProductService.getAllPagination({
+    page,
+    limit: productsPerPage,
+    sort,
+    sort_order: sortOrder,
+  });
 
-  const paginatedProducts = useMemo(() => {
-    const start = (page - 1) * productsPerPage;
-    return allProducts.slice(start, start + productsPerPage);
-  }, [page, allProducts]);
 
-  // ----- UPDATE URL WHEN FILTER CHANGES -----
-  useEffect(() => {
-    const params = new URLSearchParams();
 
-    if (page > 1) params.set("page", String(page));
-    if (sort !== "newest") params.set("sort", sort);
-    if (category !== "all") params.set("category", category);
-    if (material !== "all") params.set("material", material);
-
-    router.push(`${pathname}?${params.toString()}`);
-  }, [page, sort, category, material, pathname, router]);
+  const products = productsResponse?.data || [];
+  const totalPages = productsResponse?.total_pages || 1;
+  const totalData = productsResponse?.total_data || 0;
 
   return (
     <section className="bg-[#f8f7f4] min-h-screen py-28 px-6">
@@ -60,20 +41,22 @@ export default function Page() {
         <ProductsHeader />
 
         <FilterBar
-          totalItems={paginatedProducts.length}
+          totalItems={totalData}
           sort={sort}
-          setSort={setSort}
-          setPage={setPage}
+          sortOrder={sortOrder}
           category={category}
-          setCategory={setCategory}
           material={material}
-          setMaterial={setMaterial}
         />
 
-        <ProductGrid products={paginatedProducts} />
 
-        <Pagination page={page} totalPages={totalPages} setPage={setPage} />
+        <ProductGrid products={products} />
+
+        <Pagination
+          page={page}
+          totalPages={totalPages}
+        />
       </div>
     </section>
   );
 }
+

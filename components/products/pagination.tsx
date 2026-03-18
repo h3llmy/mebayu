@@ -1,10 +1,24 @@
+"use client";
+
+import { usePathname, useRouter } from "@/i18n/routing";
+import { useSearchParams } from "next/navigation";
+
 interface PaginationProps {
   page: number;
   totalPages: number;
-  setPage: (p: number) => void;
 }
 
-export const Pagination = ({ page, totalPages, setPage }: PaginationProps) => {
+export const Pagination = ({ page, totalPages }: PaginationProps) => {
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+
+    const setPage = (p: number) => {
+        const params = new URLSearchParams(searchParams.toString());
+        params.set("page", String(p));
+        router.push(`${pathname}?${params.toString()}`);
+    };
+
   return (
     <div className="flex justify-center items-center gap-2 md:gap-4 mt-20 flex-wrap">
       {/* Prev */}
