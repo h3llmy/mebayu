@@ -1,53 +1,11 @@
 "use client";
 
-import { useMemo, useState, useEffect, useRef } from "react";
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useDataTable } from "./useDataTable";
+import { DataTableHeader } from "./DataTableHeader";
+import { DataTableBody } from "./DataTableBody";
+import { DataTablePagination } from "./DataTablePagination";
+import { TableProps } from "./types";
 
-type Primitive =
-  | string
-  | number
-  | boolean
-  | bigint
-  | symbol
-  | null
-  | undefined
-  | Date;
-
-type DeepKeys<T> = T extends Primitive
-  ? never
-  : {
-    [K in keyof T & string]: T[K] extends Primitive
-    ? K
-    : K | `${K}.${DeepKeys<T[K]>}`;
-  }[keyof T & string];
-
-interface Column<T, P extends DeepKeys<T> = DeepKeys<T>> {
-  header: string;
-  accessor: P;
-  sortable?: boolean;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  render?: (value: any, row: T) => React.ReactNode;
-}
-
-interface TableProps<T> {
-  columns: Column<T>[];
-  data: T[];
-  bulkActions?: {
-    label: string;
-    onClick: (selected: T[]) => void;
-  }[];
-  defaultPageSize?: number;
-  isLoading?: boolean;
-  totalItems?: number; // REQUIRED for proper pagination
-  rowIdKey?: string;
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function getValue(obj: any, path: string) {
-  return path.split(".").reduce((acc, key) => acc?.[key], obj);
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function DataTable<T extends Record<string, any>>({
   columns,
   data,
@@ -57,507 +15,89 @@ export function DataTable<T extends Record<string, any>>({
   totalItems = 0,
   rowIdKey = "id",
 }: TableProps<T>) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  /* ----------------------- */
-  /* URL State               */
-  /* ----------------------- */
-
-  const queryPage = Math.max(1, Number(searchParams.get("page")) || 1);
-  const queryLimit =
-    Number(searchParams.get("limit")) || defaultPageSize;
-  const querySearch = searchParams.get("q") || "";
-  const querySort = searchParams.get("sort") || null;
-  const querySortOrder =
-    (searchParams.get("sort_order") as "Asc" | "Desc") || "Asc";
-
-  const [searchInput, setSearchInput] = useState(querySearch);
-  const [selectedRows, setSelectedRows] =
-    useState<Map<string | number, T>>(new Map());
-  const [visibleColumns, setVisibleColumns] = useState<
-    Set<string>
-  >(new Set(columns.map((c) => c.accessor)));
-
-  const [showColumnDropdown, setShowColumnDropdown] =
-    useState(false);
-  const [showBulkDropdown, setShowBulkDropdown] =
-    useState(false);
-
-  const columnRef = useRef<HTMLDivElement>(null);
-  const bulkRef = useRef<HTMLDivElement>(null);
-
-  /* ----------------------- */
-  /* Sync search input       */
-  /* ----------------------- */
-
-  useEffect(() => {
-    setSearchInput(querySearch);
-  }, [querySearch]);
-
-  /* ----------------------- */
-  /* URL Update Helper       */
-  /* ----------------------- */
-
-  const updateUrl = (updates: Record<string, string | number | null>) => {
-    const params = new URLSearchParams(searchParams.toString());
-
-    Object.entries(updates).forEach(([key, value]) => {
-      if (value === null || value === "") {
-        params.delete(key);
-      } else {
-        params.set(key, String(value));
-      }
-    });
-
-    router.push(`${pathname}?${params.toString()}`);
-  };
-
-  /* ----------------------- */
-  /* Debounce Search         */
-  /* ----------------------- */
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      if (searchInput !== querySearch) {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        updateUrl({ q: searchInput, page: 1 });
-      }
-    }, 500);
-
-    return () => clearTimeout(handler);
-  }, [searchInput, querySearch]);
-
-  /* ----------------------- */
-  /* Remote Pagination Logic */
-  /* ----------------------- */
-
-  const totalRecords = totalItems;
-  const totalPages = Math.max(
-    1,
-    Math.ceil(totalRecords / queryLimit)
-  );
-
-  useEffect(() => {
-    if (queryPage > totalPages && totalPages > 1) {
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      updateUrl({ page: totalPages });
-    }
-  }, [queryPage, totalPages]);
-
-  // 🚀 NO CLIENT SIDE MODIFICATION
-  const paginatedData = data;
-
-  /* ----------------------- */
-  /* Sorting Toggle          */
-  /* ----------------------- */
-
-  const toggleSort = (key: string) => {
-    const isCurrentKey = querySort === key;
-
-    if (!isCurrentKey) {
-      updateUrl({ sort: key, sort_order: "Asc" });
-    } else if (querySortOrder === "Asc") {
-      updateUrl({ sort: key, sort_order: "Desc" });
-    } else {
-      updateUrl({ sort: null, sort_order: null });
-    }
-  };
-
-  /* ----------------------- */
-  /* Pagination Numbers      */
-  /* ----------------------- */
-
-  const getPageNumbers = () => {
-    const delta = 2;
-    const range = [];
-    const rangeWithDots: (number | string)[] = [];
-    let l;
-
-    for (let i = 1; i <= totalPages; i++) {
-      if (
-        i === 1 ||
-        i === totalPages ||
-        (i >= queryPage - delta && i <= queryPage + delta)
-      ) {
-        range.push(i);
-      }
-    }
-
-    for (const i of range) {
-      if (l) {
-        if (i - l === 2) {
-          rangeWithDots.push(l + 1);
-        } else if (i - l !== 1) {
-          rangeWithDots.push("...");
-        }
-      }
-      rangeWithDots.push(i);
-      l = i;
-    }
-
-    return rangeWithDots;
-  };
-
-  /* ----------------------- */
-  /* Click Outside Dropdowns */
-  /* ----------------------- */
-
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (
-        columnRef.current &&
-        !columnRef.current.contains(e.target as Node)
-      )
-        setShowColumnDropdown(false);
-
-      if (
-        bulkRef.current &&
-        !bulkRef.current.contains(e.target as Node)
-      )
-        setShowBulkDropdown(false);
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () =>
-      document.removeEventListener(
-        "mousedown",
-        handleClickOutside
-      );
-  }, []);
-
-  const selectedData = useMemo(
-    () => Array.from(selectedRows.values()),
-    [selectedRows]
-  );
-
-  /* ----------------------- */
-  /* Render                  */
-  /* ----------------------- */
+  const {
+    queryPage,
+    queryLimit,
+    querySort,
+    querySortOrder,
+    searchInput,
+    setSearchInput,
+    selectedRows,
+    setSelectedRows,
+    visibleColumns,
+    setVisibleColumns,
+    showColumnDropdown,
+    setShowColumnDropdown,
+    showBulkDropdown,
+    setShowBulkDropdown,
+    columnRef,
+    bulkRef,
+    updateUrl,
+    totalPages,
+    toggleSort,
+    getPageNumbers,
+    selectedData,
+  } = useDataTable({
+    columns,
+    data,
+    defaultPageSize,
+    totalItems,
+    rowIdKey,
+  });
 
   return (
-    <div className="bg-white dark:bg-gray-950 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm font-sans relative overflow-visible">
+    <div className="bg-white dark:bg-gray-950 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm font-sans relative overflow-visible transition-colors duration-200">
       {isLoading && (
-        <div className="absolute inset-0 bg-white/60 backdrop-blur-[1px] z-30 flex items-center justify-center rounded-xl">
+        <div className="absolute inset-0 bg-white/60 dark:bg-black/40 backdrop-blur-[1px] z-30 flex items-center justify-center rounded-xl">
           <div className="flex flex-col items-center gap-2">
             <div className="w-8 h-8 border-4 border-[var(--primary)] border-t-transparent rounded-full animate-spin"></div>
-            <span className="text-sm font-medium text-[var(--primary)]">
+            <span className="text-sm font-medium text-[var(--primary)] text-white">
               Loading data...
             </span>
           </div>
         </div>
       )}
 
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 px-6 py-4 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 rounded-t-xl">
-        <div>
-          {selectedRows.size > 0 && bulkActions.length > 0 && (
-            <div className="relative" ref={bulkRef}>
-              <button
-                onClick={() =>
-                  setShowBulkDropdown(!showBulkDropdown)
-                }
-                className="h-9 px-4 text-sm bg-[var(--primary)] text-white rounded-md hover:bg-[var(--primary-hover)] flex items-center gap-2"
-              >
-                Bulk Actions ({selectedRows.size})
-              </button>
+      <DataTableHeader
+        selectedRows={selectedRows}
+        bulkActions={bulkActions as any}
+        showBulkDropdown={showBulkDropdown}
+        setShowBulkDropdown={setShowBulkDropdown}
+        bulkRef={bulkRef as any}
+        selectedData={selectedData}
+        setSelectedRows={setSelectedRows}
+        searchInput={searchInput}
+        setSearchInput={setSearchInput}
+        showColumnDropdown={showColumnDropdown}
+        setShowColumnDropdown={setShowColumnDropdown}
+        columnRef={columnRef as any}
+        columns={columns as any}
+        visibleColumns={visibleColumns}
+        setVisibleColumns={setVisibleColumns}
+      />
 
-              {showBulkDropdown && (
-                <div className="absolute left-0 mt-2 w-44 bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-800 rounded-md shadow-lg z-20">
-                  {bulkActions.map((action, i) => (
-                    <button
-                      key={i}
-                      onClick={() => {
-                        action.onClick(selectedData);
-                        setShowBulkDropdown(false);
-                        setSelectedRows(new Map());
-                      }}
-                      className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-gray-300"
-                    >
-                      {action.label}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-        </div>
+      <DataTableBody
+        columns={columns as any}
+        visibleColumns={visibleColumns}
+        data={data}
+        selectedRows={selectedRows}
+        setSelectedRows={setSelectedRows}
+        rowIdKey={rowIdKey}
+        bulkActions={bulkActions}
+        querySort={querySort}
+        querySortOrder={querySortOrder}
+        toggleSort={toggleSort}
+      />
 
-        <div className="flex items-center gap-3">
-          <div className="relative w-full md:w-64">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="h-9 pl-9 pr-3 text-sm border border-[var(--gray-300)] dark:border-gray-700 bg-white dark:bg-gray-900 dark:text-white rounded-md focus:ring-2 focus:ring-[var(--primary)] focus:border-[var(--primary)] outline-none w-full transition-all"
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-            />
-            <svg className="w-4 h-4 absolute left-3 top-2.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          </div>
-
-          <div className="relative" ref={columnRef}>
-            <button
-              onClick={() => setShowColumnDropdown(!showColumnDropdown)}
-              className="h-9 px-4 text-sm border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-900 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center gap-2 transition-colors"
-            >
-              <span>Columns</span>
-              <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-              </svg>
-            </button>
-            {showColumnDropdown && (
-              <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-800 rounded-md shadow-lg z-20 p-2">
-                <div className="text-xs font-semibold text-gray-400 dark:text-gray-500 px-2 py-1 mb-1 uppercase tracking-wider">Visible Columns</div>
-                {columns.map((col) => (
-                  <label key={col.accessor} className="flex items-center gap-2 text-sm py-1.5 px-2 hover:bg-gray-50 cursor-pointer rounded transition-colors text-gray-700">
-                    <input
-                      type="checkbox"
-                      className="rounded text-[var(--primary)] focus:ring-[var(--primary)]"
-                      checked={visibleColumns.has(col.accessor)}
-                      onChange={() => {
-                        const newSet = new Set(visibleColumns);
-                        if (newSet.has(col.accessor)) newSet.delete(col.accessor);
-                        else newSet.add(col.accessor);
-                        setVisibleColumns(newSet);
-                      }}
-                    />
-                    {col.header}
-                  </label>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Table */}
-      <div className="overflow-x-auto overflow-hidden">
-        <table className="w-full text-sm text-left border-collapse">
-          <thead className="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 text-xs uppercase text-gray-500 dark:text-gray-400 font-bold">
-            <tr>
-              {bulkActions.length > 0 && (
-                <th className="px-4 py-3 w-10 text-center">
-                  <input
-                    type="checkbox"
-                    onChange={() => {
-                      const allSelectedOnPage = paginatedData.every((row) =>
-                        selectedRows.has(row[rowIdKey])
-                      );
-                      const newMap = new Map(selectedRows);
-                      if (allSelectedOnPage) {
-                        paginatedData.forEach((row) =>
-                          newMap.delete(row[rowIdKey])
-                        );
-                      } else {
-                        paginatedData.forEach((row) =>
-                          newMap.set(row[rowIdKey], row)
-                        );
-                      }
-                      setSelectedRows(newMap);
-                    }}
-                    checked={
-                      paginatedData.length > 0 &&
-                      paginatedData.every((row) =>
-                        selectedRows.has(row[rowIdKey])
-                      )
-                    }
-                  />
-                </th>
-              )}
-
-              {columns
-                .filter((col) => visibleColumns.has(col.accessor))
-                .map((col) => {
-                  const isSorted = querySort === col.accessor;
-                  const isAsc = querySortOrder === "Asc";
-
-                  return (
-                    <th
-                      key={String(col.accessor)}
-                      onClick={() => {
-                        if (col.sortable) toggleSort(col.accessor);
-                      }}
-                      className={`px-6 py-3 text-left select-none ${col.sortable
-                        ? "cursor-pointer hover:text-gray-900 dark:hover:text-gray-200"
-                        : "cursor-default"
-                        }`}
-                    >
-                      <div className="flex items-center gap-2">
-                        <span>{col.header}</span>
-
-                        {col.sortable && (
-                          <span className="flex items-center">
-                            {!isSorted ? (
-                              <div className="flex flex-col items-center opacity-40">
-                                <svg className="w-3 h-2" viewBox="0 4 20 10" fill="currentColor">
-                                  <path d="M10 5l-5 6h10l-5-6z" />
-                                </svg>
-
-                                <svg className="w-3 h-2 -mt-[2px]" viewBox="0 6 20 10" fill="currentColor">
-                                  <path d="M10 15l5-6H5l5 6z" />
-                                </svg>
-                              </div>
-                            ) : isAsc ? (
-                              <div className="flex flex-col items-center">
-                                <svg className="w-3 h-2 opacity-40" viewBox="0 4 20 10" fill="currentColor">
-                                  <path d="M10 5l-5 6h10l-5-6z" />
-                                </svg>
-
-                                <svg className="w-3 h-2 -mt-[2px] opacity-100" viewBox="0 6 20 10" fill="currentColor">
-                                  <path d="M10 15l5-6H5l5 6z" />
-                                </svg>
-                              </div>
-                            ) : (
-                              <div className="flex flex-col items-center">
-                                <svg className="w-3 h-2 opacity-100" viewBox="0 4 20 10" fill="currentColor">
-                                  <path d="M10 5l-5 6h10l-5-6z" />
-                                </svg>
-
-                                <svg className="w-3 h-2 -mt-[2px] opacity-40" viewBox="0 6 20 10" fill="currentColor">
-                                  <path d="M10 15l5-6H5l5 6z" />
-                                </svg>
-                              </div>
-                            )}
-                          </span>
-                        )}
-                      </div>
-                    </th>
-                  );
-                })}
-            </tr>
-          </thead>
-
-          <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
-            {paginatedData.length > 0 ? (
-              paginatedData.map((row, rowIndex) => (
-                <tr key={rowIndex}>
-                  {bulkActions.length > 0 && (
-                    <td className="px-4 py-3 text-center">
-                      <input
-                        type="checkbox"
-                        checked={selectedRows.has(row[rowIdKey])}
-                        onChange={() => {
-                          const newMap = new Map(selectedRows);
-                          const id = row[rowIdKey];
-                          if (newMap.has(id)) {
-                            newMap.delete(id);
-                          } else {
-                            newMap.set(id, row);
-                          }
-                          setSelectedRows(newMap);
-                        }}
-                      />
-                    </td>
-                  )}
-
-                  {columns.map(
-                    (col) =>
-                      visibleColumns.has(
-                        col.accessor
-                      ) && (
-                        <td
-                          key={col.accessor}
-                          className="px-6 py-3"
-                        >
-                          {col.render
-                            ? col.render(
-                              getValue(
-                                row,
-                                col.accessor
-                              ),
-                              row
-                            )
-                            : String(
-                              getValue(
-                                row,
-                                col.accessor
-                              ) ?? "-"
-                            )}
-                        </td>
-                      )
-                  )}
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td
-                  colSpan={columns.length + 1}
-                  className="px-6 py-12 text-center text-gray-400 dark:text-gray-500"
-                >
-                  No records found.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
-
-      {/* Footer / Pagination */}
-      <div className="flex flex-col sm:flex-row items-center justify-between px-6 py-4 bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 gap-4 rounded-b-xl">
-        <div className="flex items-center gap-4 text-sm text-gray-600">
-          <div className="flex items-center gap-2 bg-white dark:bg-gray-950 border border-gray-300 dark:border-gray-700 rounded-md px-2 py-1 shadow-sm">
-            <span className="text-gray-500">Show</span>
-            <select
-              value={queryLimit}
-              onChange={(e) => updateUrl({ limit: e.target.value, page: 1 })}
-              className="bg-transparent outline-none font-medium text-gray-900 dark:text-gray-100"
-            >
-              {[10, 20, 50, 100].map(size => (
-                <option key={size} value={size}>{size}</option>
-              ))}
-            </select>
-            <span className="text-gray-500">entries</span>
-          </div>
-          <span className="hidden lg:inline text-gray-300">|</span>
-          <span className="text-gray-500 hidden lg:inline">
-            Showing <strong className="text-gray-900 dark:text-white">{totalRecords === 0 ? 0 : (queryPage - 1) * queryLimit + 1}</strong> to <strong className="text-gray-900 dark:text-white">{Math.min(queryPage * queryLimit, totalRecords)}</strong> of <strong className="text-gray-900 dark:text-white">{totalRecords}</strong> results
-          </span>
-        </div>
-
-        <div className="flex items-center gap-1.5">
-          <button
-            disabled={queryPage <= 1 || isLoading}
-            onClick={() => updateUrl({ page: queryPage - 1 })}
-            className="w-9 h-9 flex items-center justify-center text-sm font-medium border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-sm"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-
-          <div className="flex items-center gap-1">
-            {getPageNumbers().map((page, i) => (
-              page === "..." ? (
-                <span key={`dots-${i}`} className="w-9 h-9 flex items-center justify-center text-gray-400">...</span>
-              ) : (
-                <button
-                  key={page}
-                  onClick={() => updateUrl({ page: page as number })}
-                  className={`w-9 h-9 flex items-center justify-center text-sm font-medium rounded-md transition-all shadow-sm ${queryPage === page
-                    ? "bg-[var(--primary)] text-white border border-[var(--primary)]"
-                    : "bg-white text-[var(--gray-700)] dark:text-[var(--gray-300)] dark:bg-gray-900 border border-[var(--gray-300)] dark:border-gray-700 hover:bg-[var(--gray-50)] dark:hover:bg-gray-800"
-                    }`}
-                >
-                  {page}
-                </button>
-              )
-            ))}
-          </div>
-
-          <button
-            disabled={queryPage >= totalPages || isLoading}
-            onClick={() => updateUrl({ page: queryPage + 1 })}
-            className="w-9 h-9 flex items-center justify-center text-sm font-medium border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-sm"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-        </div>
-      </div>
+      <DataTablePagination
+        queryLimit={queryLimit}
+        updateUrl={updateUrl}
+        queryPage={queryPage}
+        totalRecords={totalItems}
+        totalPages={totalPages}
+        isLoading={isLoading}
+        getPageNumbers={getPageNumbers}
+      />
     </div>
   );
 }
