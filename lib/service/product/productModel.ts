@@ -5,7 +5,7 @@ export interface Product {
     categories: Category[];
     product_materials: Material[];
     price: number;
-    images?: string[];
+    images?: (string | { url: string; [key: string]: any })[];
 }
 
 export interface Category {

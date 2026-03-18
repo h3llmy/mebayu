@@ -19,6 +19,7 @@ export default function ProductPage() {
     // when params change if I want to "pretend" better.
 
     const [total, setTotal] = useState(0);
+    const [refreshNonce, setRefreshNonce] = useState(0);
 
     useEffect(() => {
         const loadData = async () => {
@@ -47,7 +48,18 @@ export default function ProductPage() {
         };
 
         loadData();
-    }, [searchParams]);
+    }, [searchParams, refreshNonce]);
+
+    const handleDelete = async (id: string) => {
+        if (!confirm("Are you sure you want to delete this product?")) return;
+        try {
+            await ProductService.delete(id);
+            setRefreshNonce((n) => n + 1);
+        } catch (error) {
+            console.error("Failed to delete product:", error);
+            alert("Failed to delete product");
+        }
+    };
 
     return (
         <div className="p-6">
@@ -79,12 +91,26 @@ export default function ProductPage() {
                         accessor: "id",
                         sortable: false,
                         render: (id) => (
-                            <Link
-                                href={`/dashboard/products/${id}`}
-                                className="text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors"
-                            >
-                                Edit
-                            </Link>
+                            <div className="flex gap-3">
+                                <Link
+                                    href={`/dashboard/products/${id}/detail`}
+                                    className="text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors"
+                                >
+                                    Detail
+                                </Link>
+                                <Link
+                                    href={`/dashboard/products/${id}`}
+                                    className="text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors"
+                                >
+                                    Edit
+                                </Link>
+                                <button
+                                    onClick={() => handleDelete(id as string)}
+                                    className="text-red-600 hover:text-red-800 font-medium text-sm transition-colors"
+                                >
+                                    Delete
+                                </button>
+                            </div>
                         )
                     }
                 ]}

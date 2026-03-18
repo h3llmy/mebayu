@@ -17,6 +17,7 @@ export interface ImageUploadProps {
   onChange?: (files: UploadedFile[]) => void;
   uploadPath: string; // required for presign
   required?: boolean;
+  disabled?: boolean;
 }
 
 export const ImageUpload = ({
@@ -28,6 +29,7 @@ export const ImageUpload = ({
   onChange,
   uploadPath,
   required,
+  disabled,
 }: ImageUploadProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -98,6 +100,7 @@ export const ImageUpload = ({
   const onDrop = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    if (disabled) return;
     handleFiles(e.dataTransfer.files);
   };
 
@@ -113,15 +116,17 @@ export const ImageUpload = ({
       <div
         className={`
           relative border-2 border-dashed rounded-xl p-4 min-h-[160px]
-          transition-all duration-200 cursor-pointer overflow-hidden
+          transition-all duration-200 ${disabled ? 'cursor-not-allowed opacity-75' : 'cursor-pointer'} overflow-hidden
           ${error
             ? "border-red-300 bg-red-50 dark:bg-red-500/10 dark:border-red-500/50"
-            : "border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:border-[var(--primary)] dark:hover:border-[var(--primary)] hover:bg-[var(--primary-light)] dark:hover:bg-[var(--primary-light)]"
+            : disabled 
+                ? "border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
+                : "border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:border-[var(--primary)] dark:hover:border-[var(--primary)] hover:bg-[var(--primary-light)] dark:hover:bg-[var(--primary-light)]"
           }
         `}
         onDragOver={onDragOver}
         onDrop={onDrop}
-        onClick={() => fileInputRef.current?.click()}
+        onClick={() => !disabled && fileInputRef.current?.click()}
       >
         <input
           max={maxFiles}
@@ -135,27 +140,33 @@ export const ImageUpload = ({
 
         {previews.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full text-center">
-            <svg
-              className="w-10 h-10 text-gray-400 dark:text-gray-500 mb-2"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.5}
-                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-              />
-            </svg>
+            {!disabled && (
+              <svg
+                className="w-10 h-10 text-gray-400 dark:text-gray-500 mb-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+            )}
             <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
               {uploading
                 ? "Uploading..."
-                : "Click to upload or drag and drop"}
+                : disabled 
+                  ? "No images available" 
+                  : "Click to upload or drag and drop"}
             </p>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-              PNG, JPG or WEBP (Max {maxFiles} images)
-            </p>
+            {!disabled && (
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                PNG, JPG or WEBP (Max {maxFiles} images)
+              </p>
+            )}
           </div>
         ) : (
           <div className="grid grid-cols-3 sm:grid-cols-5 gap-3">
@@ -170,16 +181,18 @@ export const ImageUpload = ({
                   alt="Preview"
                   className="w-full h-full object-cover"
                 />
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    removeImage(index);
-                  }}
-                  className="absolute top-1 right-1 bg-white/90 dark:bg-gray-900/90 p-1 rounded-full text-red-500 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm hover:bg-red-50 dark:hover:bg-red-500/20"
-                >
-                  ✕
-                </button>
+                {!disabled && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      removeImage(index);
+                    }}
+                    className="absolute top-1 right-1 bg-white/90 dark:bg-gray-900/90 p-1 rounded-full text-red-500 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm hover:bg-red-50 dark:hover:bg-red-500/20"
+                  >
+                    ✕
+                  </button>
+                )}
               </div>
             ))}
           </div>

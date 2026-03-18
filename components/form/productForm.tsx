@@ -44,10 +44,13 @@ export function ProductForm({
     price: initialData?.price || 0,
   });
   const [images, setImages] = useState<UploadedFile[]>(
-    initialData?.images?.map((url) => ({
-      file_key: url,
-      public_url: url,
-    })) || [],
+    initialData?.images?.map((img: any) => {
+      const imgUrl = typeof img === 'string' ? img : img?.url || '';
+      return {
+        file_key: imgUrl,
+        public_url: imgUrl,
+      };
+    }) || [],
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -83,10 +86,13 @@ export function ProductForm({
         price: initialData.price || 0,
       });
       setImages(
-        initialData.images?.map((url) => ({
-          file_key: url,
-          public_url: url,
-        })) || [],
+        initialData.images?.map((img: any) => {
+          const imgUrl = typeof img === 'string' ? img : img?.url || '';
+          return {
+            file_key: imgUrl,
+            public_url: imgUrl,
+          };
+        }) || [],
       );
     }
   }, [initialData]);
@@ -193,6 +199,7 @@ export function ProductForm({
               uploadPath="products"
               helperText="You can upload up to 6 images. The first image will be the cover."
               required={!initialData} // Required only for new products
+              disabled={formType === ProductFormType.DETAIL}
             />
           </div>
         </div>
@@ -216,6 +223,7 @@ export function ProductForm({
                 value={formData.name || ""}
                 onChange={handleChange}
                 required
+                disabled={formType === ProductFormType.DETAIL}
               />
             </div>
 
@@ -231,6 +239,7 @@ export function ProductForm({
                 }))
               }
               required
+              disabled={formType === ProductFormType.DETAIL}
               rows={5}
             />
 
@@ -266,6 +275,7 @@ export function ProductForm({
               hasMore={categoryHasMore}
               isLoading={categoryLoading}
               required
+              disabled={formType === ProductFormType.DETAIL}
             />
 
             <MultiSelect
@@ -303,6 +313,7 @@ export function ProductForm({
               hasMore={materialHasMore}
               isLoading={materialLoading}
               required
+              disabled={formType === ProductFormType.DETAIL}
             />
           </div>
         </div>
@@ -331,6 +342,7 @@ export function ProductForm({
                 </span>
               }
               required
+              disabled={formType === ProductFormType.DETAIL}
             />
           </div>
         </div>
@@ -341,13 +353,15 @@ export function ProductForm({
             variant="outline"
             onClick={() => router.push("/dashboard/products")}
           >
-            Cancel
+            {formType === ProductFormType.DETAIL ? "Back" : "Cancel"}
           </Button>
-          <Button type="submit" isLoading={isSubmitting}>
-            {formType === ProductFormType.EDIT
-              ? "Update Product"
-              : "Create Product"}
-          </Button>
+          {formType !== ProductFormType.DETAIL && (
+            <Button type="submit" isLoading={isSubmitting}>
+              {formType === ProductFormType.EDIT
+                ? "Update Product"
+                : "Create Product"}
+            </Button>
+          )}
         </div>
       </form>
     </div>

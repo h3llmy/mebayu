@@ -30,4 +30,8 @@ export class ProductService {
             throw error;
         }
     }
+
+    static async delete(id: string): Promise<void> {
+        await api.delete(`/v1/products/${id}`);
+    }
 }

@@ -16,6 +16,7 @@ export interface MultiSelectProps {
     onLoadMore?: () => void;
     hasMore?: boolean;
     isLoading?: boolean;
+    disabled?: boolean;
 }
 
 export function MultiSelect({
@@ -32,6 +33,7 @@ export function MultiSelect({
     onLoadMore,
     hasMore,
     isLoading,
+    disabled,
 }: MultiSelectProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
@@ -39,6 +41,7 @@ export function MultiSelect({
     const observerRef = useRef<HTMLDivElement>(null);
 
     const toggleOpen = () => {
+        if (disabled) return;
         setIsOpen((prev) => {
             if (prev) {
                 // If closing, reset search
@@ -94,6 +97,7 @@ export function MultiSelect({
     };
 
     const handleRemove = (e: React.MouseEvent, optionValue: string) => {
+        if (disabled) return;
         e.stopPropagation();
         onChange(value.filter((v) => v !== optionValue));
     };
@@ -111,7 +115,7 @@ export function MultiSelect({
                 <div
                     onClick={toggleOpen}
                     className={`
-            min-h-[44px] w-full px-4 border-r-[32px] border-r-transparent py-2 rounded-lg border bg-white dark:bg-gray-900 cursor-pointer
+            min-h-[44px] w-full px-4 border-r-[32px] border-r-transparent py-2 rounded-lg border bg-white dark:bg-gray-900 ${disabled ? 'cursor-not-allowed opacity-70' : 'cursor-pointer'}
             flex flex-wrap items-center gap-2 transition-all duration-200 outline-none
             ${error
                             ? "border-red-500 focus:ring-4 focus:ring-red-500/10 hover:border-red-600"
@@ -133,15 +137,17 @@ export function MultiSelect({
                                     className="inline-flex items-center gap-1 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200 px-2.5 py-1 rounded-md text-xs font-semibold animate-in fade-in zoom-in-95 duration-200"
                                 >
                                     {option.label}
-                                    <button
-                                        type="button"
-                                        onClick={(e) => handleRemove(e, val)}
-                                        className="hover:bg-gray-200 dark:hover:bg-gray-700 p-0.5 rounded-full text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
-                                    >
-                                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
-                                    </button>
+                                    {!disabled && (
+                                        <button
+                                            type="button"
+                                            onClick={(e) => handleRemove(e, val)}
+                                            className="hover:bg-gray-200 dark:hover:bg-gray-700 p-0.5 rounded-full text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
+                                        >
+                                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                            </svg>
+                                        </button>
+                                    )}
                                 </span>
                             );
                         })
