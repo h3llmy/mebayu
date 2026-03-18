@@ -17,7 +17,7 @@ export default async function ProductPage({ params }: Props) {
   if (!product) return notFound();
 
   return (
-    <section className="bg-[#f8f7f4] min-h-screen py-20 px-6">
+    <section className="bg-[#f8f7f4] min-h-screen py-28 px-6">
       <div className="max-w-7xl mx-auto">
 
         {/* Breadcrumb */}

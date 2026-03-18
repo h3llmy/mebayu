@@ -10,16 +10,10 @@ export default async function DetailProductPage({
 }) {
   const resolvedParams = await params;
   const id = resolvedParams.id;
-  let product: Product;
+  const product = await ProductService.getOne(id);
 
-  try {
-    product = await ProductService.getOne(id);
-  } catch (error: unknown) {
-    const err = error as { status?: number; response?: { status?: number } };
-    if (err?.status === 404 || err?.response?.status === 404) {
-      notFound();
-    }
-    throw error;
+  if (!product) {
+    notFound();
   }
 
   return (

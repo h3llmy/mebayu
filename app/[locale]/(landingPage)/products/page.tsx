@@ -55,7 +55,7 @@ export default function Page() {
   }, [page, sort, category, material, pathname, router]);
 
   return (
-    <section className="bg-[#f8f7f4] min-h-screen py-24 px-6">
+    <section className="bg-[#f8f7f4] min-h-screen py-28 px-6">
       <div className="max-w-7xl mx-auto">
         <ProductsHeader />
 

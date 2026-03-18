@@ -28,10 +28,14 @@ export const Navbar = () => {
         router.replace(pathname, { locale: nextLocale });
     };
 
+    const isHome = pathname === "/";
+    const shouldShowSolid = scrolled || open || !isHome;
+
     return (
+
         <header 
             className={`w-full fixed top-0 z-50 transition-all duration-500 flex items-center ${
-                scrolled || open
+                shouldShowSolid
                 ? "bg-[#2D2D2A]/95 backdrop-blur-md text-white shadow-sm h-16 md:h-20" 
                 : "bg-transparent text-white h-20 md:h-24"
             }`}
@@ -40,7 +44,7 @@ export const Navbar = () => {
 
                 {/* Logo with better vertical centering */}
                 <Link href="/" className="flex items-center">
-                    <div className={`transition-all duration-500 overflow-hidden flex items-center ${scrolled || open ? "scale-90" : "scale-100"}`}>
+                    <div className={`transition-all duration-500 overflow-hidden flex items-center ${shouldShowSolid ? "scale-90" : "scale-100"}`}>
                         <Image
                             src="/app-logo.png"
                             alt="Mebayu Logo"
@@ -77,7 +81,7 @@ export const Navbar = () => {
                     <button
                         onClick={toggleLocale}
                         className={`text-[10px] font-bold border px-3 py-1.5 rounded-full transition-all duration-300 hover:cursor-pointer ${
-                            scrolled || open
+                            shouldShowSolid
                             ? "border-white/20 hover:bg-white hover:text-black" 
                             : "border-white/30 hover:bg-white hover:text-black"
                         }`}
