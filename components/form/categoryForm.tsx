@@ -2,17 +2,19 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { Input, Select } from "@/components/input";
+import { useRouter } from "@/i18n/routing";
+import { Input } from "@/components/input";
 import { Button } from "@/components/button";
-import { type Category } from "@/lib/mockApi";
+import { Category } from "@/lib/service/category/categoryModel";
+import { ProductFormType } from "@/components/form/formType/productFormType";
 
 interface CategoryFormProps {
   initialData?: Category;
-  onSubmit: (data: { name: string; description: string; isActive: boolean }) => Promise<void>;
+  onSubmit: (data: { name: string }) => Promise<void>;
   isSubmitting: boolean;
   title: string;
   description: string;
+  formType?: ProductFormType;
 }
 
 export function CategoryForm({
@@ -21,21 +23,17 @@ export function CategoryForm({
   isSubmitting,
   title,
   description,
+  formType = ProductFormType.CREATE,
 }: CategoryFormProps) {
   const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
-    description: "",
-    isActive: "true",
   });
 
   useEffect(() => {
     if (initialData) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setFormData({
         name: initialData.name,
-        description: initialData.description,
-        isActive: initialData.isActive ? "true" : "false",
       });
     }
   }, [initialData]);
@@ -48,8 +46,7 @@ export function CategoryForm({
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await onSubmit({
-      ...formData,
-      isActive: formData.isActive === "true"
+      name: formData.name,
     });
   };
 
@@ -58,22 +55,22 @@ export function CategoryForm({
       <div className="mb-8">
         <button
           onClick={() => router.back()}
-          className="flex items-center text-sm text-gray-500 hover:text-blue-600 transition-colors mb-4"
+          className="flex items-center text-sm text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors mb-4"
         >
           <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
           Back to Categories
         </button>
-        <h1 className="text-2xl font-bold text-gray-900">{title}</h1>
-        <p className="text-gray-500">{description}</p>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{title}</h1>
+        <p className="text-gray-500 dark:text-gray-400">{description}</p>
       </div>
 
       <form onSubmit={handleFormSubmit} className="space-y-6">
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-          <div className="p-6 border-b border-gray-100 bg-gray-50/50">
-            <h2 className="text-lg font-semibold text-gray-900">Category Details</h2>
-            <p className="text-sm text-gray-500">Essential details about your product category.</p>
+        <div className="bg-white dark:bg-gray-950 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden">
+          <div className="p-6 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/50">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Category Details</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Essential details about your product category.</p>
           </div>
 
           <div className="p-6 space-y-6">
@@ -84,31 +81,7 @@ export function CategoryForm({
               value={formData.name}
               onChange={handleChange}
               required
-            />
-
-            <div className="space-y-1.5">
-              <label className="text-sm font-semibold text-gray-700">Description</label>
-              <textarea
-                name="description"
-                rows={4}
-                placeholder="Describe what this category is for..."
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all duration-200 resize-none"
-                value={formData.description}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <Select
-              label="Status"
-              name="isActive"
-              value={formData.isActive}
-              onChange={handleChange}
-              options={[
-                { label: "Active", value: "true" },
-                { label: "Inactive", value: "false" },
-              ]}
-              required
+              disabled={formType === ProductFormType.DETAIL}
             />
           </div>
         </div>
@@ -119,14 +92,16 @@ export function CategoryForm({
             variant="outline"
             onClick={() => router.push("/dashboard/categories")}
           >
-            Cancel
+            {formType === ProductFormType.DETAIL ? "Back" : "Cancel"}
           </Button>
-          <Button
-            type="submit"
-            isLoading={isSubmitting}
-          >
-            {initialData ? "Update Category" : "Create Category"}
-          </Button>
+          {formType !== ProductFormType.DETAIL && (
+            <Button
+              type="submit"
+              isLoading={isSubmitting}
+            >
+              {initialData ? "Update Category" : "Create Category"}
+            </Button>
+          )}
         </div>
       </form>
     </div>

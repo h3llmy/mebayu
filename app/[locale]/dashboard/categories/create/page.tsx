@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
 import { CategoryForm } from "@/components/form/categoryForm";
+import { CategoryService } from "@/lib/service/category/categoryService";
 
 export default function CreateCategoryPage() {
   const router = useRouter();
@@ -10,14 +11,14 @@ export default function CreateCategoryPage() {
 
   const handleSubmit = async (data: {
     name: string;
-    description: string;
-    isActive: boolean;
   }) => {
     setIsSubmitting(true);
 
-    // Simulate API call
-    console.log("Creating category:", data);
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      await CategoryService.create({ name: data.name });
+    } catch (error) {
+      console.error("Failed to create category:", error);
+    }
 
     setIsSubmitting(false);
     router.push("/dashboard/categories");

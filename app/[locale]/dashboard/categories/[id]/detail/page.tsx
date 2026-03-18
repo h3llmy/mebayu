@@ -1,20 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "@/i18n/routing";
+import { useRouter, useParams } from "next/navigation";
 import { CategoryForm } from "@/components/form/categoryForm";
 import { CategoryService } from "@/lib/service/category/categoryService";
 import { Category } from "@/lib/service/category/categoryModel";
-import { useParams } from "next/navigation";
+import { ProductFormType } from "@/components/form/formType/productFormType";
 
-export default function EditCategoryPage() {
+export default function DetailCategoryPage() {
   const router = useRouter();
   const params = useParams();
   const id = params.id as string;
 
   const [category, setCategory] = useState<Category | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -30,19 +29,6 @@ export default function EditCategoryPage() {
     };
     loadCategory();
   }, [id]);
-
-  const handleSubmit = async (data: {
-    name: string;
-  }) => {
-    setIsSubmitting(true);
-    try {
-      await CategoryService.update(id, { name: data.name });
-    } catch (error) {
-      console.error("Failed to update category:", error);
-    }
-    setIsSubmitting(false);
-    router.push("/dashboard/categories");
-  };
 
   if (isLoading) {
     return (
@@ -95,10 +81,11 @@ export default function EditCategoryPage() {
   return (
     <CategoryForm
       initialData={category}
-      onSubmit={handleSubmit}
-      isSubmitting={isSubmitting}
-      title="Edit Category"
-      description={`Editing ${category?.name}`}
+      onSubmit={async () => {}}
+      isSubmitting={false}
+      formType={ProductFormType.DETAIL}
+      title="Category Details"
+      description={`Viewing details for ${category?.name}`}
     />
   );
 }

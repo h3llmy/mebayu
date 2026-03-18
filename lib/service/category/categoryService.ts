@@ -13,15 +13,15 @@ export class CategoryService {
         return response.data.data;
     }
 
-    // static async create(data: Omit<Category, "id">): Promise<Category> {
-    //     const response = await api.post<Category>(`/v1/product-categories`, data);
-    //     return response.data;
-    // }
+    static async create(data: { name: string }): Promise<Category> {
+        const response = await api.post<Category>(`/v1/product-categories`, data);
+        return response.data;
+    }
 
-    // static async update(id: string, data: Omit<Category, "id">): Promise<Category> {
-    //     const response = await api.put<Category>(`/v1/product-categories/${id}`, data);
-    //     return response.data;
-    // }
+    static async update(id: string, data: { name: string }): Promise<Category> {
+        const response = await api.put<Category>(`/v1/product-categories/${id}`, data);
+        return response.data;
+    }
 
     static async delete(id: string): Promise<void> {
         await api.delete(`/v1/product-categories/${id}`);

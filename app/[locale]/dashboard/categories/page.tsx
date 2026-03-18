@@ -3,7 +3,8 @@
 
 import { useEffect, useState } from "react";
 import { DataTable } from "@/components/table";
-import { fetchCategories, type Category } from "@/lib/mockApi";
+import { CategoryService } from "@/lib/service/category/categoryService";
+import { Category } from "@/lib/service/category/categoryModel";
 import { useSearchParams } from "next/navigation";
 import { RedirectButton } from "@/components/button";
 import { Link } from "@/i18n/routing";
@@ -13,6 +14,7 @@ export default function CategoryPage() {
     const [data, setData] = useState<Category[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [total, setTotal] = useState(0);
+    const [refreshNonce, setRefreshNonce] = useState(0);
 
     useEffect(() => {
         const loadData = async () => {
@@ -24,15 +26,15 @@ export default function CategoryPage() {
                 const sort = searchParams.get("sort") || undefined;
                 const dir = (searchParams.get("dir") as "asc" | "desc") || "asc";
 
-                const result = await fetchCategories({
+                const result = await CategoryService.getAll({
                     page,
                     limit,
                     search,
                     sort,
                     dir,
                 });
-                setData(result.items);
-                setTotal(result.total);
+                setData(result.data);
+                setTotal(result.total_data);
             } catch (error) {
                 console.error("Failed to fetch categories:", error);
             } finally {
@@ -41,7 +43,18 @@ export default function CategoryPage() {
         };
 
         loadData();
-    }, [searchParams]);
+    }, [searchParams, refreshNonce]);
+
+    const handleDelete = async (id: string) => {
+        if (!confirm("Are you sure you want to delete this category?")) return;
+        try {
+            await CategoryService.delete(id);
+            setRefreshNonce((n) => n + 1);
+        } catch (error) {
+            console.error("Failed to delete category:", error);
+            alert("Failed to delete category");
+        }
+    };
 
     return (
         <div className="p-6">
@@ -60,38 +73,30 @@ export default function CategoryPage() {
                 totalItems={total}
                 columns={[
                     { header: "Name", accessor: "name", sortable: true },
-                    { header: "Description", accessor: "description" },
-                    { 
-                        header: "Products", 
-                        accessor: "productCount", 
-                        sortable: true,
-                        render: (val) => (
-                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300">
-                                {val} products
-                            </span>
-                        )
-                    },
-                    { 
-                        header: "Status", 
-                        accessor: "isActive",
-                        render: (active) => (
-                            <div className="flex items-center gap-1.5">
-                                <div className={`w-2 h-2 rounded-full ${active ? "bg-green-500" : "bg-gray-300 dark:bg-gray-600"}`} />
-                                <span className="text-sm text-gray-600 dark:text-gray-400">{active ? "Active" : "Inactive"}</span>
-                            </div>
-                        )
-                    },
+                    { header: "Created At", accessor: "created_at", sortable: true, render: (value) => new Date(value).toLocaleString() },
                     {
                         header: "Actions",
                         accessor: "id",
                         render: (id) => (
                             <div className="flex items-center gap-3">
                                 <Link
+                                    href={`/dashboard/categories/${id}/detail`}
+                                    className="text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors"
+                                >
+                                    Detail
+                                </Link>
+                                <Link
                                     href={`/dashboard/categories/${id}`}
-                                    className="text-blue-600 hover:text-blue-800 font-medium text-sm"
+                                    className="text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors"
                                 >
                                     Edit
                                 </Link>
+                                <button
+                                    onClick={() => handleDelete(id as string)}
+                                    className="text-red-600 hover:text-red-800 font-medium text-sm transition-colors"
+                                >
+                                    Delete
+                                </button>
                             </div>
                         )
                     }
