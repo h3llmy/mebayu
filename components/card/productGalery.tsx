@@ -4,12 +4,12 @@ import { useState } from "react";
 import Image from "next/image";
 
 interface Props {
-  images: string[];
+  images?: string[];
   name: string;
 }
 
 export const ProductGallery = ({ images, name }: Props) => {
-  const [selectedImage, setSelectedImage] = useState(images[0]);
+  const [selectedImage, setSelectedImage] = useState(images?.[0] || '');
 
   return (
     <div>
@@ -26,15 +26,14 @@ export const ProductGallery = ({ images, name }: Props) => {
 
       {/* Thumbnails */}
       <div className="flex gap-4 mt-4">
-        {images.map((img, index) => (
+        {images?.map((img, index) => (
           <button
             key={index}
             onClick={() => setSelectedImage(img)}
             className={`relative w-20 h-24 rounded-md overflow-hidden border transition
-              ${
-                selectedImage === img
-                  ? "border-[#507c59] ring-2 ring-[#507c59]"
-                  : "border-gray-200 hover:border-[#507c59]"
+              ${selectedImage === img
+                ? "border-[#507c59] ring-2 ring-[#507c59]"
+                : "border-gray-200 hover:border-[#507c59]"
               }
             `}
           >

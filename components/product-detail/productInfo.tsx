@@ -1,13 +1,6 @@
 import { Link } from "@/i18n/routing";
+import { Product } from "@/lib/service/product";
 import { useTranslations } from "next-intl";
-
-interface Product {
-  name: string;
-  price: string;
-  category: string;
-  material: string;
-  description: string;
-}
 
 interface Props {
   product: Product;
@@ -29,10 +22,10 @@ export const ProductInfo = ({ product }: Props) => {
       {/* Tags */}
       <div className="flex gap-4 mt-6 text-xs uppercase tracking-widest text-gray-500">
         <span className="border border-gray-300 px-3 py-1">
-          {product.category}
+          {product.categories.map((category) => category.name).join(", ")}
         </span>
         <span className="border border-gray-300 px-3 py-1">
-          {product.material}
+          {product.product_materials.map((material) => material.name).join(", ")}
         </span>
       </div>
 

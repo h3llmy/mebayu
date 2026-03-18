@@ -6,14 +6,14 @@ import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
-export const ProductCard = ({ product }: { 
-    product: { 
-        id: string | number; 
-        name: string; 
-        description?: string; 
-        price: string | number; 
-        image: string; 
-    } 
+export const ProductCard = ({ product }: {
+    product: {
+        id: string | number;
+        name: string;
+        description?: string;
+        price: string | number;
+        image: string;
+    }
 }) => {
     const t = useTranslations("Pages.Home.Products");
     return (
@@ -30,23 +30,16 @@ export const ProductCard = ({ product }: {
                     sizes="(max-width: 768px) 100vw, 25vw"
                     className="object-cover transition-transform duration-1000 ease-out group-hover:scale-110"
                 />
-                
+
                 {/* Visual Overlay on Hover */}
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-700 z-10 flex items-center justify-center">
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0, scale: 0.8 }}
                         whileHover={{ opacity: 1, scale: 1 }}
                         className="p-4 bg-white/90 backdrop-blur-md rounded-full text-black shadow-xl opacity-0 group-hover:opacity-100 transition-all duration-500"
                     >
                         <ArrowRight className="w-6 h-6" />
                     </motion.div>
-                </div>
-
-                {/* Status Badge (Optional) */}
-                <div className="absolute top-4 left-4 z-20">
-                    <span className="px-3 py-1 bg-white/80 backdrop-blur-sm text-[9px] uppercase tracking-[0.3em] font-bold text-black border border-black/5">
-                        Handmade
-                    </span>
                 </div>
             </div>
 
@@ -56,7 +49,7 @@ export const ProductCard = ({ product }: {
                     {product.name}
                 </h3>
 
-                <p className="text-xs text-gray-400 tracking-[0.1em] font-light italic">
+                <p className="text-xs text-gray-400 tracking-[0.1em] font-light italic truncate">
                     {product.description}
                 </p>
 

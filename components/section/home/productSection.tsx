@@ -6,16 +6,17 @@ import { FadeIn } from "@/components/ui/fade-in";
 import { ProductCard } from "@/components/card";
 import { ChevronRight } from "lucide-react";
 
-export const ProductSection = () => {
+import { Product } from "@/lib/service/product/productModel";
+
+export const ProductSection = ({ products }: { products: Product[] }) => {
   const t = useTranslations("Pages.Home.Products");
 
-  // Replace later with real data
-  const products = Array.from({ length: 4 }).map((_, i) => ({
-    id: i + 1,
-    name: i % 2 === 0 ? `The Mebayu Tote ${i + 1}` : `Bali Canvas Bag ${i + 1}`,
-    price: "Rp 1.250.000",
-    image: i % 2 === 0 ? "/leather-hero.png" : "/leather-collection.png",
-    description: "Handcrafted in Bali • Limited Edition",
+  const formattedProducts = products.map((product) => ({
+    id: product.id,
+    name: product.name,
+    price: `Rp ${product.price.toLocaleString("id-ID")}`,
+    image: (product.images?.[0] as any)?.url || (typeof product.images?.[0] === 'string' ? product.images?.[0] : "/leather-hero.png"),
+    description: product.description || "Handcrafted in Bali",
   }));
 
   return (
@@ -24,18 +25,17 @@ export const ProductSection = () => {
       className="bg-white py-32 px-6"
     >
       <div className="max-w-7xl mx-auto">
-
         {/* Header with high-end aesthetic */}
         <div className="grid md:grid-cols-2 items-end gap-10 mb-24 border-b border-black/5 pb-10">
           <FadeIn direction="up">
             <span className="block text-[#507c59] tracking-[0.4em] uppercase text-xs font-semibold mb-6">
-                Featured collection
+              Featured collection
             </span>
             <h2 className="text-4xl md:text-6xl font-extralight tracking-tight text-[#2D2D2A]">
               {t("title")}
             </h2>
           </FadeIn>
-          
+
           <FadeIn direction="up" delay={0.2} className="flex justify-start md:justify-end">
             <p className="mt-6 text-gray-500 max-w-sm text-lg font-light leading-relaxed">
               {t("description")}
@@ -45,7 +45,7 @@ export const ProductSection = () => {
 
         {/* Grid with better spacing and visual balance */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
-          {products.map((product, index) => (
+          {formattedProducts.map((product, index) => (
             <FadeIn
               key={product.id}
               direction="up"

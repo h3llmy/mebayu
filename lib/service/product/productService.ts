@@ -21,13 +21,12 @@ export class ProductService {
         return response.data;
     }
 
-    static async getOne(id: string): Promise<Product> {
+    static async getOne(id: string): Promise<Product | null> {
         try {
             const response = await api.get<{ data: Product }>(`/v1/products/${id}`);
             return response.data.data;
-        } catch (error: unknown) {
-            console.log((error as { response?: { data?: unknown } })?.response?.data);
-            throw error;
+        } catch (error: any) {
+            return null;
         }
     }
 

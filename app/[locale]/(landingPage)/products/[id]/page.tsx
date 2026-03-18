@@ -1,5 +1,6 @@
 import { ProductGallery } from "@/components/card";
 import { ProductBreadcrumb, ProductInfo, RelatedProducts } from "@/components/product-detail";
+import { ProductService } from "@/lib/service/product";
 import { notFound } from "next/navigation";
 
 interface Props {
@@ -9,19 +10,21 @@ interface Props {
 }
 
 export default async function ProductPage({ params }: Props) {
-    const { id } = await params;
+  const { id } = await params;
 
-  // 🔥 Mock product (replace with DB later)
-  const product = {
-    id,
-    name: `Leather Bag ${id}`,
-    price: "Rp 1.250.000",
-    material: "Full Grain Leather",
-    category: "Bags",
-    description:
-      "Handcrafted leather bag made in Bali. Designed for durability and timeless elegance. Each piece is carefully crafted using premium materials.",
-    images: ["/hero-1.png", "/hero-2.png"]
-  };
+  // // 🔥 Mock product (replace with DB later)
+  // const product = {
+  //   id,
+  //   name: `Leather Bag ${id}`,
+  //   price: "Rp 1.250.000",
+  //   material: "Full Grain Leather",
+  //   category: "Bags",
+  //   description:
+  //     "Handcrafted leather bag made in Bali. Designed for durability and timeless elegance. Each piece is carefully crafted using premium materials.",
+  //   images: ["/hero-1.png", "/hero-2.png"]
+  // };
+
+  const product = await ProductService.getOne(id);
 
   if (!product) return notFound();
 
@@ -35,7 +38,7 @@ export default async function ProductPage({ params }: Props) {
         <div className="grid lg:grid-cols-2 gap-16">
 
           {/* LEFT - Images */}
-          <ProductGallery images={product.images} name={product.name} />
+          <ProductGallery images={product.images?.map((image) => image.url)} name={product.name} />
 
           {/* RIGHT - Info */}
           <ProductInfo product={product} />
