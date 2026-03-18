@@ -12,18 +12,6 @@ interface Props {
 export default async function ProductPage({ params }: Props) {
   const { id } = await params;
 
-  // // 🔥 Mock product (replace with DB later)
-  // const product = {
-  //   id,
-  //   name: `Leather Bag ${id}`,
-  //   price: "Rp 1.250.000",
-  //   material: "Full Grain Leather",
-  //   category: "Bags",
-  //   description:
-  //     "Handcrafted leather bag made in Bali. Designed for durability and timeless elegance. Each piece is carefully crafted using premium materials.",
-  //   images: ["/hero-1.png", "/hero-2.png"]
-  // };
-
   const product = await ProductService.getOne(id);
 
   if (!product) return notFound();

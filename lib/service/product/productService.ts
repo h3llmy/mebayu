@@ -1,7 +1,7 @@
 import { PaginationRequest, PaginationResponse } from "@/types";
 import { api } from "../../apiFetch/apiFetch";
 import { Product } from "./productModel";
-import { CreateProductDto } from "./dto";
+import { CreateProductDto, UpdateProductDto } from "./dto";
 
 export class ProductService {
     static async getAllPagination(params: PaginationRequest): Promise<PaginationResponse<Product>> {
@@ -16,10 +16,11 @@ export class ProductService {
         return response.data;
     }
 
-    static async update(id: string, data: Omit<Product, "id">): Promise<Product> {
+    static async update(id: string, data: UpdateProductDto): Promise<Product> {
         const response = await api.put<Product>(`/v1/products/${id}`, data);
         return response.data;
     }
+
 
     static async getOne(id: string): Promise<Product | null> {
         try {

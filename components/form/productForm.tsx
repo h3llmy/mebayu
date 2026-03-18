@@ -42,7 +42,9 @@ export function ProductForm({
     categories: initialData?.categories || [],
     product_materials: initialData?.product_materials || [],
     price: initialData?.price || 0,
+    status: initialData?.status || "ACTIVE",
   });
+
   const [images, setImages] = useState<UploadedFile[]>(
     initialData?.images?.map((img: any) => {
       const imgUrl = typeof img === 'string' ? img : img?.url || '';
@@ -84,6 +86,7 @@ export function ProductForm({
         categories: initialData.categories || [],
         product_materials: initialData.product_materials || [],
         price: initialData.price || 0,
+        status: initialData.status || "ACTIVE",
       });
       setImages(
         initialData.images?.map((img: any) => {
@@ -130,14 +133,19 @@ export function ProductForm({
             price: formData.price,
             image_urls: images.map((img) => img.public_url),
             description: formData.description,
-            status: "ACTIVE",
+            status: formData.status,
           });
           router.push("/dashboard/products");
           break;
         case ProductFormType.EDIT:
           await ProductService.update(initialData?.id || "", {
-            ...formData,
-            images: images.map((img) => img.file_key),
+            category_ids: formData.categories.map((c) => c.id),
+            material_ids: formData.product_materials.map((m) => m.id),
+            name: formData.name,
+            price: formData.price,
+            image_urls: images.map((img) => img.public_url),
+            description: formData.description,
+            status: formData.status,
           });
           router.push("/dashboard/products");
           break;

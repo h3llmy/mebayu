@@ -6,7 +6,9 @@ export interface Product {
     product_materials: Material[];
     price: number;
     images?: { url: string;[key: string]: any }[];
+    status: string;
 }
+
 
 export interface Category {
     id: string;
