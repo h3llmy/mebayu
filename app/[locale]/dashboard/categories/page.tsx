@@ -24,15 +24,16 @@ export default function CategoryPage() {
                 const limit = Number(searchParams.get("limit")) || 10;
                 const search = searchParams.get("q") || "";
                 const sort = searchParams.get("sort") || undefined;
-                const dir = (searchParams.get("dir") as "asc" | "desc") || "asc";
+                const sort_order = (searchParams.get("sort_order") as "Asc" | "Desc") || "Asc";
 
                 const result = await CategoryService.getAll({
                     page,
                     limit,
                     search,
                     sort,
-                    dir,
+                    sort_order,
                 });
+
                 setData(result.data);
                 setTotal(result.total_data);
             } catch (error) {

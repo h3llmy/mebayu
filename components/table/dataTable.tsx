@@ -70,8 +70,8 @@ export function DataTable<T extends Record<string, any>>({
     Number(searchParams.get("limit")) || defaultPageSize;
   const querySearch = searchParams.get("q") || "";
   const querySort = searchParams.get("sort") || null;
-  const queryDir =
-    (searchParams.get("dir") as "asc" | "desc") || "asc";
+  const querySortOrder =
+    (searchParams.get("sort_order") as "Asc" | "Desc") || "Asc";
 
   const [searchInput, setSearchInput] = useState(querySearch);
   const [selectedRows, setSelectedRows] =
@@ -157,11 +157,11 @@ export function DataTable<T extends Record<string, any>>({
     const isCurrentKey = querySort === key;
 
     if (!isCurrentKey) {
-      updateUrl({ sort: key, dir: "asc" });
-    } else if (queryDir === "asc") {
-      updateUrl({ sort: key, dir: "desc" });
+      updateUrl({ sort: key, sort_order: "Asc" });
+    } else if (querySortOrder === "Asc") {
+      updateUrl({ sort: key, sort_order: "Desc" });
     } else {
-      updateUrl({ sort: null, dir: null });
+      updateUrl({ sort: null, sort_order: null });
     }
   };
 
@@ -372,7 +372,7 @@ export function DataTable<T extends Record<string, any>>({
                 .filter((col) => visibleColumns.has(col.accessor))
                 .map((col) => {
                   const isSorted = querySort === col.accessor;
-                  const isAsc = queryDir === "asc";
+                  const isAsc = querySortOrder === "Asc";
 
                   return (
                     <th
