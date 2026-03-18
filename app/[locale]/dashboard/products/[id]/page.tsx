@@ -10,21 +10,10 @@ export default async function EditProductPage({
 }) {
   const resolvedParams = await params;
   const id = resolvedParams.id;
-  let product: Product;
+  const product = await ProductService.getOne(id);
 
-  try {
-    product = await ProductService.getOne(id);
-    // 🔍 TEMP: inspect raw API response shape (remove after fixing)
-    console.log("📦 product from API:", JSON.stringify(product, null, 2));
-  } catch (error: unknown) {
-    // if your service throws 404 or not found error
-    const err = error as { status?: number; response?: { status?: number } };
-    if (err?.status === 404 || err?.response?.status === 404) {
-      notFound();
-    }
-
-    // rethrow other unexpected errors
-    throw error;
+  if (!product) {
+    notFound();
   }
 
   return (
