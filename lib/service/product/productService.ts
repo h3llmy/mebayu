@@ -8,8 +8,6 @@ export class ProductService {
         const response = await api.get<PaginationResponse<Product>>("/v1/products", {
             params,
         });
-        console.log(response.data.data.length);
-        console.log(params);
         return response.data;
     }
 
