@@ -4,12 +4,17 @@ import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/routing";
 import { useSearchParams } from "next/navigation";
 
+import { Category } from "@/lib/service/category/categoryModel";
+import { Material } from "@/lib/service/material/materialModel";
+
 interface FilterBarProps {
   totalItems: number;
   sort: string;
   sortOrder: "Asc" | "Desc";
   category: string;
   material: string;
+  categories: Category[];
+  materials: Material[];
 }
 
 export const FilterBar = ({
@@ -18,6 +23,8 @@ export const FilterBar = ({
   sortOrder,
   category,
   material,
+  categories,
+  materials,
 }: FilterBarProps) => {
     const t = useTranslations("Pages.Products");
     const router = useRouter();
@@ -66,9 +73,7 @@ export const FilterBar = ({
           onChange={(v) => updateFilters({ category: v })}
           options={[
             { value: "all", label: t("all") },
-            { value: "bags", label: t("bags") },
-            { value: "wallets", label: t("wallets") },
-            { value: "accessories", label: t("accessories") },
+            ...categories.map((c) => ({ value: c.id, label: c.name })),
           ]}
         />
 
@@ -79,10 +84,7 @@ export const FilterBar = ({
           onChange={(v) => updateFilters({ material: v })}
           options={[
             { value: "all", label: t("all") },
-            { value: "fullgrain", label: "Full Grain" },
-            { value: "crazyhorse", label: "Crazy Horse" },
-            { value: "suede", label: "Suede" },
-            { value: "vegan", label: "Vegan Leather" },
+            ...materials.map((m) => ({ value: m.id, label: m.name })),
           ]}
         />
 
