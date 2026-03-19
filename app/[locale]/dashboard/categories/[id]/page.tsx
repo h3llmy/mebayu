@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "@/i18n/routing";
-import { CategoryForm } from "@/components/form/categoryForm";
+import { CategoryForm } from "@/components/organisms/Forms/CategoryForm";
 import { CategoryService } from "@/lib/service/category/categoryService";
 import { Category } from "@/lib/service/category/categoryModel";
 import { useParams } from "next/navigation";

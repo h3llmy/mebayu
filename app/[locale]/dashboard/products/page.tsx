@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { DataTable } from "@/components/table";
+import { DataTable } from "@/components/organisms/DataTable/dataTable";
 import { useSearchParams } from "next/navigation";
-import { RedirectButton } from "@/components/button";
+import { RedirectButton } from "@/components/molecules/RedirectButton";
 import { Link } from "@/i18n/routing";
 import { Category, Product, ProductService } from "@/lib/service/product";
 

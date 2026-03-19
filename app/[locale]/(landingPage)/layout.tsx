@@ -5,9 +5,9 @@ import { routing } from '@/i18n/routing';
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./../../globals.css";
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
-import { WhatsAppButton } from "@/components/floatingButton";
+import { Navbar } from "@/components/organisms/Navbar";
+import { Footer } from "@/components/organisms/Footer";
+import { WhatsAppButton } from "@/components/molecules/FloatingButton";
 import { Locale } from '@/types';
 
 const geistSans = Geist({

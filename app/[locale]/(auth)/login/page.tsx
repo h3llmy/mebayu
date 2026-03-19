@@ -1,6 +1,6 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import Image from "next/image";
-import { LoginForm } from "@/components/auth/loginForm";
+import { LoginForm } from "@/components/organisms/LoginForm";
 import { Link, redirect } from "@/i18n/routing";
 import { cookies } from "next/headers";
 

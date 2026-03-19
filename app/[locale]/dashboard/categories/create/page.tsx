@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "@/i18n/routing";
-import { CategoryForm } from "@/components/form/categoryForm";
+import { CategoryForm } from "@/components/organisms/Forms/CategoryForm";
 import { CategoryService } from "@/lib/service/category/categoryService";
 
 export default function CreateCategoryPage() {

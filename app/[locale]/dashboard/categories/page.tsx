@@ -2,11 +2,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { DataTable } from "@/components/table";
+import { DataTable } from "@/components/organisms/DataTable/dataTable";
 import { CategoryService } from "@/lib/service/category/categoryService";
 import { Category } from "@/lib/service/category/categoryModel";
 import { useSearchParams } from "next/navigation";
-import { RedirectButton } from "@/components/button";
+import { RedirectButton } from "@/components/molecules/RedirectButton";
 import { Link } from "@/i18n/routing";
 
 export default function CategoryPage() {

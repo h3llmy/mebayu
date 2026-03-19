@@ -1,0 +1,7 @@
+export * from './aboutSection'
+export * from './ctaSection'
+export * from './productSection'
+export * from './heroSection'
+export * from './craftsmanshipSection'
+export * from './featuresSection'
+export * from './testimonialsSection'

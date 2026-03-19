@@ -1,5 +1,7 @@
-import { ProductGallery } from "@/components/card";
-import { ProductBreadcrumb, ProductInfo, RelatedProducts } from "@/components/product-detail";
+import { ProductGallery } from "@/components/molecules/ProductGallery";
+import { ProductBreadcrumb } from "@/components/molecules/Breadcrumb";
+import { ProductInfo } from "@/components/organisms/ProductInfo";
+import { RelatedProducts } from "@/components/organisms/RelatedProducts";
 import { ProductService } from "@/lib/service/product";
 import { notFound } from "next/navigation";
 

@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { MaterialForm } from "@/components/form/materialForm";
+import { MaterialForm } from "@/components/organisms/Forms/MaterialForm";
 import { MaterialService } from "@/lib/service/material/materialService";
 import { Material } from "@/lib/service/material/materialModel";
-import { ProductFormType } from "@/components/form/formType/productFormType";
+import { ProductFormType } from "@/components/organisms/Forms/formType/productFormType";
 
 export default function DetailMaterialPage() {
   const router = useRouter();

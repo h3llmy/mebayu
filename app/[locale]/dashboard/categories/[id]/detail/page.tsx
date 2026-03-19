@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { CategoryForm } from "@/components/form/categoryForm";
+import { CategoryForm } from "@/components/organisms/Forms/CategoryForm";
 import { CategoryService } from "@/lib/service/category/categoryService";
 import { Category } from "@/lib/service/category/categoryModel";
-import { ProductFormType } from "@/components/form/formType/productFormType";
+import { ProductFormType } from "@/components/organisms/Forms/formType/productFormType";
 
 export default function DetailCategoryPage() {
   const router = useRouter();

@@ -5,8 +5,8 @@ import { routing } from '@/i18n/routing';
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./../../globals.css";
-import { DashboardSidebar } from '@/components/sidebar';
-import { DashboardNavbar } from '@/components/navbar';
+import { DashboardSidebar } from '@/components/organisms/DashboardSidebar';
+import { DashboardNavbar } from '@/components/organisms/DashboardNavbar';
 import { Locale } from '@/types';
 import { ThemeProvider } from '@/components/theme-provider';
 

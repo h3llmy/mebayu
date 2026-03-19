@@ -1,9 +1,7 @@
-import {
-  ProductsHeader,
-  FilterBar,
-  ProductGrid,
-  Pagination,
-} from "@/components/products";
+import { ProductsHeader } from "@/components/molecules/ProductsHeader";
+import { FilterBar } from "@/components/organisms/FilterBar";
+import { ProductGrid } from "@/components/organisms/ProductGrid";
+import { Pagination } from "@/components/molecules/Pagination";
 import { ProductService } from "@/lib/service/product";
 import { CategoryService } from "@/lib/service/category/categoryService";
 import { MaterialService } from "@/lib/service/material/materialService";

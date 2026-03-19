@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "@/i18n/routing";
-import { MaterialForm } from "@/components/form/materialForm";
+import { MaterialForm } from "@/components/organisms/Forms/MaterialForm";
 import { MaterialService } from "@/lib/service/material/materialService";
 
 export default function CreateMaterialPage() {

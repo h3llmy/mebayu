@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import { ProductForm } from "@/components/form/productForm";
-import { ProductFormType } from "@/components/form/formType/productFormType";
+import { ProductForm } from "@/components/organisms/Forms/ProductForm";
+import { ProductFormType } from "@/components/organisms/Forms/formType/productFormType";
 import { ProductService, Product } from "@/lib/service/product";
 
 export default async function DetailProductPage({

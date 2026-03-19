@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "@/i18n/routing";
-import { MaterialForm } from "@/components/form/materialForm";
+import { MaterialForm } from "@/components/organisms/Forms/MaterialForm";
 import { MaterialService } from "@/lib/service/material/materialService";
 import { Material } from "@/lib/service/material/materialModel";
 import { useParams } from "next/navigation";

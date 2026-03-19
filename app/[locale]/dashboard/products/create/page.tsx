@@ -1,7 +1,7 @@
 "use client";
 
-import { ProductForm } from "@/components/form/productForm";
-import { ProductFormType } from "@/components/form/formType/productFormType";
+import { ProductForm } from "@/components/organisms/Forms/ProductForm";
+import { ProductFormType } from "@/components/organisms/Forms/formType/productFormType";
 
 export default function CreateProductPage() {
   return (
