@@ -28,6 +28,6 @@ const Home = async () => {
       <CtaSection />
     </>
   );
-}
+};
 
 export default Home;
