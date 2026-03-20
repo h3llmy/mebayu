@@ -12,6 +12,7 @@ import { useRouter } from "@/i18n/routing";
 import { Product, ProductService } from "@/lib/service/product";
 import { CategoryService } from "@/lib/service/category/categoryService";
 import { MaterialService } from "@/lib/service/material/materialService";
+import { FoundationService } from "@/lib/service/foundation/foundationService";
 import { useServiceSearch } from "@/hooks/useServiceSearch";
 import { TextAreaInput } from "../input/textArea";
 import { ProductFormType } from "@/components/form/formType/productFormType";
@@ -41,13 +42,14 @@ export function ProductForm({
     description: initialData?.description || "",
     categories: initialData?.categories || [],
     product_materials: initialData?.product_materials || [],
+    product_foundations: initialData?.product_foundations || [],
     price: initialData?.price || 0,
     status: initialData?.status || "ACTIVE",
   });
 
   const [images, setImages] = useState<UploadedFile[]>(
     initialData?.images?.map((img: any) => {
-      const imgUrl = typeof img === 'string' ? img : img?.url || '';
+      const imgUrl = typeof img === "string" ? img : img?.url || "";
       return {
         file_key: imgUrl,
         public_url: imgUrl,
@@ -78,6 +80,17 @@ export function ProductForm({
     mapFn: (m) => ({ label: m.name, value: m.id, original: m }),
   });
 
+  const {
+    items: foundationOptions,
+    setSearch: setFoundationSearch,
+    hasMore: foundationHasMore,
+    isLoading: foundationLoading,
+    onLoadMore: loadMoreFoundations,
+  } = useServiceSearch({
+    fetchFn: FoundationService.getAll,
+    mapFn: (f) => ({ label: f.name, value: f.id, original: f }),
+  });
+
   useEffect(() => {
     if (initialData) {
       setFormData({
@@ -85,12 +98,13 @@ export function ProductForm({
         description: initialData.description || "",
         categories: initialData.categories || [],
         product_materials: initialData.product_materials || [],
+        product_foundations: initialData.product_foundations || [],
         price: initialData.price || 0,
         status: initialData.status || "ACTIVE",
       });
       setImages(
         initialData.images?.map((img: any) => {
-          const imgUrl = typeof img === 'string' ? img : img?.url || '';
+          const imgUrl = typeof img === "string" ? img : img?.url || "";
           return {
             file_key: imgUrl,
             public_url: imgUrl,
@@ -129,6 +143,7 @@ export function ProductForm({
           await ProductService.create({
             category_ids: formData.categories.map((c) => c.id),
             material_ids: formData.product_materials.map((m) => m.id),
+            foundation_ids: formData.product_foundations.map((f) => f.id),
             name: formData.name,
             price: formData.price,
             image_urls: images.map((img) => img.public_url),
@@ -141,6 +156,7 @@ export function ProductForm({
           await ProductService.update(initialData?.id || "", {
             category_ids: formData.categories.map((c) => c.id),
             material_ids: formData.product_materials.map((m) => m.id),
+            foundation_ids: formData.product_foundations.map((f) => f.id),
             name: formData.name,
             price: formData.price,
             image_urls: images.map((img) => img.public_url),
@@ -320,6 +336,44 @@ export function ProductForm({
               onLoadMore={loadMoreMaterials}
               hasMore={materialHasMore}
               isLoading={materialLoading}
+              required
+              disabled={formType === ProductFormType.DETAIL}
+            />
+
+            <MultiSelect
+              label="Foundations"
+              placeholder="Select Foundations"
+              value={formData.product_foundations?.map((f) => f.id) || []}
+              onChange={(values: string[]) => {
+                const newFoundations = values.map((val) => {
+                  const selectedFoundation = foundationOptions.find(
+                    (f) => f.value === val,
+                  )?.original;
+                  const existingFoundation = formData.product_foundations?.find(
+                    (f) => f.id === val,
+                  );
+                  return (
+                    selectedFoundation ||
+                    existingFoundation || { id: val, name: "" }
+                  );
+                });
+                setFormData((prev) => ({
+                  ...prev,
+                  product_foundations: newFoundations,
+                }));
+              }}
+              options={[
+                ...foundationOptions,
+                ...(formData.product_foundations || [])
+                  .filter(
+                    (f) => !foundationOptions.find((fo) => fo.value === f.id),
+                  )
+                  .map((f) => ({ label: f.name, value: f.id })),
+              ]}
+              onSearch={setFoundationSearch}
+              onLoadMore={loadMoreFoundations}
+              hasMore={foundationHasMore}
+              isLoading={foundationLoading}
               required
               disabled={formType === ProductFormType.DETAIL}
             />
