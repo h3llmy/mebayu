@@ -10,4 +10,13 @@ export class AuthService {
             return null;
         }
     }
+    static async logout(): Promise<void> {
+        // Clear auth cookies
+        if (typeof window !== "undefined") {
+            const cookies = ["access_token", "refresh_token", "user_id"];
+            cookies.forEach(name => {
+                document.cookie = `${name}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax`;
+            });
+        }
+    }
 }

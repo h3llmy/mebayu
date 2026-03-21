@@ -2,6 +2,8 @@ import { Link } from "@/i18n/routing";
 import { SidebarLink } from "../molecules/SidebarLink";
 import { AuthService } from "@/lib/service/auth/authService";
 
+import { LogoutButton } from "../molecules/LogoutButton";
+
 function getInitials(name: string): string {
     return name
         .split(/[\s_@]+/)
@@ -86,11 +88,15 @@ export const DashboardSidebar = async () => {
                         />
                     </div>
                 </div>
+
+                <div className="pt-4 mt-auto border-t border-gray-100 dark:border-gray-800">
+                    <LogoutButton />
+                </div>
             </nav>
 
             {/* User Profile */}
             <div className="p-4 border-t border-gray-100 dark:border-gray-800">
-                <div className="flex items-center gap-3 w-full px-2 py-2.5 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200">
+                <div className="flex items-center gap-3 w-full px-2 py-2.5 rounded-xl transition-colors duration-200">
                     <div className="w-9 h-9 rounded-full bg-[var(--primary-light)] flex items-center justify-center text-[var(--primary)] font-bold text-xs ring-2 ring-white dark:ring-gray-950 shadow-sm shrink-0">
                         {initials}
                     </div>
@@ -98,12 +104,10 @@ export const DashboardSidebar = async () => {
                         <p className="text-sm font-semibold text-gray-900 dark:text-white truncate">{displayName}</p>
                         <p className="text-xs text-gray-500 dark:text-gray-400 truncate font-medium">{displayEmail}</p>
                     </div>
-                    <svg className="w-4 h-4 text-gray-400 dark:text-gray-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
                 </div>
             </div>
         </aside>
     );
 };
+;
 
