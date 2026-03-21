@@ -3,7 +3,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { Instagram, Mail, MapPin, ArrowUpRight } from "lucide-react";
 
-export const Footer = () => {
+interface FooterProps {
+  email?: string;
+}
+
+export const Footer = ({ email = "hello@mebayu.com" }: FooterProps) => {
   const t = useTranslations("Components.Footer");
 
   return (
@@ -33,7 +37,7 @@ export const Footer = () => {
                    <Instagram className="w-5 h-5" />
                  </a>
                  <a 
-                   href="mailto:hello@mebayu.com" 
+                   href={`mailto:${email}`} 
                    className="group p-4 bg-white/5 rounded-full hover:bg-white hover:text-black transition-all duration-500"
                  >
                    <Mail className="w-5 h-5" />
@@ -73,7 +77,7 @@ export const Footer = () => {
                 </li>
                 <li className="flex items-center gap-4">
                   <Mail className="w-4 h-4 text-[#507c59] shrink-0" />
-                  <a href="mailto:hello@mebayu.com" className="hover:text-white transition">hello@mebayu.com</a>
+                  <a href={`mailto:${email}`} className="hover:text-white transition">{email}</a>
                 </li>
               </ul>
           </div>

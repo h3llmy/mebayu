@@ -6,20 +6,23 @@ import { TestimonialsSection } from "@/components/organisms/Home/testimonialsSec
 import { CraftsmanshipSection } from "@/components/organisms/Home/craftsmanshipSection";
 import { CtaSection } from "@/components/organisms/Home/ctaSection";
 import { ProductService } from "@/lib/service/product/productService";
+import { SettingService } from "@/lib/service/setting/settingService";
 
 const Home = async () => {
-  const productsResponse = await ProductService.getAllPagination({
-    page: 1,
-    limit: 4,
-  });
-
-  console.log(productsResponse);
+  const [productsResponse, settings] = await Promise.all([
+    ProductService.getAllPagination({
+      page: 1,
+      limit: 4,
+    }),
+    SettingService.get(),
+  ]);
 
   const products = productsResponse?.data || [];
+  const heroImages = settings?.hero_images?.map(img => img.image_url) || [];
 
   return (
     <>
-      <HeroSection />
+      <HeroSection images={heroImages} />
       <AboutSection />
       <FeaturesSection />
       <ProductSection products={products} />

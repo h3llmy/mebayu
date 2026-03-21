@@ -7,9 +7,14 @@ import { Link } from "@/i18n/routing";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 
-const images = ["/leather-hero.png", "/leather-collection.png"];
+const defaultImages = ["/leather-hero.png", "/leather-collection.png"];
 
-export const HeroSection = () => {
+interface HeroSectionProps {
+    images?: string[];
+}
+
+export const HeroSection = ({ images = defaultImages }: HeroSectionProps) => {
+    const heroImages = images.length > 0 ? images : defaultImages;
     const t = useTranslations("Pages.Home.Hero");
     const [current, setCurrent] = useState(0);
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -23,10 +28,10 @@ export const HeroSection = () => {
     useEffect(() => {
         resetTimeout();
         timeoutRef.current = setTimeout(() => {
-            setCurrent((prev) => (prev + 1) % images.length);
+            setCurrent((prev) => (prev + 1) % heroImages.length);
         }, 6000);
         return () => resetTimeout();
-    }, [current]);
+    }, [current, heroImages.length]);
 
     return (
         <section className="relative w-full h-[85vh] md:h-screen overflow-hidden bg-[#2D2D2A]">
@@ -41,7 +46,7 @@ export const HeroSection = () => {
                     className="absolute inset-0"
                 >
                     <Image
-                        src={images[current]}
+                        src={heroImages[current]}
                         alt={`Hero Image ${current + 1}`}
                         fill
                         sizes="100vw"
@@ -113,9 +118,9 @@ export const HeroSection = () => {
 
             {/* Slide Indicators */}
             <div className="absolute right-10 top-1/2 -translate-y-1/2 z-30 hidden md:flex flex-col gap-4">
-                {images.map((_, i) => (
+                {heroImages.map((img, i) => (
                     <button
-                        key={i}
+                        key={`${img}-${i}`}
                         onClick={() => setCurrent(i)}
                         className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${
                             i === current ? "bg-white h-8" : "bg-white/30 hover:bg-white/50"

@@ -9,6 +9,7 @@ import { Navbar } from "@/components/organisms/Navbar";
 import { Footer } from "@/components/organisms/Footer";
 import { WhatsAppButton } from "@/components/molecules/FloatingButton";
 import { Locale } from '@/types';
+import { SettingService } from '@/lib/service/setting/settingService';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -108,6 +109,9 @@ export default async function LandingPageLayout({
   // side is the easiest way to get started
   const messages = await getMessages();
 
+  // Fetch settings for public use
+  const settings = await SettingService.get();
+
   return (
     <html lang={locale}>
       <body
@@ -117,8 +121,8 @@ export default async function LandingPageLayout({
 
           <Navbar />
           {children}
-          <WhatsAppButton phoneNumber="0817085750446" />
-          <Footer />
+          <WhatsAppButton phoneNumber={settings?.whatsapp_number || "0817085750446"} />
+          <Footer email={settings?.email} />
         </NextIntlClientProvider>
       </body>
     </html>
