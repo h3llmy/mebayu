@@ -20,7 +20,7 @@ export default function EditMaterialPage() {
   useEffect(() => {
     const loadMaterial = async () => {
       try {
-        const data = await MaterialService.getOne(id);
+        const data = await MaterialService.getOne(id, true);
         setMaterial(data);
       } catch (err) {
         setError((err as Error).message || "Material not found");
@@ -36,7 +36,7 @@ export default function EditMaterialPage() {
   }) => {
     setIsSubmitting(true);
     try {
-      await MaterialService.update(id, { name: data.name });
+      await MaterialService.update(id, { name: data.name }, true);
     } catch (error) {
       console.error("Failed to update material:", error);
     }

@@ -12,20 +12,20 @@ export const ProductInfo = ({ product }: Props) => {
   return (
     <div className="flex flex-col">
       <h1 className="text-3xl md:text-4xl font-light tracking-wide text-[#2D2D2A]">
-        {product.name}
+        {product.translations?.[0]?.name || "Unnamed Product"}
       </h1>
 
       <p className="mt-4 text-2xl font-medium text-[#507c59]">
-        {product.price}
+        Rp {product.price.toLocaleString('id-ID')}
       </p>
 
       {/* Tags */}
       <div className="flex gap-4 mt-6 text-xs uppercase tracking-widest text-gray-500">
         <span className="border border-gray-300 px-3 py-1">
-          {product.categories.map((category) => category.name).join(", ")}
+          {product.product_categories?.map((category) => category.translations?.[0]?.name).filter(Boolean).join(", ") || "No Category"}
         </span>
         <span className="border border-gray-300 px-3 py-1">
-          {product.product_materials.map((material) => material.name).join(", ")}
+          {product.product_materials?.map((material) => material.translations?.[0]?.name).filter(Boolean).join(", ") || "No Material"}
         </span>
       </div>
 
@@ -35,14 +35,14 @@ export const ProductInfo = ({ product }: Props) => {
           {t("Description")}
         </h2>
         <p className="text-gray-600 leading-relaxed">
-          {product.description}
+          {product.translations?.[0]?.description || "No description available"}
         </p>
       </div>
 
       {/* CTA */}
       <div className="mt-12 flex flex-col sm:flex-row gap-4">
         <a
-          href={`https://wa.me/62817085750446?text=Hello, I'm interested in ${product.name}`}
+          href={`https://wa.me/62817085750446?text=Hello, I'm interested in ${product.translations?.[0]?.name || "this product"}`}
           target="_blank"
           className="px-8 py-3 bg-[#507c59] text-white text-sm tracking-widest uppercase text-center hover:bg-[#466e4e] transition"
         >

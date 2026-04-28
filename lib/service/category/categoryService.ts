@@ -8,8 +8,10 @@ export class CategoryService {
         return response.data;
     }
 
-    static async getOne(id: string): Promise<Category> {
-        const response = await api.get<{ data: Category }>(`/v1/product-categories/${id}`);
+    static async getOne(id: string, skipLocale = false): Promise<Category> {
+        const response = await api.get<{ data: Category }>(`/v1/product-categories/${id}`, {
+            headers: skipLocale ? { "x-skip-locale": "true" } : {},
+        });
         return response.data.data;
     }
 
@@ -18,8 +20,10 @@ export class CategoryService {
         return response.data;
     }
 
-    static async update(id: string, data: { name: string }): Promise<Category> {
-        const response = await api.put<Category>(`/v1/product-categories/${id}`, data);
+    static async update(id: string, data: { name: string }, skipLocale = false): Promise<Category> {
+        const response = await api.put<Category>(`/v1/product-categories/${id}`, data, {
+            headers: skipLocale ? { "x-skip-locale": "true" } : {},
+        });
         return response.data;
     }
 

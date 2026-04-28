@@ -27,22 +27,22 @@ export const FilterBar = ({
   categories,
   materials,
 }: FilterBarProps) => {
-    const t = useTranslations("Pages.Products");
-    const router = useRouter();
-    const pathname = usePathname();
-    const searchParams = useSearchParams();
+  const t = useTranslations("Pages.Products");
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-    const updateFilters = (updates: Record<string, string>) => {
-        const params = new URLSearchParams(searchParams.toString());
-        Object.entries(updates).forEach(([name, value]) => {
-            params.set(name, value);
-        });
-        params.set("page", "1"); // Reset to page 1 on filter change
-        router.push(`${pathname}?${params.toString()}`);
-    };
+  const updateFilters = (updates: Record<string, string>) => {
+    const params = new URLSearchParams(searchParams.toString());
+    Object.entries(updates).forEach(([name, value]) => {
+      params.set(name, value);
+    });
+    params.set("page", "1"); // Reset to page 1 on filter change
+    router.push(`${pathname}?${params.toString()}`);
+  };
 
 
-    return (
+  return (
 
 
     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8 mb-16 border-y border-gray-200 py-6">
@@ -74,7 +74,10 @@ export const FilterBar = ({
           onChange={(v) => updateFilters({ category: v })}
           options={[
             { value: "all", label: t("all") },
-            ...categories.map((c) => ({ value: c.id, label: c.name })),
+            ...categories.map((c) => ({ 
+              value: c.id, 
+              label: c.translations?.[0]?.name || c.name || "Unknown" 
+            })),
           ]}
         />
 
@@ -85,7 +88,10 @@ export const FilterBar = ({
           onChange={(v) => updateFilters({ material: v })}
           options={[
             { value: "all", label: t("all") },
-            ...materials.map((m) => ({ value: m.id, label: m.name })),
+            ...materials.map((m) => ({ 
+              value: m.id, 
+              label: m.translations?.[0]?.name || m.name || "Unknown" 
+            })),
           ]}
         />
 

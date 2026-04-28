@@ -17,7 +17,8 @@ interface DataTableBodyProps<T> {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getValue(obj: any, path: string) {
-  return path.split(".").reduce((acc, key) => acc?.[key], obj);
+  const normalizedPath = path.replace(/\[(\w+)\]/g, ".$1");
+  return normalizedPath.split(".").reduce((acc, key) => acc?.[key], obj);
 }
 
 export function DataTableBody<T extends Record<string, any>>({

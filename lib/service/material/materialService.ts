@@ -8,8 +8,10 @@ export class MaterialService {
         return response.data;
     }
 
-    static async getOne(id: string): Promise<Material> {
-        const response = await api.get<{ data: Material }>(`/v1/product-materials/${id}`);
+    static async getOne(id: string, skipLocale = false): Promise<Material> {
+        const response = await api.get<{ data: Material }>(`/v1/product-materials/${id}`, {
+            headers: skipLocale ? { "x-skip-locale": "true" } : {},
+        });
         return response.data.data;
     }
 
@@ -18,8 +20,10 @@ export class MaterialService {
         return response.data;
     }
 
-    static async update(id: string, data: { name: string }): Promise<Material> {
-        const response = await api.put<Material>(`/v1/product-materials/${id}`, data);
+    static async update(id: string, data: { name: string }, skipLocale = false): Promise<Material> {
+        const response = await api.put<Material>(`/v1/product-materials/${id}`, data, {
+            headers: skipLocale ? { "x-skip-locale": "true" } : {},
+        });
         return response.data;
     }
 

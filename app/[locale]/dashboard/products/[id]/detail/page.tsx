@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { ProductForm } from "@/components/organisms/Forms/ProductForm";
 import { ProductFormType } from "@/components/organisms/Forms/formType/productFormType";
-import { ProductService, Product } from "@/lib/service/product";
+import { ProductService } from "@/lib/service/product";
 
 export default async function DetailProductPage({
   params,
@@ -10,7 +10,7 @@ export default async function DetailProductPage({
 }) {
   const resolvedParams = await params;
   const id = resolvedParams.id;
-  const product = await ProductService.getOne(id);
+  const product = await ProductService.getOne(id, true);
 
   if (!product) {
     notFound();
@@ -21,7 +21,7 @@ export default async function DetailProductPage({
       initialData={product}
       formType={ProductFormType.DETAIL}
       title="Product Details"
-      description={`Viewing details for ${product.name}`}
+      description={`Viewing details for ${product.translations?.[0]?.name}`}
     />
   );
 }

@@ -20,7 +20,7 @@ export default function EditFoundationPage() {
   useEffect(() => {
     const loadFoundation = async () => {
       try {
-        const data = await FoundationService.getOne(id);
+        const data = await FoundationService.getOne(id, true);
         setFoundation(data);
       } catch (err) {
         setError((err as Error).message || "Foundation not found");
@@ -36,7 +36,7 @@ export default function EditFoundationPage() {
   }) => {
     setIsSubmitting(true);
     try {
-      await FoundationService.update(id, { name: data.name });
+      await FoundationService.update(id, { name: data.name }, true);
     } catch (error) {
       console.error("Failed to update foundation:", error);
     }

@@ -3,7 +3,8 @@
         "Navbar": {
             "about": "Cerita Kami",
             "products": "Koleksi",
-            "login": "Masuk"
+            "login": "Masuk",
+            "heritage": "Warisan Kami"
         },
         "Footer": {
             "description": "Produk kulit buatan tangan dari Bali. Berakar pada tradisi, dirancang untuk kehidupan modern.",
@@ -18,29 +19,36 @@
             "Hero": {
                 "title": "Dibuat dengan Tangan. Dirancang untuk Bertahan.",
                 "description": "Produk kulit premium buatan pengrajin Bali — dirancang untuk menemani perjalanan Anda dalam jangka panjang.",
-                "cta": "Lihat Koleksi"
+                "cta": "Lihat Koleksi",
+                "scrollExplore": "Gulir Jelajahi"
             },
             "About": {
                 "title": "Ketika Keahlian Bertemu Karakter",
                 "p1": "Lahir di jantung Bali, Mebayu memadukan keahlian tradisional dengan desain modern yang bersih dan fungsional. Setiap produk dibuat secara handmade oleh pengrajin lokal menggunakan kulit asli pilihan.",
-                "p2": "Kami tidak sekadar membuat aksesori — kami menciptakan karya yang akan menua dengan indah, membentuk karakter, dan menjadi bagian dari kisah Anda sehari-hari."
+                "p2": "Kami tidak sekadar membuat aksesori — kami menciptakan karya yang akan menua dengan indah, membentuk karakter, dan menjadi bagian dari kisah Anda sehari-hari.",
+                "heritage": "Warisan Kami",
+                "philosophy": "Jelajahi Filosofi Kami"
             },
             "Products": {
                 "title": "Koleksi Pilihan",
                 "description": "Desain yang jujur. Material berkualitas. Dirancang dengan ketelitian untuk digunakan dalam waktu yang lama.",
                 "viewDetails": "Selengkapnya",
-                "showMore": "Lihat Semua Koleksi"
+                "showMore": "Lihat Semua Koleksi",
+                "featured": "Koleksi Pilihan"
             },
             "Cta": {
                 "title": "Bawa Sesuatu yang Bermakna",
                 "description": "Temukan produk kulit handmade yang memadukan kesederhanaan, fungsi, dan karakter yang tak lekang waktu.",
-                "cta": "Ikuti Perjalanan Kami"
+                "cta": "Ikuti Perjalanan Kami",
+                "join": "Bergabung dalam perjalanan",
+                "connect": "Hubungi kami"
             },
             "Craftsmanship": {
                 "title": "Dibuat dengan Tangan",
                 "description": "Setiap produk dimulai dari kulit pilihan dan dibentuk melalui waktu, kesabaran, dan keahlian tangan pengrajin.",
                 "storyTitle": "Material yang Jujur",
-                "story": "Kami menggunakan kulit asli premium dari pemasok lokal terpercaya dengan proses penyamakan nabati tradisional agar kulit dapat menua dengan indah. Setiap jahitan dilakukan secara manual untuk memastikan kekuatan, karakter, dan sentuhan personal dari pengrajin di baliknya."
+                "story": "Kami menggunakan kulit asli premium dari pemasok lokal terpercaya dengan proses penyamakan nabati tradisional agar kulit dapat menua dengan indah. Setiap jahitan dilakukan secara manual untuk memastikan kekuatan, karakter, dan sentuhan personal dari pengrajin di baliknya.",
+                "artisanStory": "Kisah Pengrajin"
             },
             "Features": {
                 "title": "Standar Mebayu",

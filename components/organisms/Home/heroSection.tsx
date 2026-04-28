@@ -107,7 +107,7 @@ export const HeroSection = ({ images = defaultImages }: HeroSectionProps) => {
                 transition={{ delay: 2, duration: 1 }}
                 className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2 text-white/50"
             >
-                <span className="text-[10px] uppercase tracking-[0.3em] font-light">Scroll Explore</span>
+                <span className="text-[10px] uppercase tracking-[0.3em] font-light">{t("scrollExplore")}</span>
                 <motion.div
                     animate={{ y: [0, 8, 0] }}
                     transition={{ repeat: Infinity, duration: 2 }}

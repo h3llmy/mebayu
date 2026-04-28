@@ -3,7 +3,8 @@
         "Navbar": {
             "about": "Our Story",
             "products": "Collection",
-            "login": "Login"
+            "login": "Login",
+            "heritage": "Our Heritage"
         },
         "Footer": {
             "description": "Handcrafted leather goods from Bali. Rooted in tradition, refined for modern living.",
@@ -18,29 +19,36 @@
             "Hero": {
                 "title": "Crafted by Hand. Made to Last.",
                 "description": "Premium leather goods handcrafted in Bali — timeless pieces designed to grow with you.",
-                "cta": "Discover the Collection"
+                "cta": "Discover the Collection",
+                "scrollExplore": "Scroll Explore"
             },
             "About": {
                 "title": "Where Craft Meets Character",
                 "p1": "Born in the heart of Bali, Mebayu blends traditional craftsmanship with contemporary design. Each piece is carefully shaped by skilled local artisans using full-grain genuine leather.",
-                "p2": "We create more than accessories — we craft companions. Pieces that soften, age beautifully, and carry the marks of your journey."
+                "p2": "We create more than accessories — we craft companions. Pieces that soften, age beautifully, and carry the marks of your journey.",
+                "heritage": "Our Heritage",
+                "philosophy": "Explore Our Philosophy"
             },
             "Products": {
                 "title": "The Collection",
                 "description": "Clean silhouettes. Honest materials. Designed with intention and built to endure.",
                 "viewDetails": "Discover More",
-                "showMore": "View Full Collection"
+                "showMore": "View Full Collection",
+                "featured": "Featured collection"
             },
             "Cta": {
                 "title": "Carry Something Meaningful",
                 "description": "Explore handcrafted leather essentials that balance simplicity, function, and quiet elegance.",
-                "cta": "Follow Our Journey"
+                "cta": "Follow Our Journey",
+                "join": "Join the journey",
+                "connect": "Connect with us"
             },
             "Craftsmanship": {
                 "title": "Crafted by Hand",
                 "description": "Every piece begins with carefully selected leather and is shaped through time, patience, and skilled hands.",
                 "storyTitle": "Honest Materials",
-                "story": "We source premium genuine leather from trusted local suppliers and use traditional vegetable tanning methods that allow the material to age beautifully. Each stitch is done by hand, ensuring strength, character, and a finish that carries the mark of the artisan behind it."
+                "story": "We source premium genuine leather from trusted local suppliers and use traditional vegetable tanning methods that allow the material to age beautifully. Each stitch is done by hand, ensuring strength, character, and a finish that carries the mark of the artisan behind it.",
+                "artisanStory": "Artisan Story"
             },
             "Features": {
                 "title": "The Mebayu Standard",

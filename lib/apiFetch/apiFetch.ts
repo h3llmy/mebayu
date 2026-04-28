@@ -45,11 +45,60 @@ async function getAccessToken(): Promise<string | null> {
     return match ? decodeURIComponent(match[2]) : null;
 }
 
+async function getLocale(): Promise<string | null> {
+    // 🟢 SERVER SIDE
+    if (typeof window === "undefined") {
+        try {
+            // Try to get from next-intl/server first as it's most reliable for App Router
+            const { getLocale: getIntlLocale } = await import("next-intl/server");
+            const locale = await getIntlLocale();
+            if (locale) return locale;
+        } catch {
+            // Fallback to cookies if getLocale fails
+        }
+
+        try {
+            const { cookies } = await import("next/headers");
+            const cookieStore = await cookies();
+            return cookieStore.get("NEXT_LOCALE")?.value ?? null;
+        } catch {
+            return null;
+        }
+    }
+
+    // 🔵 CLIENT SIDE
+    // 1. Try cookie first
+    const match = document.cookie.match(/(^| )NEXT_LOCALE=([^;]+)/);
+    if (match) return decodeURIComponent(match[2]);
+
+    // 2. Fallback to URL pathname
+    const pathLocale = window.location.pathname.split('/')[1];
+    if (pathLocale === "en" || pathLocale === "id") return pathLocale;
+
+    return null;
+}
+
 api.interceptors.request.use(async (config) => {
     const token = await getAccessToken();
+    const locale = await getLocale();
+
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
+
+    const url = config.url ?? "";
+    const skipLocale = config.headers["x-skip-locale"] === "true";
+
+    if (skipLocale) {
+        delete config.headers["x-skip-locale"];
+    } else if (locale) {
+        // ALWAYS send Accept-Language header if locale is known
+        config.headers["Accept-Language"] = locale;
+
+        // Add lang query param if not skipping
+        config.params = { lang: locale, ...config.params };
+    }
+
     return config;
 });
 

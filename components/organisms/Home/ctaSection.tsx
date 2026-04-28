@@ -2,22 +2,23 @@
 
 import { useTranslations } from "next-intl";
 import { FadeIn } from "../../atoms/FadeIn";
-import { Instagram, Send } from "lucide-react";
+import { Send } from "lucide-react";
 import Image from "next/image";
+import { InstagramIcon } from "@/components/icon";
 
 export const CtaSection = () => {
   const t = useTranslations("Pages.Home.Cta");
 
   return (
     <section className="relative h-[80vh] flex items-center bg-[#2D2D2A] text-white py-32 px-6 text-center overflow-hidden">
-      
+
       {/* Background Image with Parallax-like effect */}
       <div className="absolute inset-0 opacity-40 z-0 select-none grayscale-[0.8]">
         <Image
-           src="/workshop-aesthetic.png"
-           alt="Mebayu Workshop"
-           fill
-           className="object-cover transition-transform duration-1000 scale-105"
+          src="/workshop-aesthetic.png"
+          alt="Mebayu Workshop"
+          fill
+          className="object-cover transition-transform duration-1000 scale-105"
         />
       </div>
 
@@ -27,7 +28,7 @@ export const CtaSection = () => {
       <div className="relative z-20 max-w-4xl mx-auto flex flex-col items-center">
         <FadeIn direction="up" delay={0.2} duration={1.2}>
           <span className="block text-[#507c59] tracking-[0.5em] uppercase text-xs font-bold mb-10">
-            Join the journey
+            {t("join")}
           </span>
           <h2 className="text-4xl md:text-7xl font-light tracking-tight mb-12 leading-[1.1]">
             {t("title")}
@@ -39,21 +40,21 @@ export const CtaSection = () => {
 
           <div className="flex flex-col sm:flex-row gap-8 justify-center items-center">
             <a
-                href="https://www.instagram.com/mebayu.idn/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center gap-4 px-12 py-5 bg-white text-black font-semibold uppercase tracking-[0.2em] text-xs transition-all duration-500 hover:bg-[#507c59] hover:text-white rounded-sm"
+              href="https://www.instagram.com/mebayu.idn/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-4 px-12 py-5 bg-white text-black font-semibold uppercase tracking-[0.2em] text-xs transition-all duration-500 hover:bg-[#507c59] hover:text-white rounded-sm"
             >
-                <Instagram className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                {t("cta")}
+              <InstagramIcon className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              {t("cta")}
             </a>
 
             <a
-                href="#contact"
-                className="group flex items-center gap-4 text-white/70 hover:text-white tracking-[0.3em] uppercase text-xs font-light transition-all duration-300"
+              href="#contact"
+              className="group flex items-center gap-4 text-white/70 hover:text-white tracking-[0.3em] uppercase text-xs font-light transition-all duration-300"
             >
-                Connect with us
-                <Send className="w-4 h-4 transition-transform group-hover:translate-x-3 group-hover:-translate-y-3" />
+              {t("connect")}
+              <Send className="w-4 h-4 transition-transform group-hover:translate-x-3 group-hover:-translate-y-3" />
             </a>
           </div>
 

@@ -6,20 +6,18 @@ interface ProductGridProps {
   products: Product[];
 }
 
-
-
 export const ProductGrid = ({ products }: ProductGridProps) => {
   // 🔍 DEBUG: Log incoming products count
   console.log("🛒 Rendering ProductGrid with", products?.length, "products");
 
   const formattedProducts = products.map((product) => ({
     id: product.id,
-    name: product.name,
-    price: typeof product.price === "number" 
+    name: product.translations?.[0]?.name || "Unnamed Product",
+    price: typeof product.price === "number"
       ? `Rp ${product.price.toLocaleString("id-ID")}`
       : product.price || "Contact for Price",
     image: product.images?.[0]?.url || "/leather-hero.png",
-    description: product.description || "Handcrafted in Bali",
+    description: product.translations?.[0]?.description || "Handcrafted in Bali",
   }));
 
   return (

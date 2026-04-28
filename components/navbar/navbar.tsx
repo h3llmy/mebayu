@@ -7,6 +7,8 @@ import { useTranslations, useLocale } from "next-intl";
 import { Locale } from "@/types";
 
 
+import Cookies from "js-cookie";
+
 export const Navbar = () => {
     const t = useTranslations("Components.Navbar");
     const locale = useLocale();
@@ -25,6 +27,7 @@ export const Navbar = () => {
 
     const toggleLocale = () => {
         const nextLocale = locale === Locale.EN ? Locale.ID : Locale.EN;
+        Cookies.set("NEXT_LOCALE", nextLocale);
         router.replace(pathname, { locale: nextLocale });
     };
 

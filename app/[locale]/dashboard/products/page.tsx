@@ -78,15 +78,15 @@ export default function ProductPage() {
                 isLoading={isLoading}
                 totalItems={total}
                 columns={[
-                    { header: "Name", accessor: "name", sortable: true },
+                    { header: "Name", accessor: "translations.0.name", sortable: true },
                     { header: "Price", accessor: "price", sortable: true },
                     {
-                        header: "Categories", accessor: "categories", sortable: true, render: (value) => {
-                            return value?.map((item: Category) => item.name).join(", ")
+                        header: "Categories", accessor: "product_categories", sortable: true, render: (value) => {
+                            return value?.map((item: Category) => item.translations.map((item: any) => item.name).join(", "))
                         }
                     },
-                    { header: "Materials", accessor: "product_materials", sortable: true, render: (value) => value?.map((item: any) => item.name).join(", ") },
-                    { header: "Foundations", accessor: "product_foundations", sortable: true, render: (value) => value?.map((item: any) => item.name).join(", ") },
+                    { header: "Materials", accessor: "product_materials", sortable: true, render: (value) => value?.map((item: any) => item.translations.map((item: any) => item.name).join(", ")) },
+                    { header: "Foundations", accessor: "product_foundations", sortable: true, render: (value) => value?.map((item: any) => item.translations.map((item: any) => item.name).join(", ")) },
                     {
                         header: "Actions",
                         accessor: "id",

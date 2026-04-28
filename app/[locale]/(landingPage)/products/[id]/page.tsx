@@ -23,12 +23,15 @@ export default async function ProductPage({ params }: Props) {
       <div className="max-w-7xl mx-auto">
 
         {/* Breadcrumb */}
-        <ProductBreadcrumb productName={product.name} />
+        <ProductBreadcrumb productName={product.translations?.[0]?.name || "Product"} />
 
         <div className="grid lg:grid-cols-2 gap-16">
 
           {/* LEFT - Images */}
-          <ProductGallery images={product.images?.map((image) => image.url)} name={product.name} />
+          <ProductGallery 
+            images={product.images?.map((image) => image.url)} 
+            name={product.translations?.[0]?.name || "Product Image"} 
+          />
 
           {/* RIGHT - Info */}
           <ProductInfo product={product} />

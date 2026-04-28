@@ -34,7 +34,7 @@ export const AboutSection = () => {
                 <div className="relative">
                     <FadeIn direction="up" delay={0.2}>
                         <span className="block text-[#507c59] tracking-[0.4em] uppercase text-xs font-semibold mb-6">
-                            Our Heritage
+                            {t("heritage")}
                         </span>
                         <h2 className="text-4xl md:text-6xl font-light tracking-tight mb-10 text-[#2D2D2A] leading-[1.1]">
                             {t("title")}
@@ -54,7 +54,7 @@ export const AboutSection = () => {
                                 href="/#products"
                                 className="group inline-flex items-center gap-3 text-[#2D2D2A] tracking-[0.2em] uppercase text-xs font-bold hover:text-[#507c59] transition-colors"
                             >
-                                Explore Our Philosophy
+                                {t("philosophy")}
                                 <MoveRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-2" />
                             </Link>
                         </div>

@@ -15,7 +15,7 @@ export const CraftsmanshipSection = () => {
         <div className="grid lg:grid-cols-2 gap-10 items-end mb-24">
           <FadeIn direction="up" delay={0.2}>
             <span className="block text-[#507c59] tracking-[0.4em] uppercase text-xs font-semibold mb-6">
-                Artisan Story
+                {t("artisanStory")}
             </span>
             <h2 className="text-4xl md:text-7xl font-extralight tracking-tight text-[#2D2D2A] leading-[1.1]">
               {t("title")}

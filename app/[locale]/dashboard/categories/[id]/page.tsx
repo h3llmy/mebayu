@@ -20,7 +20,7 @@ export default function EditCategoryPage() {
   useEffect(() => {
     const loadCategory = async () => {
       try {
-        const data = await CategoryService.getOne(id);
+        const data = await CategoryService.getOne(id, true);
         setCategory(data);
       } catch (err) {
         setError((err as Error).message || "Category not found");
@@ -36,7 +36,7 @@ export default function EditCategoryPage() {
   }) => {
     setIsSubmitting(true);
     try {
-      await CategoryService.update(id, { name: data.name });
+      await CategoryService.update(id, { name: data.name }, true);
     } catch (error) {
       console.error("Failed to update category:", error);
     }

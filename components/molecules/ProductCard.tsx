@@ -5,15 +5,16 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+export interface ProductCardFormatted {
+    id: string;
+    name: string;
+    price: string;
+    image: string;
+    description: string;
+}
 
 export const ProductCard = ({ product }: {
-    product: {
-        id: string | number;
-        name: string;
-        description?: string;
-        price: string | number;
-        image: string;
-    }
+    product: ProductCardFormatted
 }) => {
     const t = useTranslations("Pages.Home.Products");
     return (

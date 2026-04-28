@@ -37,7 +37,7 @@ export default async function Page({ searchParams }: Props) {
 
 
   const products = productsResponse?.data || [];
-  const totalPages = productsResponse?.total_pages || 1;
+  const totalPages = productsResponse?.total_page || 1;
   const totalData = productsResponse?.total_data || 0;
 
   const categories = categoriesResponse?.data || [];

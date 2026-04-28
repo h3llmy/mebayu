@@ -13,10 +13,10 @@ export const ProductSection = ({ products }: { products: Product[] }) => {
 
   const formattedProducts = products.map((product) => ({
     id: product.id,
-    name: product.name,
+    name: product.translations?.[0]?.name || "Unnamed Product",
     price: `Rp ${product.price.toLocaleString("id-ID")}`,
     image: (product.images?.[0] as any)?.url || (typeof product.images?.[0] === 'string' ? product.images?.[0] : "/leather-hero.png"),
-    description: product.description || "Handcrafted in Bali",
+    description: product.translations?.[0]?.description || "Handcrafted in Bali",
   }));
 
   return (
@@ -29,7 +29,7 @@ export const ProductSection = ({ products }: { products: Product[] }) => {
         <div className="grid md:grid-cols-2 items-end gap-10 mb-24 border-b border-black/5 pb-10">
           <FadeIn direction="up">
             <span className="block text-[#507c59] tracking-[0.4em] uppercase text-xs font-semibold mb-6">
-              Featured collection
+              {t("featured")}
             </span>
             <h2 className="text-4xl md:text-6xl font-extralight tracking-tight text-[#2D2D2A]">
               {t("title")}
