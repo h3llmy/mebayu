@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import Image from "next/image";
-import { Instagram, Mail, MapPin, ArrowUpRight } from "lucide-react";
+import { Mail, MapPin, ArrowUpRight } from "lucide-react";
+import { InstagramIcon } from "../icon";
 
 export const Footer = () => {
   const t = useTranslations("Components.Footer");
@@ -22,22 +22,22 @@ export const Footer = () => {
               <p className="text-white/60 text-xl font-light leading-relaxed mb-10 border-l border-[#507c59] pl-8">
                 {t("description")}
               </p>
-              
+
               <div className="flex items-center gap-8 pt-4">
-                 <a 
-                   href="https://www.instagram.com/mebayu.idn/" 
-                   target="_blank" 
-                   rel="noopener noreferrer"
-                   className="group p-4 bg-white/5 rounded-full hover:bg-white hover:text-black transition-all duration-500"
-                 >
-                   <Instagram className="w-5 h-5" />
-                 </a>
-                 <a 
-                   href="mailto:hello@mebayu.com" 
-                   className="group p-4 bg-white/5 rounded-full hover:bg-white hover:text-black transition-all duration-500"
-                 >
-                   <Mail className="w-5 h-5" />
-                 </a>
+                <a
+                  href="https://www.instagram.com/mebayu.idn/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group p-4 bg-white/5 rounded-full hover:bg-white hover:text-black transition-all duration-500"
+                >
+                  <InstagramIcon className="w-5 h-5" />
+                </a>
+                <a
+                  href="mailto:hello@mebayu.com"
+                  className="group p-4 bg-white/5 rounded-full hover:bg-white hover:text-black transition-all duration-500"
+                >
+                  <Mail className="w-5 h-5" />
+                </a>
               </div>
             </div>
           </div>
@@ -63,19 +63,19 @@ export const Footer = () => {
 
           {/* Contact Details */}
           <div className="lg:col-span-3">
-             <h3 className="text-[#507c59] tracking-[0.4em] uppercase text-[10px] font-bold mb-10">
-                {t("connect")}
-              </h3>
-              <ul className="space-y-8 text-sm tracking-widest font-light">
-                <li className="flex items-start gap-4">
-                  <MapPin className="w-4 h-4 text-[#507c59] mt-0.5 shrink-0" />
-                  <span className="text-white/60">Bali, Indonesia<br/>Denpasar, 80234</span>
-                </li>
-                <li className="flex items-center gap-4">
-                  <Mail className="w-4 h-4 text-[#507c59] shrink-0" />
-                  <a href="mailto:hello@mebayu.com" className="hover:text-white transition">hello@mebayu.com</a>
-                </li>
-              </ul>
+            <h3 className="text-[#507c59] tracking-[0.4em] uppercase text-[10px] font-bold mb-10">
+              {t("connect")}
+            </h3>
+            <ul className="space-y-8 text-sm tracking-widest font-light">
+              <li className="flex items-start gap-4">
+                <MapPin className="w-4 h-4 text-[#507c59] mt-0.5 shrink-0" />
+                <span className="text-white/60">Bali, Indonesia<br />Denpasar, 80234</span>
+              </li>
+              <li className="flex items-center gap-4">
+                <Mail className="w-4 h-4 text-[#507c59] shrink-0" />
+                <a href="mailto:hello@mebayu.com" className="hover:text-white transition">hello@mebayu.com</a>
+              </li>
+            </ul>
           </div>
         </div>
 

@@ -33,7 +33,7 @@ export function CategoryForm({
   useEffect(() => {
     if (initialData) {
       setFormData({
-        name: initialData.name,
+        name: initialData.translations?.[0]?.name || "",
       });
     }
   }, [initialData]);

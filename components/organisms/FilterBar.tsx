@@ -76,7 +76,7 @@ export const FilterBar = ({
             { value: "all", label: t("all") },
             ...categories.map((c) => ({ 
               value: c.id, 
-              label: c.translations?.[0]?.name || c.name || "Unknown" 
+              label: c.translations?.[0]?.name || "Unknown" 
             })),
           ]}
         />

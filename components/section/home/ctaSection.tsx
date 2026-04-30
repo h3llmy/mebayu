@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { FadeIn } from "@/components/ui/fade-in";
-import { Instagram, Send } from "lucide-react";
+import { Send } from "lucide-react";
 import Image from "next/image";
 
 export const CtaSection = () => {
@@ -44,7 +44,6 @@ export const CtaSection = () => {
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-4 px-12 py-5 bg-white text-black font-semibold uppercase tracking-[0.2em] text-xs transition-all duration-500 hover:bg-[#507c59] hover:text-white rounded-sm"
             >
-                <Instagram className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 {t("cta")}
             </a>
 

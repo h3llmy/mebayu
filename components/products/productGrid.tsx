@@ -1,4 +1,4 @@
-import { ProductCard } from "@/components/card";
+import { ProductCard } from "@/components/molecules/ProductCard";
 import { FadeIn } from "@/components/ui/fade-in";
 import { Product } from "@/lib/service/product";
 
@@ -14,12 +14,12 @@ export const ProductGrid = ({ products }: ProductGridProps) => {
 
   const formattedProducts = products.map((product) => ({
     id: product.id,
-    name: product.name,
+    name: product.translations?.[0]?.name || "Unnamed Product",
     price: typeof product.price === "number" 
       ? `Rp ${product.price.toLocaleString("id-ID")}`
       : product.price || "Contact for Price",
     image: product.images?.[0]?.url || "/leather-hero.png",
-    description: product.description || "Handcrafted in Bali",
+    description: product.translations?.[0]?.description || "Handcrafted in Bali",
   }));
 
   return (

@@ -28,6 +28,16 @@ interface ProductFormProps {
   formType: ProductFormType;
 }
 
+interface ProductFormData {
+  name: string;
+  description: string;
+  categories: any[];
+  product_materials: any[];
+  product_foundations: any[];
+  price: number;
+  status: string;
+}
+
 export function ProductForm({
   initialData,
   // onSubmit,
@@ -37,10 +47,10 @@ export function ProductForm({
   formType,
 }: ProductFormProps) {
   const router = useRouter();
-  const [formData, setFormData] = useState<Omit<Product, "id">>({
-    name: initialData?.name || "",
-    description: initialData?.description || "",
-    categories: initialData?.categories || [],
+  const [formData, setFormData] = useState<ProductFormData>({
+    name: initialData?.translations?.[0]?.name || "",
+    description: initialData?.translations?.[0]?.description || "",
+    categories: initialData?.product_categories || [],
     product_materials: initialData?.product_materials || [],
     product_foundations: initialData?.product_foundations || [],
     price: initialData?.price || 0,
@@ -66,7 +76,7 @@ export function ProductForm({
     onLoadMore: loadMoreCategories,
   } = useServiceSearch({
     fetchFn: CategoryService.getAll,
-    mapFn: (c) => ({ label: c.name, value: c.id, original: c }),
+    mapFn: (c) => ({ label: c.translations?.[0]?.name || "", value: c.id, original: c }),
   });
 
   const {
@@ -77,7 +87,7 @@ export function ProductForm({
     onLoadMore: loadMoreMaterials,
   } = useServiceSearch({
     fetchFn: MaterialService.getAll,
-    mapFn: (m) => ({ label: m.name, value: m.id, original: m }),
+    mapFn: (m) => ({ label: m.translations?.[0]?.name || "", value: m.id, original: m }),
   });
 
   const {
@@ -88,15 +98,15 @@ export function ProductForm({
     onLoadMore: loadMoreFoundations,
   } = useServiceSearch({
     fetchFn: FoundationService.getAll,
-    mapFn: (f) => ({ label: f.name, value: f.id, original: f }),
+    mapFn: (f) => ({ label: f.translations?.[0]?.name || "", value: f.id, original: f }),
   });
 
   useEffect(() => {
     if (initialData) {
       setFormData({
-        name: initialData.name || "",
-        description: initialData.description || "",
-        categories: initialData.categories || [],
+        name: initialData.translations?.[0]?.name || "",
+        description: initialData.translations?.[0]?.description || "",
+        categories: (initialData as any).categories || initialData.product_categories || [],
         product_materials: initialData.product_materials || [],
         product_foundations: initialData.product_foundations || [],
         price: initialData.price || 0,
@@ -144,10 +154,13 @@ export function ProductForm({
             category_ids: formData.categories.map((c) => c.id),
             material_ids: formData.product_materials.map((m) => m.id),
             foundation_ids: formData.product_foundations.map((f) => f.id),
-            name: formData.name,
             price: formData.price,
             image_urls: images.map((img) => img.public_url),
-            description: formData.description,
+            translations: [{
+              language_id: initialData?.translations?.[0]?.language_id || "",
+              name: formData.name,
+              description: formData.description,
+            }],
             status: formData.status,
           });
           router.push("/dashboard/products");
@@ -157,10 +170,13 @@ export function ProductForm({
             category_ids: formData.categories.map((c) => c.id),
             material_ids: formData.product_materials.map((m) => m.id),
             foundation_ids: formData.product_foundations.map((f) => f.id),
-            name: formData.name,
             price: formData.price,
             image_urls: images.map((img) => img.public_url),
-            description: formData.description,
+            translations: [{
+              language_id: initialData?.translations?.[0]?.language_id || "",
+              name: formData.name,
+              description: formData.description,
+            }],
             status: formData.status,
           });
           router.push("/dashboard/products");
@@ -281,7 +297,7 @@ export function ProductForm({
                   );
                   return (
                     selectedCategory ||
-                    existingCategory || { id: val, name: "" }
+                    existingCategory || { id: val, translations: [{ name: "" }] } as any
                   );
                 });
                 setFormData((prev) => ({ ...prev, categories: newCategories }));
@@ -292,7 +308,7 @@ export function ProductForm({
                   .filter(
                     (c) => !categoryOptions.find((co) => co.value === c.id),
                   )
-                  .map((c) => ({ label: c.name, value: c.id })),
+                  .map((c) => ({ label: c.translations?.[0]?.name || "", value: c.id })),
               ]}
               onSearch={setCategorySearch}
               onLoadMore={loadMoreCategories}
@@ -316,7 +332,7 @@ export function ProductForm({
                   );
                   return (
                     selectedMaterial ||
-                    existingMaterial || { id: val, name: "" }
+                    existingMaterial || { id: val, translations: [{ name: "" }] } as any
                   );
                 });
                 setFormData((prev) => ({
@@ -330,7 +346,7 @@ export function ProductForm({
                   .filter(
                     (m) => !materialOptions.find((mo) => mo.value === m.id),
                   )
-                  .map((m) => ({ label: m.name, value: m.id })),
+                  .map((m) => ({ label: m.translations?.[0]?.name || "", value: m.id })),
               ]}
               onSearch={setMaterialSearch}
               onLoadMore={loadMoreMaterials}
@@ -354,7 +370,7 @@ export function ProductForm({
                   );
                   return (
                     selectedFoundation ||
-                    existingFoundation || { id: val, name: "" }
+                    existingFoundation || { id: val, translations: [{ name: "" }] } as any
                   );
                 });
                 setFormData((prev) => ({
@@ -368,7 +384,7 @@ export function ProductForm({
                   .filter(
                     (f) => !foundationOptions.find((fo) => fo.value === f.id),
                   )
-                  .map((f) => ({ label: f.name, value: f.id })),
+                  .map((f) => ({ label: f.translations?.[0]?.name || "", value: f.id })),
               ]}
               onSearch={setFoundationSearch}
               onLoadMore={loadMoreFoundations}

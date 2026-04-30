@@ -81,11 +81,11 @@ export default function DetailCategoryPage() {
   return (
     <CategoryForm
       initialData={category}
-      onSubmit={async () => {}}
+      onSubmit={async () => { }}
       isSubmitting={false}
       formType={ProductFormType.DETAIL}
       title="Category Details"
-      description={`Viewing details for ${category?.name}`}
+      description={`Viewing details for ${category?.translations?.[0]?.name}`}
     />
   );
 }

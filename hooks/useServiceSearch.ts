@@ -48,7 +48,7 @@ export function useServiceSearch<T>({ fetchFn, mapFn }: ServiceSearchProps<T>) {
                 if (active) {
                     const newItems = response.data.map(mapFnRef.current);
                     setItems(newItems);
-                    setHasMore(response.current_page < response.total_pages);
+                    setHasMore(response.page < response.total_page);
                     setPage(2);
                 }
             } catch (error) {
@@ -78,7 +78,7 @@ export function useServiceSearch<T>({ fetchFn, mapFn }: ServiceSearchProps<T>) {
 
             const newItems = response.data.map(mapFnRef.current);
             setItems((prev) => [...prev, ...newItems]);
-            setHasMore(response.current_page < response.total_pages);
+            setHasMore(response.page < response.total_page);
             setPage((p) => p + 1);
         } catch (error) {
             console.error("Failed to load more:", error);

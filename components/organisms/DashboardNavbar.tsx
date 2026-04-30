@@ -2,6 +2,7 @@
 import { usePathname, useRouter } from "@/i18n/routing";
 import { useLocale } from "next-intl";
 import { ThemeToggle } from "../atoms/ThemeToggle";
+import { Locale } from "@/types";
 
 export const DashboardNavbar = () => {
     const locale = useLocale();
@@ -9,7 +10,8 @@ export const DashboardNavbar = () => {
     const pathname = usePathname();
 
     const toggleLocale = () => {
-        router.replace(pathname, { locale });
+        const nextLocale = locale === Locale.EN ? Locale.ID : Locale.EN;
+        router.replace(pathname, { locale: nextLocale });
     };
 
     return (

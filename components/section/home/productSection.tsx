@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { FadeIn } from "@/components/ui/fade-in";
-import { ProductCard } from "@/components/card";
+import { ProductCard } from "@/components/molecules/ProductCard";
 import { ChevronRight } from "lucide-react";
 
 import { Product } from "@/lib/service/product/productModel";
@@ -13,10 +13,10 @@ export const ProductSection = ({ products }: { products: Product[] }) => {
 
   const formattedProducts = products.map((product) => ({
     id: product.id,
-    name: product.name,
+    name: product.translations?.[0]?.name || "Unnamed Product",
     price: `Rp ${product.price.toLocaleString("id-ID")}`,
     image: (product.images?.[0] as any)?.url || (typeof product.images?.[0] === 'string' ? product.images?.[0] : "/leather-hero.png"),
-    description: product.description || "Handcrafted in Bali",
+    description: product.translations?.[0]?.description || "Handcrafted in Bali",
   }));
 
   return (

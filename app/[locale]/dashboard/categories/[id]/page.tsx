@@ -98,7 +98,7 @@ export default function EditCategoryPage() {
       onSubmit={handleSubmit}
       isSubmitting={isSubmitting}
       title="Edit Category"
-      description={`Editing ${category?.name}`}
+      description={`Editing ${category?.translations?.[0]?.name}`}
     />
   );
 }

@@ -73,7 +73,7 @@ export const FilterBar = ({
           onChange={(v) => updateFilters({ category: v })}
           options={[
             { value: "all", label: t("all") },
-            ...categories.map((c) => ({ value: c.id, label: c.name })),
+            ...categories.map((c) => ({ value: c.id, label: c.translations?.[0]?.name || "Unknown" })),
           ]}
         />
 
@@ -84,7 +84,7 @@ export const FilterBar = ({
           onChange={(v) => updateFilters({ material: v })}
           options={[
             { value: "all", label: t("all") },
-            ...materials.map((m) => ({ value: m.id, label: m.name })),
+            ...materials.map((m) => ({ value: m.id, label: m.translations?.[0]?.name || "Unknown" })),
           ]}
         />
 

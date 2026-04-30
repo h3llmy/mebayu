@@ -33,16 +33,18 @@ export default async function DashboardLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const typedLocale = locale as Locale;
 
-  // Ensure that the incoming `locale` is valid
-  if (!routing.locales.includes(typedLocale)) {
+  if (!routing.locales.includes(locale as Locale)) {
     notFound();
   }
 
-  // Providing all messages to the client
-  // side is the easiest way to get started
   const messages = await getMessages();
+
+  const clientMessages = {
+    Dashboard: messages.Dashboard,
+    Navbar: messages.Navbar,
+    Sidebar: messages.Sidebar,
+  };
 
   return (
     <html lang={locale} suppressHydrationWarning>
@@ -55,9 +57,8 @@ export default async function DashboardLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <NextIntlClientProvider locale={locale} messages={messages}>
-
-
+          {/* Wrap the content in the Intl Provider inside the Theme Provider */}
+          <NextIntlClientProvider locale={locale} messages={clientMessages}>
             <div className="flex min-h-screen">
               {/* Sidebar */}
               <DashboardSidebar />
@@ -71,7 +72,6 @@ export default async function DashboardLayout({
                 </main>
               </div>
             </div>
-
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>
