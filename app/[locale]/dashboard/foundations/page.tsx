@@ -80,6 +80,12 @@ export default function FoundationPage() {
                         render: (id) => (
                             <div className="flex items-center gap-3">
                                 <Link
+                                    href={`/dashboard/foundations/${id}/detail`}
+                                    className="text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors"
+                                >
+                                    Detail
+                                </Link>
+                                <Link
                                     href={`/dashboard/foundations/${id}`}
                                     className="text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors"
                                 >

@@ -12,7 +12,7 @@ import { MaterialService } from "@/lib/service/material/materialService";
 import { FoundationService } from "@/lib/service/foundation/foundationService";
 import { useServiceSearch } from "@/hooks/useServiceSearch";
 import { TextAreaInput } from "../../atoms/TextArea";
-import { ProductFormType } from "@/components/form/formType/productFormType";
+import { ProductFormType } from "./formType/productFormType";
 import { Language, LanguageService } from "@/lib/service/language/languageService";
 
 export { ProductFormType };

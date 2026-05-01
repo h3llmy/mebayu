@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { Mail, MapPin, ArrowUpRight } from "lucide-react";
-import { InstagramIcon } from "../icon";
+import { InstagramIcon } from "../atoms/Icons/InstagramIcon";
 
 interface FooterProps {
   email?: string;

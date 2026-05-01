@@ -17,7 +17,7 @@ export default async function ProductPage({ params }: Props) {
   // Fetch product and recommendations in parallel
   const [product, recommendations] = await Promise.all([
     ProductService.getOne(id),
-    ProductService.getRecomendations(id, { limit: 4 })
+    ProductService.getRecommendations(id, { limit: 4 })
   ]);
 
   if (!product) return notFound();

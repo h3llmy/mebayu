@@ -98,7 +98,7 @@ export default function EditFoundationPage() {
       onSubmit={handleSubmit}
       isSubmitting={isSubmitting}
       title="Edit Foundation"
-      description={`Editing ${foundation?.name}`}
+      description={`Editing ${foundation?.translations?.[0]?.name || "Foundation"}`}
     />
   );
 }

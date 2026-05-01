@@ -19,7 +19,7 @@ export default function DetailMaterialPage() {
   useEffect(() => {
     const loadMaterial = async () => {
       try {
-        const data = await MaterialService.getOne(id);
+        const data = await MaterialService.getOne(id, true);
         setMaterial(data);
       } catch (err) {
         setError((err as Error).message || "Material not found");
@@ -85,7 +85,7 @@ export default function DetailMaterialPage() {
       isSubmitting={false}
       formType={ProductFormType.DETAIL}
       title="Material Details"
-      description={`Viewing details for ${material?.name}`}
+      description={`Viewing details for ${material?.translations?.[0]?.name || "Material"}`}
     />
   );
 }

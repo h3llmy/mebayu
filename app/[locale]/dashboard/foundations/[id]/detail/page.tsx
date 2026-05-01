@@ -1,48 +1,34 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "@/i18n/routing";
-import { MaterialForm } from "@/components/organisms/Forms/MaterialForm";
-import { MaterialService } from "@/lib/service/material/materialService";
-import { Material } from "@/lib/service/material/materialModel";
-import { useParams } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
+import { FoundationForm } from "@/components/organisms/Forms/FoundationForm";
+import { FoundationService } from "@/lib/service/foundation/foundationService";
+import { Foundation } from "@/lib/service/foundation/foundationModel";
+import { ProductFormType } from "@/components/organisms/Forms/formType/productFormType";
 
-export default function EditMaterialPage() {
+export default function DetailFoundationPage() {
   const router = useRouter();
   const params = useParams();
   const id = params.id as string;
 
-  const [material, setMaterial] = useState<Material | undefined>(undefined);
+  const [foundation, setFoundation] = useState<Foundation | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const loadMaterial = async () => {
+    const loadFoundation = async () => {
       try {
-        const data = await MaterialService.getOne(id, true);
-        setMaterial(data);
+        const data = await FoundationService.getOne(id, true);
+        setFoundation(data);
       } catch (err) {
-        setError((err as Error).message || "Material not found");
+        setError((err as Error).message || "Foundation not found");
       } finally {
         setIsLoading(false);
       }
     };
-    loadMaterial();
+    loadFoundation();
   }, [id]);
-
-  const handleSubmit = async (data: {
-    translations: { language_code: string; name: string }[];
-  }) => {
-    setIsSubmitting(true);
-    try {
-      await MaterialService.update(id, { translations: data.translations }, true);
-    } catch (error) {
-      console.error("Failed to update material:", error);
-    }
-    setIsSubmitting(false);
-    router.push("/dashboard/materials");
-  };
 
   if (isLoading) {
     return (
@@ -68,7 +54,7 @@ export default function EditMaterialPage() {
             ></path>
           </svg>
           <p className="text-gray-500 animate-pulse">
-            Loading material details...
+            Loading foundation details...
           </p>
         </div>
       </div>
@@ -82,10 +68,10 @@ export default function EditMaterialPage() {
           <h2 className="text-xl font-bold text-gray-900 mb-2">Error</h2>
           <p className="text-gray-500 mb-6">{error}</p>
           <button
-            onClick={() => router.push("/dashboard/materials")}
+            onClick={() => router.push("/dashboard/foundations")}
             className="text-[#507c59] hover:underline font-medium"
           >
-            Go back to materials
+            Go back to foundations
           </button>
         </div>
       </div>
@@ -93,12 +79,13 @@ export default function EditMaterialPage() {
   }
 
   return (
-    <MaterialForm
-      initialData={material}
-      onSubmit={handleSubmit}
-      isSubmitting={isSubmitting}
-      title="Edit Material"
-      description={`Editing ${material?.translations?.[0]?.name || "Material"}`}
+    <FoundationForm
+      initialData={foundation}
+      onSubmit={async () => {}}
+      isSubmitting={false}
+      formType={ProductFormType.DETAIL}
+      title="Foundation Details"
+      description={`Viewing details for ${foundation?.translations?.[0]?.name || "Foundation"}`}
     />
   );
 }

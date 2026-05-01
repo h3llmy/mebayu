@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { FadeIn } from "../../atoms/FadeIn";
 import { Send } from "lucide-react";
 import Image from "next/image";
-import { InstagramIcon } from "@/components/icon";
+import { InstagramIcon } from "../../atoms/Icons/InstagramIcon";
 
 export const CtaSection = () => {
   const t = useTranslations("Pages.Home.Cta");

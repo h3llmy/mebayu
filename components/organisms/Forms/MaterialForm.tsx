@@ -5,7 +5,7 @@ import { useRouter } from "@/i18n/routing";
 import { Input } from "../../atoms/Input";
 import { Button } from "../../atoms/Button";
 import { Material } from "@/lib/service/material/materialModel";
-import { ProductFormType } from "@/components/form/formType/productFormType";
+import { ProductFormType } from "./formType/productFormType";
 import { Language, LanguageService } from "@/lib/service/language/languageService";
 
 interface Translation {
@@ -54,7 +54,7 @@ export function MaterialForm({
       if (initialData?.translations) {
         const mapped = languages.map((lang) => {
           const existing = initialData.translations.find(
-            (t) => t.language_id === lang.id || t.language_id === lang.code
+            (t: any) => t.language_id === lang.id || t.language_id === lang.code || t.language?.code === lang.code
           );
           return {
             language_code: lang.code,

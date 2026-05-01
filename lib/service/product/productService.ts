@@ -1,7 +1,7 @@
 import { PaginationRequest, PaginationResponse } from "@/types";
 import { api } from "../../apiFetch/apiFetch";
 import { Product } from "./productModel";
-import { CreateProductDto, RecomendationDto, UpdateProductDto } from "./dto";
+import { CreateProductDto, RecommendationDto, UpdateProductDto } from "./dto";
 
 export class ProductService {
     static async getAllPagination(params: PaginationRequest): Promise<PaginationResponse<Product>> {
@@ -15,7 +15,7 @@ export class ProductService {
 
     }
 
-    static async getRecomendations(id: string, params: RecomendationDto): Promise<Pick<PaginationResponse<Product>, 'data'>> {
+    static async getRecommendations(id: string, params: RecommendationDto): Promise<Pick<PaginationResponse<Product>, 'data'>> {
         const filteredParams = Object.fromEntries(
             Object.entries(params).filter(([, v]) => v !== undefined && v !== null && v !== "")
         );
