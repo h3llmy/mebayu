@@ -74,14 +74,14 @@ export function ProductForm({
   const buildTranslations = (data: Product | undefined, langs: Language[]): ProductTranslation[] => {
     if (langs.length === 0) {
       // Fallback: return existing translations or empty placeholders
-      return data?.translations?.length ? data.translations : [emptyTranslation("en"), emptyTranslation("id")];
+      return data?.translations?.length ? data.translations : [];
     }
     return langs.map((lang) => {
-      const existing = data?.translations?.find((t) => t.language_id === lang.code || t.language_id === lang.id);
+      const existing = data?.translations?.find((t) => t.language_id === lang.id || t.language_id === lang.code);
       if (existing) return existing;
       return {
         product_id: data?.id || "",
-        language_id: lang.code,
+        language_id: lang.id,
         language: lang,
         name: "",
         description: "",
@@ -95,13 +95,11 @@ export function ProductForm({
     product_materials: initialData?.product_materials || [],
     product_foundations: initialData?.product_foundations || [],
     price: initialData?.price || 0,
-    status: initialData?.status || "ACTIVE",
+    status: initialData?.status?.toLowerCase() || "active",
   });
 
   // Active language tab — default to the first translation's language
-  const [activeLang, setActiveLang] = useState<string>(
-    () => formData.translations[0]?.language_id || "en"
-  );
+  const [activeLang, setActiveLang] = useState<string>("");
 
   const [images, setImages] = useState<UploadedFile[]>(
     initialData?.images?.map((img: any) => {
@@ -121,10 +119,13 @@ export function ProductForm({
       product_materials: initialData?.product_materials || prev.product_materials,
       product_foundations: initialData?.product_foundations || prev.product_foundations,
       price: initialData?.price ?? prev.price,
-      status: initialData?.status || prev.status,
+      status: initialData?.status?.toLowerCase() || prev.status,
     }));
-    if (translations[0]?.language_id) {
-      setActiveLang((prev) => prev || translations[0].language_id);
+    if (translations.length > 0) {
+      setActiveLang((prev) => {
+        if (!prev || prev === "en" || prev === "id") return translations[0].language_id;
+        return prev;
+      });
     }
     if (initialData?.images) {
       setImages(
@@ -422,8 +423,8 @@ export function ProductForm({
                 disabled={isDisabled}
                 className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                <option value="ACTIVE">Active</option>
-                <option value="INACTIVE">Inactive</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
               </select>
             </div>
           </div>
