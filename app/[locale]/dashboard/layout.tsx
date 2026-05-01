@@ -51,14 +51,13 @@ export default async function DashboardLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 dark:bg-gray-950 dark:text-gray-100 transition-colors duration-200`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {/* Wrap the content in the Intl Provider inside the Theme Provider */}
-          <NextIntlClientProvider locale={locale} messages={clientMessages}>
+        {/* Wrap the content in the Intl Provider inside the Theme Provider */}
+        <NextIntlClientProvider locale={locale} messages={clientMessages}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+          >
             <div className="flex min-h-screen">
               {/* Sidebar */}
               <DashboardSidebar />
@@ -72,8 +71,8 @@ export default async function DashboardLayout({
                 </main>
               </div>
             </div>
-          </NextIntlClientProvider>
-        </ThemeProvider>
+          </ThemeProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
