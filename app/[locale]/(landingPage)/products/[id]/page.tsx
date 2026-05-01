@@ -14,7 +14,11 @@ interface Props {
 export default async function ProductPage({ params }: Props) {
   const { id } = await params;
 
-  const product = await ProductService.getOne(id);
+  // Fetch product and recommendations in parallel
+  const [product, recommendations] = await Promise.all([
+    ProductService.getOne(id),
+    ProductService.getRecomendations(id, { limit: 4 })
+  ]);
 
   if (!product) return notFound();
 
@@ -28,9 +32,9 @@ export default async function ProductPage({ params }: Props) {
         <div className="grid lg:grid-cols-2 gap-16">
 
           {/* LEFT - Images */}
-          <ProductGallery 
-            images={product.images?.map((image) => image.url)} 
-            name={product.translations?.[0]?.name || "Product Image"} 
+          <ProductGallery
+            images={product.images?.map((image) => image.url)}
+            name={product.translations?.[0]?.name || "Product Image"}
           />
 
           {/* RIGHT - Info */}
@@ -38,7 +42,7 @@ export default async function ProductPage({ params }: Props) {
         </div>
 
         {/* Extra Section */}
-        <RelatedProducts />
+        <RelatedProducts products={recommendations.data} />
 
       </div>
     </section>

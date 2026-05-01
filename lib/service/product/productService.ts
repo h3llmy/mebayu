@@ -1,22 +1,28 @@
 import { PaginationRequest, PaginationResponse } from "@/types";
 import { api } from "../../apiFetch/apiFetch";
 import { Product } from "./productModel";
-import { CreateProductDto, UpdateProductDto } from "./dto";
+import { CreateProductDto, RecomendationDto, UpdateProductDto } from "./dto";
 
 export class ProductService {
     static async getAllPagination(params: PaginationRequest): Promise<PaginationResponse<Product>> {
-        try {
-            const filteredParams = Object.fromEntries(
-                Object.entries(params).filter(([, v]) => v !== undefined && v !== null && v !== "")
-            );
-            const response = await api.get<PaginationResponse<Product>>("/v1/products", {
-                params: filteredParams,
-            });
-            return response.data;
-        } catch (error) {
-            console.log(error);
-            throw error;
-        }
+        const filteredParams = Object.fromEntries(
+            Object.entries(params).filter(([, v]) => v !== undefined && v !== null && v !== "")
+        );
+        const response = await api.get<PaginationResponse<Product>>("/v1/products", {
+            params: filteredParams,
+        });
+        return response.data;
+
+    }
+
+    static async getRecomendations(id: string, params: RecomendationDto): Promise<Pick<PaginationResponse<Product>, 'data'>> {
+        const filteredParams = Object.fromEntries(
+            Object.entries(params).filter(([, v]) => v !== undefined && v !== null && v !== "")
+        );
+        const response = await api.get<Pick<PaginationResponse<Product>, 'data'>>(`/v1/products/${id}/recommendations`, {
+            params: filteredParams,
+        });
+        return response.data;
     }
 
     static async create(data: CreateProductDto): Promise<Product> {
