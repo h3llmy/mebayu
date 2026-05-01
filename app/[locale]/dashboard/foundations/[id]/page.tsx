@@ -32,11 +32,11 @@ export default function EditFoundationPage() {
   }, [id]);
 
   const handleSubmit = async (data: {
-    name: string;
+    translations: { language_code: string; name: string }[];
   }) => {
     setIsSubmitting(true);
     try {
-      await FoundationService.update(id, { name: data.name }, true);
+      await FoundationService.update(id, { translations: data.translations }, true);
     } catch (error) {
       console.error("Failed to update foundation:", error);
     }

@@ -32,11 +32,11 @@ export default function EditMaterialPage() {
   }, [id]);
 
   const handleSubmit = async (data: {
-    name: string;
+    translations: { language_code: string; name: string }[];
   }) => {
     setIsSubmitting(true);
     try {
-      await MaterialService.update(id, { name: data.name }, true);
+      await MaterialService.update(id, { translations: data.translations }, true);
     } catch (error) {
       console.error("Failed to update material:", error);
     }

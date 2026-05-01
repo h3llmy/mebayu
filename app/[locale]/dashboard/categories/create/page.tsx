@@ -10,12 +10,12 @@ export default function CreateCategoryPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (data: {
-    name: string;
+    translations: { language_code: string; name: string }[];
   }) => {
     setIsSubmitting(true);
 
     try {
-      await CategoryService.create({ name: data.name });
+      await CategoryService.create({ translations: data.translations });
     } catch (error) {
       console.error("Failed to create category:", error);
     }

@@ -15,12 +15,12 @@ export class CategoryService {
         return response.data.data;
     }
 
-    static async create(data: { name: string }): Promise<Category> {
+    static async create(data: { translations: { language_code: string; name: string }[] }): Promise<Category> {
         const response = await api.post<Category>(`/v1/product-categories`, data);
         return response.data;
     }
 
-    static async update(id: string, data: { name: string }, skipLocale = false): Promise<Category> {
+    static async update(id: string, data: { translations: { language_code: string; name: string }[] }, skipLocale = false): Promise<Category> {
         const response = await api.put<Category>(`/v1/product-categories/${id}`, data, {
             headers: skipLocale ? { "x-skip-locale": "true" } : {},
         });

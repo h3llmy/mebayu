@@ -10,12 +10,12 @@ export default function CreateMaterialPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (data: {
-    name: string;
+    translations: { language_code: string; name: string }[];
   }) => {
     setIsSubmitting(true);
 
     try {
-      await MaterialService.create({ name: data.name });
+      await MaterialService.create({ translations: data.translations });
     } catch (error) {
       console.error("Failed to create material:", error);
     }

@@ -15,12 +15,12 @@ export class FoundationService {
         return response.data.data;
     }
 
-    static async create(data: { name: string }): Promise<Foundation> {
+    static async create(data: { translations: { language_code: string; name: string }[] }): Promise<Foundation> {
         const response = await api.post<Foundation>(`/v1/product-foundations`, data);
         return response.data;
     }
 
-    static async update(id: string, data: { name: string }, skipLocale = false): Promise<Foundation> {
+    static async update(id: string, data: { translations: { language_code: string; name: string }[] }, skipLocale = false): Promise<Foundation> {
         const response = await api.put<Foundation>(`/v1/product-foundations/${id}`, data, {
             headers: skipLocale ? { "x-skip-locale": "true" } : {},
         });

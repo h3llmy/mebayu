@@ -32,11 +32,11 @@ export default function EditCategoryPage() {
   }, [id]);
 
   const handleSubmit = async (data: {
-    name: string;
+    translations: { language_code: string; name: string }[];
   }) => {
     setIsSubmitting(true);
     try {
-      await CategoryService.update(id, { name: data.name }, true);
+      await CategoryService.update(id, { translations: data.translations }, true);
     } catch (error) {
       console.error("Failed to update category:", error);
     }

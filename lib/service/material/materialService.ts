@@ -15,12 +15,12 @@ export class MaterialService {
         return response.data.data;
     }
 
-    static async create(data: { name: string }): Promise<Material> {
+    static async create(data: { translations: { language_code: string; name: string }[] }): Promise<Material> {
         const response = await api.post<Material>(`/v1/product-materials`, data);
         return response.data;
     }
 
-    static async update(id: string, data: { name: string }, skipLocale = false): Promise<Material> {
+    static async update(id: string, data: { translations: { language_code: string; name: string }[] }, skipLocale = false): Promise<Material> {
         const response = await api.put<Material>(`/v1/product-materials/${id}`, data, {
             headers: skipLocale ? { "x-skip-locale": "true" } : {},
         });

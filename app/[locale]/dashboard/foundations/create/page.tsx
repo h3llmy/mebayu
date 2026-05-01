@@ -10,12 +10,12 @@ export default function CreateFoundationPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (data: {
-    name: string;
+    translations: { language_code: string; name: string }[];
   }) => {
     setIsSubmitting(true);
 
     try {
-      await FoundationService.create({ name: data.name });
+      await FoundationService.create({ translations: data.translations });
     } catch (error) {
       console.error("Failed to create foundation:", error);
     }

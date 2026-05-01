@@ -72,7 +72,7 @@ export default function MaterialPage() {
                 isLoading={isLoading}
                 totalItems={total}
                 columns={[
-                    { header: "Name", accessor: "name", sortable: true },
+                    { header: "Name", accessor: "translations.0.name", sortable: true },
                     { header: "Created At", accessor: "created_at", sortable: true, render: (value) => new Date(value).toLocaleString() },
                     {
                         header: "Actions",
