@@ -103,7 +103,8 @@
             "wallets": "Wallets",
             "accessories": "Accessories",
             "viewDetails": "View Details",
-            "material": "Material"
+            "material": "Material",
+            "foundation": "Foundation"
         },
         "ProductDetail": {
             "Products": "Products",

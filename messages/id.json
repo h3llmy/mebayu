@@ -103,7 +103,8 @@
             "wallets": "Dompet",
             "accessories": "Aksesoris",
             "viewDetails": "Lihat Detail",
-            "material": "Material"
+            "material": "Material",
+            "foundation": "Foundation"
         },
         "ProductDetail": {
             "Products": "Produk",

@@ -6,4 +6,5 @@ export interface PaginationRequest {
     sort_order?: "Asc" | "Desc";
     category_id?: string;
     material_id?: string;
+    foundation_id?: string;
 }

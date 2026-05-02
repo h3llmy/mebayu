@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 
 import { Category } from "@/lib/service/category/categoryModel";
 import { Material } from "@/lib/service/material/materialModel";
+import { Foundation } from "@/lib/service/foundation/foundationModel";
 import { FilterSelect } from "../molecules/FilterSelect";
 
 interface FilterBarProps {
@@ -13,8 +14,10 @@ interface FilterBarProps {
   sortOrder: "Asc" | "Desc";
   category: string;
   material: string;
+  foundation: string;
   categories: Category[];
   materials: Material[];
+  foundations: Foundation[];
 }
 
 export const FilterBar = ({
@@ -23,8 +26,10 @@ export const FilterBar = ({
   sortOrder,
   category,
   material,
+  foundation,
   categories,
   materials,
+  foundations,
 }: FilterBarProps) => {
   const t = useTranslations("Pages.Products");
   const router = useRouter();
@@ -90,6 +95,20 @@ export const FilterBar = ({
             ...materials.map((m) => ({
               value: m.id,
               label: m.translations?.[0]?.name || "Unknown"
+            })),
+          ]}
+        />
+
+        {/* Foundation */}
+        <FilterSelect
+          label={t("foundation")}
+          value={foundation}
+          onChange={(v) => updateFilters({ foundation: v })}
+          options={[
+            { value: "all", label: t("all") },
+            ...foundations.map((f) => ({
+              value: f.id,
+              label: f.translations?.[0]?.name || "Unknown"
             })),
           ]}
         />
