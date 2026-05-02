@@ -9,6 +9,7 @@ import { DashboardSidebar } from '@/components/organisms/DashboardSidebar';
 import { DashboardNavbar } from '@/components/organisms/DashboardNavbar';
 import { Locale } from '@/types';
 import { ThemeProvider } from '@/components/theme-provider';
+import { SidebarProvider } from '@/hooks/useSidebar';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -58,19 +59,23 @@ export default async function DashboardLayout({
             defaultTheme="system"
             enableSystem
           >
-            <div className="flex min-h-screen">
-              {/* Sidebar */}
-              <DashboardSidebar />
+            <SidebarProvider>
+              <div className="flex min-h-screen">
+                {/* Sidebar */}
+                <DashboardSidebar />
 
-              {/* Main Content Area */}
-              <div className="flex-1 flex flex-col ml-64 transition-all duration-300 ease-in-out">
-                <DashboardNavbar />
+                {/* Main Content Area */}
+                <div className="flex-1 flex flex-col transition-all duration-300 ease-in-out lg:ml-64">
+                  <DashboardNavbar />
 
-                <main className="flex-1 p-6 md:p-8 mt-16 overflow-y-auto bg-gray-50 dark:bg-gray-950">
-                  {children}
-                </main>
+                  <main className="flex-1 p-4 md:p-6 lg:p-8 mt-16 overflow-y-auto bg-gray-50 dark:bg-gray-950">
+                    <div className="max-w-[1600px] mx-auto">
+                      {children}
+                    </div>
+                  </main>
+                </div>
               </div>
-            </div>
+            </SidebarProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>

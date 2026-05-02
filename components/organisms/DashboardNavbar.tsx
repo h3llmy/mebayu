@@ -1,21 +1,56 @@
 "use client";
+
 import { usePathname, useRouter } from "@/i18n/routing";
 import { useLocale } from "next-intl";
 import { ThemeToggle } from "../atoms/ThemeToggle";
 import { Locale } from "@/types";
+import { useSidebar } from "@/hooks/useSidebar";
+import { Link } from "@/i18n/routing";
+import Image from "next/image";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-export const DashboardNavbar = () => {
+const NavbarContent = () => {
     const locale = useLocale();
     const router = useRouter();
     const pathname = usePathname();
+    const { toggle } = useSidebar();
+    const searchParams = useSearchParams();
 
     const toggleLocale = () => {
         const nextLocale = locale === Locale.EN ? Locale.ID : Locale.EN;
-        router.replace(pathname, { locale: nextLocale });
+        const currentParams = searchParams.toString();
+        const href = currentParams ? `${pathname}?${currentParams}` : pathname;
+        router.replace(href, { locale: nextLocale });
     };
 
     return (
-        <header className="h-16 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 fixed top-0 right-0 left-64 z-40 px-6 flex items-center justify-end transition-colors duration-200">
+        <header className="h-16 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 fixed top-0 right-0 left-0 lg:left-64 z-40 px-4 md:px-6 flex items-center justify-between transition-colors duration-200">
+            <div className="flex items-center gap-4">
+                {/* Mobile Menu Toggle */}
+                <button
+                    onClick={toggle}
+                    className="lg:hidden p-2 rounded-md text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+
+                {/* Mobile Logo */}
+                <Link href="/dashboard" className="lg:hidden flex items-center gap-2">
+                    <div className="bg-[var(--primary)] p-1 rounded-md">
+                        <Image
+                            src="/app-logo.png"
+                            alt="Logo"
+                            width={24}
+                            height={24}
+                            className="invert brightness-0"
+                        />
+                    </div>
+                </Link>
+            </div>
+
             {/* Right Actions */}
             <div className="flex items-center gap-4">
                 <ThemeToggle />
@@ -29,8 +64,18 @@ export const DashboardNavbar = () => {
 
                 <div className="h-8 w-px bg-gray-200 dark:bg-gray-800 mx-2"></div>
 
-                <button onClick={toggleLocale} className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:cursor-pointer">{locale.toUpperCase()}</button>
+                <button onClick={toggleLocale} className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:cursor-pointer p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                    {locale.toUpperCase()}
+                </button>
             </div>
         </header>
+    );
+};
+
+export const DashboardNavbar = () => {
+    return (
+        <Suspense fallback={<div className="h-16 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 fixed top-0 right-0 left-0 lg:left-64 z-40" />}>
+            <NavbarContent />
+        </Suspense>
     );
 };

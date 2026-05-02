@@ -1,5 +1,3 @@
-"use client";
-
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/routing";
 import { useSearchParams } from "next/navigation";
@@ -74,9 +72,9 @@ export const FilterBar = ({
           onChange={(v) => updateFilters({ category: v })}
           options={[
             { value: "all", label: t("all") },
-            ...categories.map((c) => ({ 
-              value: c.id, 
-              label: c.translations?.[0]?.name || "Unknown" 
+            ...categories.map((c) => ({
+              value: c.id,
+              label: c.translations?.[0]?.name || "Unknown"
             })),
           ]}
         />
@@ -88,9 +86,9 @@ export const FilterBar = ({
           onChange={(v) => updateFilters({ material: v })}
           options={[
             { value: "all", label: t("all") },
-            ...materials.map((m) => ({ 
-              value: m.id, 
-              label: m.translations?.[0]?.name || m.name || "Unknown" 
+            ...materials.map((m) => ({
+              value: m.id,
+              label: m.translations?.[0]?.name || "Unknown"
             })),
           ]}
         />

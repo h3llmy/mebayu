@@ -58,14 +58,14 @@ export default function CategoryPage() {
     };
 
     return (
-        <div className="p-6">
-            <div className="mb-6 flex items-center justify-between">
+        <div className="px-4 md:px-6 py-6 transition-all duration-300">
+            <div className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Product Categories</h1>
-                    <p className="text-gray-500 dark:text-gray-400">Organize your products into logical sections.</p>
+                    <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Product Categories</h1>
+                    <p className="text-sm md:text-base text-gray-500 dark:text-gray-400">Organize your products into logical sections.</p>
                 </div>
-                <div>
-                    <RedirectButton href="/dashboard/categories/create" label="Add Category" />
+                <div className="shrink-0 transition-transform active:scale-95">
+                    <RedirectButton href="/dashboard/categories/create" label="Add Category" className="w-full sm:w-auto" />
                 </div>
             </div>
 
