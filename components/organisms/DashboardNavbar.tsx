@@ -45,6 +45,7 @@ const NavbarContent = () => {
                             alt="Logo"
                             width={24}
                             height={24}
+                            style={{ height: "auto" }}
                             className="invert brightness-0"
                         />
                     </div>

@@ -18,6 +18,7 @@ export const CtaSection = () => {
           src="/workshop-aesthetic.png"
           alt="Mebayu Workshop"
           fill
+          sizes="100vw"
           className="object-cover transition-transform duration-1000 scale-105"
         />
       </div>

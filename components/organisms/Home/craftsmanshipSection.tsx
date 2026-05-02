@@ -39,6 +39,7 @@ export const CraftsmanshipSection = () => {
                 src="/leather-collection.png"
                 alt="Leather texture close-up"
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 800px"
                 className="object-cover transition-transform duration-1000 group-hover:scale-110 grayscale-[0.2] hover:grayscale-0"
               />
             </div>
@@ -51,6 +52,7 @@ export const CraftsmanshipSection = () => {
                 src="/artisan-hands.png"
                 alt="Hand stitching process"
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                 className="object-cover transition-transform duration-1000 group-hover:scale-110"
               />
             </div>
@@ -63,6 +65,7 @@ export const CraftsmanshipSection = () => {
                 src="/leather-hero.png"
                 alt="Finished piece"
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                 className="object-cover transition-transform duration-1000 group-hover:scale-110 brightness-[0.9] hover:brightness-100"
               />
             </div>
@@ -75,6 +78,7 @@ export const CraftsmanshipSection = () => {
                 src="/workshop-aesthetic.png"
                 alt="Leather crafting workshop"
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 800px"
                 className="object-cover transition-transform duration-1000 group-hover:scale-110"
               />
             </div>

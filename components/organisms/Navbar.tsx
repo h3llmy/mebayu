@@ -51,6 +51,7 @@ export const Navbar = () => {
                             width={110}
                             height={35}
                             priority
+                            style={{ height: "auto" }}
                             className={`object-contain transition-all duration-500 brightness-0 invert`}
                         />
                     </div>
